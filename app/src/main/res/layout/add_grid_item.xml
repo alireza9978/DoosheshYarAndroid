@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="150dp"
+    android:layout_height="100dp"
+    android:layout_gravity="center"
+    android:background="@drawable/black_border_background"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/farm_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/anjoman_regular"
+        android:text="@string/add_new_cow"
+        android:textColor="@color/hit_gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cow_icon" />
+
+    <ImageView
+        android:id="@+id/cow_icon"
+        style="@style/Theme.App.ImageView.Edit"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_add_reverse"
+        app:layout_constraintBottom_toTopOf="@id/farm_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/hit_gray" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple200">#BB86FC</color>
-    <color name="purple500">#6200EE</color>
-    <color name="purple700">#3700B3</color>
-    <color name="teal200">#03DAC5</color>
+    <color name="caribbean_green">#00C299</color>
+    <color name="caribbean_green_lighter">#D5F6F0</color>
+    <color name="white_ice">#E4FAF6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#EF3800</color>
+
+    <color name="persian_green">#00B48E</color>
+    <color name="polar">#EFFBF9</color>
+    <!--background-->
+    <color name="athens_gray">#F1F1F6</color>
+    <color name="athens_gray_alpha">#aaF1F1F6</color>
+    <!--text-->
+    <color name="hit_gray">#A0ABB4</color>
+
+    <color name="report_gray">#697B86</color>
+    <color name="calender_blue">#00BFD5</color>
+
+
+    <color name="selected_tab_home">#072336</color>
+    <color name="tab_home">#A9B3BB</color>
+
+
+    <color name="show_more_back">#D5F6F0</color>
+    <color name="tab_colors">#D3D9DD</color>
+    <color name="report_price_add_color">#5A6D7A</color>
+
+
 </resources>

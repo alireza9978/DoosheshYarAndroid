@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Theme.App.MainConstraint"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/date_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/anjoman_bold"
+        android:text="۹۶/۰۵/۱۸"
+        android:textColor="@color/selected_tab_home"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/cattel_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@id/cattel_id"
+        app:layout_constraintTop_toTopOf="@id/cattel_id" />
+
+    <ImageView
+        android:id="@+id/cow_image"
+        style="@style/Theme.App.ImageView.Edit"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ic_cattel"
+        app:layout_constraintBottom_toBottomOf="@id/cattel_id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cattel_id" />
+
+    <TextView
+        android:id="@+id/farm_title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/anjoman_bold"
+        android:text="نام گاوداری"
+        android:textColor="@color/hit_gray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/cattel_id"
+        app:layout_constraintTop_toBottomOf="@id/cattel_id"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/cattel_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:fontFamily="@font/anjoman_black"
+        android:gravity="center"
+        android:text="دام ۱۲۳"
+        android:textAlignment="center"
+        android:textColor="@color/selected_tab_home"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/farm_title_text"
+        app:layout_constraintEnd_toStartOf="@id/date_string"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@id/cow_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

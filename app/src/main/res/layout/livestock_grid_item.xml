@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="8dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        style="@style/Theme.App.MainConstraint"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/farm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/anjoman_semi_bold"
+            android:textColor="@color/selected_tab_home"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/cow_icon"
+            style="@style/Theme.App.ImageView.Edit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/farm_text"
+            app:layout_constraintTop_toBottomOf="@id/farm_text" />
+
+        <TextView
+            android:id="@+id/cow_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:fontFamily="@font/anjoman_medium"
+            android:gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:textColor="@color/persian_green"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/cow_icon"
+            app:layout_constraintStart_toEndOf="@id/cow_icon"
+            app:layout_constraintTop_toTopOf="@id/cow_icon" />
+
+        <ImageView
+            android:id="@+id/arrow"
+            style="@style/Theme.App.ImageView.Edit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/anjoman_medium"
+            android:gravity="center"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:textColor="@color/persian_green"
+            app:layout_constraintBottom_toBottomOf="@id/cow_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cow_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

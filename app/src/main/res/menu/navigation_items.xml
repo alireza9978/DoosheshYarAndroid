@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/username"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/username" />
+        <item
+            android:id="@+id/user_guid"
+            android:icon="@drawable/ic_info"
+            android:title="@string/help" />
+        <item
+            android:id="@+id/contact"
+            android:icon="@drawable/ic_call"
+            android:title="@string/contact_us" />
+        <item
+            android:id="@+id/about_us"
+            android:icon="@drawable/ic_user_guide"
+            android:title="@string/about_us" />
+        <item
+            android:id="@+id/lang"
+            android:icon="@drawable/ic_language"
+            android:title="@string/change_language" />
+
+    </group>
+
+</menu>

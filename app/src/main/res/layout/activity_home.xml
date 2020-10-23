@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.App.MainConstraint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.tabs.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:paddingTop="@dimen/tool_bar_top_padding"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/page_name"
+            style="@style/Theme.App.Toolbar.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/menu_button"
+            style="@style/Theme.App.Toolbar.Image"
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_toolbar">
+
+        <TextView
+            android:id="@+id/next_visit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/anjoman_bold"
+            android:text="@string/next_visits"
+            android:textColor="@color/selected_tab_home"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/next_visit_contatiner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/next_visit_list_background"
+            android:padding="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/next_visit_title">
+
+            <TextView
+                android:id="@+id/no_next_visit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/anjoman_extra_light"
+                android:gravity="center"
+                android:text="@string/no_next_visit"
+                android:textColor="@color/hit_gray"
+                android:textSize="32sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ir.coleo.varam.ui_element.ExpandableHeightRecyclerView
+                android:id="@+id/next_visit_lists"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="3"
+                tools:listitem="@layout/next_visit_item_home" />
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/show_more"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:fb_borderColor="@color/caribbean_green"
+                app:fb_borderWidth="2dp"
+                app:fb_defaultColor="@color/show_more_back"
+                app:fb_focusColor="@color/persian_green"
+                app:fb_radius="5dp"
+                app:fb_text="@string/show_more"
+                app:fb_textColor="@color/caribbean_green"
+                app:fb_textFontRes="@font/anjoman_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/next_visit_lists"
+
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/livestock_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/anjoman_bold"
+            android:text="@string/livestocks"
+            android:textColor="@color/selected_tab_home"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/next_visit_contatiner" />
+
+        <TextView
+            android:id="@+id/no_livestocks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/anjoman_light"
+            android:text="@string/empty_livestrock_list"
+            android:textAlignment="center"
+            android:textColor="@color/hit_gray"
+            android:textSize="28sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/create_first_livestock"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/livestock_title"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/create_first_livestock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/anjoman_semi_bold"
+            android:text="@string/create_first_livestrock"
+            android:textAlignment="center"
+            android:textColor="@color/persian_green"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/down_arrow"
+            app:layout_constraintTop_toBottomOf="@id/no_livestocks"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <ImageView
+            android:id="@+id/down_arrow"
+            style="@style/Theme.App.ImageView.Edit"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_down_arrow"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/create_first_livestock"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <GridView
+            android:id="@+id/livestocks_grid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:numColumns="2"
+            android:overScrollMode="never"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="15dp"
+            android:verticalSpacing="10dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/livestock_title"
+            tools:listitem="@layout/livestock_grid_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

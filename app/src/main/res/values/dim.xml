@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="login_input_height">55dp</dimen>
+    <dimen name="toolbar_height">70dp</dimen>
+    <dimen name="toolbar_top_padding">15dp</dimen>
+
+    <dimen name="margin_livestrock">15dp</dimen>
+    <dimen name="my_edit_text_height">50dp</dimen>
+
+
+</resources>

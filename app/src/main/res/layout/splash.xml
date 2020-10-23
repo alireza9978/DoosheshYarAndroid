@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_ice"
+    tools:context=".activities.SplashActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/offline_splash_loading_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/splash_loading_background"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/splash_logo">
+
+        <ImageView
+            android:id="@+id/error_image"
+            style="@style/Theme.App.ImageView.Edit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_error"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/no_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/anjoman_regular"
+            android:text="@string/check_network"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/error_image"
+            app:layout_constraintRight_toLeftOf="@id/error_image"
+            app:layout_constraintTop_toTopOf="@id/error_image" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/retry"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:textSize="18sp"
+            app:fb_borderColor="@color/caribbean_green"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@android:color/transparent"
+            app:fb_focusColor="@color/persian_green"
+            app:fb_radius="15dp"
+            app:fb_text="@string/try_again"
+            app:fb_textColor="@color/caribbean_green"
+            app:fb_textFontRes="@font/anjoman_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/work_offline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/error_image" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/work_offline"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:textSize="18sp"
+            app:fb_borderColor="@color/caribbean_green"
+            app:fb_borderWidth="1dp"
+            app:fb_defaultColor="@android:color/transparent"
+            app:fb_focusColor="@color/persian_green"
+            app:fb_radius="15dp"
+            app:fb_text="@string/offline"
+            app:fb_textColor="@color/caribbean_green"
+            app:fb_textFontRes="@font/anjoman_bold"
+            app:layout_constraintBottom_toBottomOf="@id/retry"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/retry"
+            app:layout_constraintTop_toTopOf="@id/retry" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/splash_loading_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/splash_loading_background"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/splash_logo">
+
+        <com.akexorcist.roundcornerprogressbar.indeterminate.IndeterminateRoundCornerProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="270dp"
+            android:layout_height="15dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rcAnimationSpeedScale="3"
+            app:rcBackgroundColor="@color/caribbean_green_lighter"
+            app:rcProgressColor="@color/caribbean_green" />
+
+        <TextView
+            android:id="@+id/loading_state_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/anjoman_bold"
+            android:text="@string/loading"
+            android:textColor="@color/caribbean_green"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progress_bar"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/splash_logo"
+        style="@style/Theme.App.ImageView.Edit"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:background="@drawable/splash_logo_background"
+        android:contentDescription="@string/logo_content"
+        android:padding="40dp"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

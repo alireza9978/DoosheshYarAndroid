@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Theme.App.MainConstraint"
+    tools:context=".activities.tabs.report_activites.ReportVisitFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_of_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/month_title"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/year_title"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                app:layout_constraintLeft_toLeftOf="@id/month_title"
+                app:layout_constraintRight_toRightOf="@id/month_title"
+                app:layout_constraintTop_toBottomOf="@id/month_title" />
+
+            <ImageView
+                android:id="@+id/right_arrow"
+                style="@style/Theme.App.ImageView.Edit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:rotationY="180"
+                android:src="@drawable/ic_next"
+                app:layout_constraintBottom_toBottomOf="@id/month_title"
+                app:layout_constraintLeft_toRightOf="@id/month_title"
+                app:layout_constraintTop_toTopOf="@id/month_title"
+                app:tint="@color/calender_blue" />
+
+            <ImageView
+                android:id="@+id/left_arrow"
+                style="@style/Theme.App.ImageView.Edit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_next"
+                app:layout_constraintBottom_toBottomOf="@id/month_title"
+                app:layout_constraintRight_toLeftOf="@id/month_title"
+                app:layout_constraintTop_toTopOf="@id/month_title"
+                app:tint="@color/calender_blue" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_of_calendar"
+            app:mcv_calendarMode="week"
+            app:mcv_selectionColor="@color/calender_blue"
+            app:mcv_selectionMode="single"
+            app:mcv_showOtherDates="all" />
+
+        <TextView
+            android:id="@+id/visitDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/anjoman_bold"
+            android:text="@string/visits"
+            android:textColor="@color/selected_tab_home"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/calendarView" />
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/anjoman_regular"
+            android:text=""
+            android:textColor="@color/report_gray"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/visitDate"
+            app:layout_constraintStart_toEndOf="@id/visitDate"
+            app:layout_constraintTop_toTopOf="@id/visitDate" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/next_visits_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/visitDate"
+            tools:listitem="@layout/next_visit_item" />
+
+        <TextView
+            android:id="@+id/not_fount_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/anjoman_extra_light"
+            android:gravity="center"
+            android:textColor="@color/hit_gray"
+            android:text="@string/no_visit"
+            android:textSize="32sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/visitDate"
+            app:layout_constraintVertical_bias="0.2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

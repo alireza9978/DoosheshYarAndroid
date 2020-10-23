@@ -1,0 +1,201 @@
+<resources>
+
+    <string name="app_name">سمچین</string>
+    <string name="logo_content">logo image</string>
+
+    <string name="login">ورود</string>
+    <string name="sign_in">عضویت</string>
+
+    <string name="cows">گاو‌ها</string>
+    <string name="livestrocks">گاوداری‌ها</string>
+
+    <string name="home">خانه</string>
+    <string name="search">جستجو</string>
+    <string name="report">گزارش</string>
+    <string name="marked">نشان شده‌ها</string>
+
+    <!--    menu -->
+    <string name="username">نام‌کاربری</string>
+    <string name="help">راهنمای‌برنامه</string>
+    <string name="contact_us">تماس با‌ما</string>
+    <string name="about_us">درباره‌ما</string>
+
+    <string name="show_more">مشاهده بیشتر ></string>
+
+    <string name="import_file">ایمپورت اکسل</string>
+    <string name="visits">بازدید‌ها</string>
+    <string name="facor">دریافت فاکتور</string>
+    <string name="injeries">جراحات گله</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="next_visits">بازدید‌های بعدی</string>
+    <string name="next_visit">بازدید‌ بعدی</string>
+
+    <string name="no_next_visit">بازدیدی ثبت نشده است!</string>
+    <string name="empty_livestrock_list">لیست دامداری‌ها خالی است!</string>
+    <string name="create_first_livestrock">اولین دامداری را ثبت کنید</string>
+    <string name="livestocks">گاوداری‌ها</string>
+    <string name="cow_title">گاو </string>
+    <string name="today">امروز</string>
+    <string name="create_farm">ایجاد گاوداری</string>
+    <string name="control_system">سیستم نگهداری</string>
+    <string name="enter_farm_name">نام گاوداری را وارد کنید</string>
+    <string name="birth_count">تعداد مولد</string>
+    <string name="check_fields">ورودی را بررسی کنید</string>
+    <string name="not_found">نتیجه‌ای یافت نشد!</string>
+    <string name="cows_list">لیست دام‌ها</string>
+    <string name="submit">اعمال</string>
+    <string name="enter_farm">دامداری مورد نظر خود را انتخاب کنید</string>
+    <string name="enter_date">بازه‌ی زمانی برای جستجو را وارد کنید</string>
+    <string name="enter_cow_number">شماره دام مورد نظر خود را وارد کنید</string>
+    <string name="enter_cow_number_coma">شماره دام‌ها را وارد کنید. ۱۲,۲۳,…</string>
+    <string name="cow_number">شماره گاو</string>
+    <string name="enter_cow_number_report">شماره گاو را وارد کنید</string>
+    <string name="enter_date_report">تاریخ بازدید را وارد کنید</string>
+    <string name="information">اطلاعات اولیه</string>
+
+    <string name="empty"> </string>
+    <string name="count">تعداد</string>
+    <string name="price">قیمت واحد</string>
+    <string name="total_price">قیمت کل</string>
+    <string name="sum">مجموع</string>
+
+    <string name="next">بعدی</string>
+    <string name="add_report">افزودن گزارش</string>
+    <string name="month_1">فروردين</string>
+    <string name="month_2">ارديبهشت</string>
+    <string name="month_3">خرداد</string>
+    <string name="month_4">تير</string>
+    <string name="month_5">مرداد</string>
+    <string name="month_6">شهريور</string>
+    <string name="month_7">مهر</string>
+    <string name="month_8">آبان</string>
+    <string name="month_9">آذر</string>
+    <string name="month_10">دي</string>
+    <string name="month_11">بهمن</string>
+    <string name="month_12">اسفند</string>
+    <string name="reason">علت ارجاع</string>
+    <string name="prevois">قبلی</string>
+
+    <string name="more_info_reason_1">زخم</string>
+    <string name="more_info_reason_2">خونمردگی</string>
+    <string name="more_info_reason_3">بهبودیافته</string>
+    <string name="more_info_reason_4">بدون‌جراحت</string>
+    <string name="more_info_reason_5">ژل‌و‌بانداز</string>
+    <string name="more_info_reason_6">تخته‌گذاری</string>
+    <string name="more_info_reason_7">سم‌چینی</string>
+
+    <string name="reason_1">۱۰۰ روزه</string>
+    <string name="reason_2">خشکی</string>
+    <string name="reason_3">عقب‌مانده تولید‌مثلی</string>
+    <string name="reason_4">لنگش‌جدید</string>
+    <string name="reason_5">بازدید‌لنگش</string>
+    <string name="reason_6">اسکوربالا</string>
+    <string name="reason_7">ارجاعی</string>
+    <string name="reason_8">سم‌بلند</string>
+    <string name="reason_9">تلیسه</string>
+    <string name="reason_10">سم‌چینی‌گروهی</string>
+
+    <string name="more_info">توضیحات بیشتر</string>
+    <string name="enter_next_visit_date">تاریخ بازدید بعدی را انتخاب کنید</string>
+    <string name="create">ثبت دام</string>
+    <string name="more_info_text_add_report">در این قسمت حتما باید یکی از گزینه‌ّای زخم، خونمردگی یا سم‌چینی را علامت بزنید.</string>
+    <string name="injury_area">ناحیه درگیر</string>
+    <string name="select_farm">دامداری مورد نظر خود را انتخاب کنید</string>
+    <string name="farm_list">لیست دامداری‌ها</string>
+    <string name="import_excel">فایل اکسل خود را ایمپورت کنید</string>
+    <string name="import_text">ایمپورت</string>
+    <string name="select_cow">انتخاب گاو</string>
+    <string name="export_factor">دریافت فاکتور</string>
+    <string name="add_new_cow_factor">افزودن دام جدید به فاکتور</string>
+    <string name="som_cut_price">هزینه‌ سم‌چینی</string>
+    <string name="cure_price">هزینه‌ درمان‌عفونی</string>
+    <string name="bed_price">هزینه‌ تخته‌گذاری</string>
+    <string name="export_report">دریافت گزارش</string>
+    <string name="no_marked_cow">گاو نشان نشده‌ای وجود ندارد!</string>
+    <string name="no_marked_farm">دامداری نشان نشده‌ای وجود ندارد!</string>
+    <string name="no_visit">بازدیدی ثبت نشده است!</string>
+    <string name="no_visit_short">بدون بازدید</string>
+    <string name="all_visits">همه بازدید‌ها</string>
+    <string name="visit_cow">بازدید از گاو</string>
+    <string name="visit_cows">بازدید از گاو</string>
+
+    <string name="toast_enter_cow_number">شماره گاو را وارد کنید</string>
+    <string name="toast_enter_date">تاریخ را وارد کنید</string>
+    <string name="toast_select_one">یکی از موارد را انتخاب کنید</string>
+    <string name="toast_select_only_one">انتخاب دو مورد امکان‌پذیر نیست</string>
+    <string name="ok">تایید</string>
+    <string name="other_info">سایر اعلاعات</string>
+    <string name="cow_reports">گزارشات دام</string>
+    <string name="last_visit">آخرین بازدید</string>
+    <string name="add_new_cow">افزودن گاو جدید</string>
+    <string name="loading">درحال ‌بارگذاری</string>
+    <string name="offline">استفاده آفلاین</string>
+    <string name="check_network">لطفا اتصال اینترنت خود را بررسی کنید</string>
+    <string name="try_again">تلاش دوباره</string>
+    <string name="notification_title">یادآوری بازدید‌های امروز</string>
+    <string name="channel_name">cow visit reminder</string>
+    <string name="edit">ویرایش</string>
+    <string name="remove">حذف</string>
+    <string name="change_language">change language to English</string>
+    <string name="export">خروجی</string>
+    <string name="day">روز</string>
+    <string name="month">ماه</string>
+    <string name="year">سال</string>
+
+    <string name="zero">۰</string>
+    <string name="one">۱</string>
+    <string name="two">۲</string>
+    <string name="three">۳</string>
+    <string name="four">۴</string>
+    <string name="five">۵</string>
+    <string name="six">۶</string>
+    <string name="seven">۷</string>
+    <string name="eight">۸</string>
+    <string name="nine">۹</string>
+    <string name="ten">۱۰</string>
+    <string name="eleven">۱۱</string>
+    <string name="twelve">۱۲</string>
+    <string name="finger">انگشت</string>
+
+    <string name="injury_row_0">فلگمون بین انگشتی</string>
+    <string name="injury_row_1">درماتیت انگشتی</string>
+    <string name="injury_row_2">زخم کف سم</string>
+    <string name="injury_row_3">زخم خط سفید</string>
+    <string name="injury_row_4">زخم پنجه</string>
+    <string name="injury_row_5">زخم پاشنه</string>
+    <string name="injury_row_6">ترک دیواره</string>
+    <string name="injury_row_7">ناحیه 9</string>
+
+    <string name="column_name_1">میانگین عملیات در روز</string>
+    <string name="column_name_2">بازدید</string>
+    <string name="column_name_3">لنگش جدید</string>
+    <string name="column_name_4">صد‌روزه</string>
+    <string name="column_name_5">خشکی</string>
+    <string name="column_name_6">عقب‌مانده تولید مثلی</string>
+    <string name="column_name_7">سم‌چینی گروهی</string>
+    <string name="column_name_8">سم بلند</string>
+    <string name="column_name_9">سم‌چینی</string>
+    <string name="column_name_10">اسکوربالا</string>
+    <string name="column_name_11">تلیسه</string>
+    <string name="column_name_12">ارجاعی</string>
+    <string name="column_name_13">تخته گذاری</string>
+    <string name="edit_profile">ویرایش حساب کاربری</string>
+    <string name="password">رمز‌عبور</string>
+    <string name="old_password">رمزعبور فعلی</string>
+    <string name="new_password">رمزعبور جدید</string>
+    <string name="confirm_password">تکرار رمزعبور جدید</string>
+    <string name="edit_password">تغییر رمز عبور</string>
+    <string name="email">ایمیل</string>
+    <string name="save">ذخیره</string>
+    <string name="more_info_text_one">در این قسمت شماره دامی که وارد باکس سم‌چینی شده است، وارد کنید. تاریخ به صورت پیش‌فرض در روزی که اطلاعات را وارد می‌ کنید.تعریف شده است.امکان ویرایش آن وجود دارد.</string>
+    <string name="more_info_three">در صورتی که در دام جراحت جدید مشاهده کردید، ناحیه درگیر را در این قسمت علامت بزنید.</string>
+    <string name="forget_password">فراموشی رمز عبور؟</string>
+    <string name="forgot_password">فراموشی رمز عبور</string>
+    <string name="reset_password">درخواست رمز عبور جدید</string>
+    <string name="reset_password_text">ایمیلی برای شما ارسال شد که اجازه میدهد رمزعبور خود را تغییر دهید</string>
+    <string name="enter_finger_number">شماره انگشت را وارد کنید</string>
+    <string name="date_selection">انتخاب تاریخ</string>
+    <string name="clear">پاک کردن</string>
+
+
+</resources>

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ir.coleo.varam">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +13,55 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".activities.login_fragments.ForgetPasswordActivity" />
+        <activity android:name=".activities.reports.ReportSummery" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="ir.coleo.varam.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity android:name=".activities.reports.MoreInfoActivity" />
+        <activity android:name=".activities.FarmSelectionActivity" />
+        <activity android:name=".activities.DateSelectionActivity" />
+        <activity android:name=".activities.menu.ContactActivity" />
+        <activity android:name=".activities.MainActivity" />
+        <activity
+            android:name=".activities.reports.AddReportActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activities.FarmProfileActivity" />
+        <activity android:name=".activities.CowProfileActivity" />
+        <activity android:name=".activities.tabs.AddLivestockActivity" />
+        <activity android:name=".activities.menu.ProfileActivity" />
+        <activity android:name=".activities.tabs.home_activites.VisitActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".service.AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver> <!-- Will not be called unless the application explicitly enables it -->
+        <receiver
+            android:name=".service.DeviceBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

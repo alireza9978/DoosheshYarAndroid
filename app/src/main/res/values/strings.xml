@@ -1,3 +1,207 @@
 <resources>
-    <string name="app_name">Varam</string>
+
+    <array name="spinner_value">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+    </array>
+
+    <string name="app_name">SomChin</string>
+    <string name="logo_content">logo image</string>
+
+    <string name="login">login</string>
+    <string name="sign_in">sign up</string>
+
+    <string name="cows">cows</string>
+    <string name="livestrocks">farms</string>
+
+    <string name="home">home</string>
+    <string name="search">search</string>
+    <string name="report">report</string>
+    <string name="marked">marked</string>
+
+    <string name="help">help</string>
+    <string name="contact_us">contact us</string>
+    <string name="about_us">about us</string>
+
+    <string name="show_more">show more ></string>
+
+    <string name="import_file">import file</string>
+    <string name="visits">Re-check list</string>
+    <string name="facor">Invoice</string>
+    <string name="injeries">Dairy farm digital lesions</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="next_visits">next visits</string>
+    <string name="next_visit">next visit</string>
+    <string name="no_next_visit">there is no visit</string>
+    <string name="empty_livestrock_list">no farm</string>
+    <string name="create_first_livestrock">create your first farm</string>
+    <string name="livestocks">farms</string>
+    <string name="cow_title">cow </string>
+    <string name="today">today</string>
+    <string name="enter_farm_name">enter farm name</string>
+    <string name="create_farm">create farm</string>
+    <string name="control_system">Housing system</string>
+    <string name="birth_count">Herd size‌(Dairy cows)</string>
+
+    <string name="check_fields">check fields</string>
+    <string name="not_found">not found</string>
+    <string name="cows_list">cows list</string>
+    <string name="submit">submit</string>
+    <string name="enter_farm">please select farm</string>
+    <string name="enter_date">enter searching date</string>
+    <string name="enter_cow_number">enter cow number</string>
+    <string name="enter_cow_number_coma">enter cow numbers: 12,3,…</string>
+    <string name="cow_number">cow number</string>
+    <string name="enter_date_report">enter visit date</string>
+    <string name="enter_next_visit_date">enter next visit date</string>
+    <string name="enter_cow_number_report">enter cow number</string>
+    <string name="next">next</string>
+    <string name="information">information</string>
+    <string name="add_report">add report</string>
+
+    <string name="empty"> </string>
+    <string name="count">count</string>
+    <string name="price">price</string>
+    <string name="total_price">total price</string>
+    <string name="sum">sum</string>
+
+    <string name="month_1">January</string>
+    <string name="month_2">February</string>
+    <string name="month_3">March</string>
+    <string name="month_4">April</string>
+    <string name="month_5">May</string>
+    <string name="month_6">June</string>
+    <string name="month_7">July</string>
+    <string name="month_8">August</string>
+    <string name="month_9">September</string>
+    <string name="month_10">October</string>
+    <string name="month_11">November</string>
+    <string name="month_12">December</string>
+    <string name="reason">reason</string>
+    <string name="prevois">previeos</string>
+
+    <string name="more_info_reason_1">Wound</string>
+    <string name="more_info_reason_2">Point Hemorrhage</string>
+    <string name="more_info_reason_3">Healed lesion</string>
+    <string name="more_info_reason_4">No injuries</string>
+    <string name="more_info_reason_5">Infectious lesion Treatment</string>
+    <string name="more_info_reason_6">Block/shoe</string>
+    <string name="more_info_reason_7">Hoof trimming</string>
+
+    <string name="reason_1">120 DIM hoof trimming</string>
+    <string name="reason_2">Dry-off hoof trimming</string>
+    <string name="reason_3">Delayed reproduction</string>
+    <string name="reason_4">New case</string>
+    <string name="reason_5">Re-check</string>
+    <string name="reason_6">High locomotion score inspection</string>
+    <string name="reason_7">Referred for lameness</string>
+    <string name="reason_8">Long toe</string>
+    <string name="reason_9">Heifer</string>
+    <string name="reason_10">Group hoof trimming</string>
+
+    <string name="more_info">more info</string>
+    <string name="create">create</string>
+    <string name="more_info_text_add_report">In this part you should select at least on of options from Wound,Point Hemorrhage or Hoof trimming.</string>
+    <string name="injury_area">Affected claw zone</string>
+    <string name="select_farm">select farm please</string>
+    <string name="farm_list">Farms list</string>
+    <string name="import_excel">import your excel file</string>
+    <string name="import_text">import</string>
+    <string name="select_cow">select cow</string>
+    <string name="export_factor">Invoice</string>
+    <string name="add_new_cow_factor">add new cow to factor</string>
+    <string name="som_cut_price">Hoof trimming cost</string>
+    <string name="cure_price">Infectious lesion treatment cost</string>
+    <string name="bed_price">Hoof block application cost</string>
+    <string name="export_report">export report</string>
+    <string name="no_marked_cow">no marked cow!</string>
+    <string name="no_marked_farm">no marked farm!</string>
+    <string name="no_visit">there is no visit!</string>
+    <string name="all_visits">all visits</string>
+    <string name="visit_cow">visit from cow</string>
+    <string name="visit_cows">visit from cows</string>
+
+    <string name="toast_enter_cow_number">enter cow number</string>
+    <string name="toast_enter_date">enter date</string>
+    <string name="toast_select_one">select one of options</string>
+    <string name="toast_select_only_one">select only one part</string>
+    <string name="ok">OK</string>
+    <string name="other_info">Treatment and severity</string>
+    <string name="cow_reports">cow reports</string>
+    <string name="last_visit">last visit</string>
+    <string name="add_new_cow">add new cow</string>
+    <string name="no_visit_short">no visit</string>
+    <string name="loading">loading</string>
+    <string name="offline">offline</string>
+    <string name="check_network">check internet connection</string>
+    <string name="try_again">try again</string>
+    <string name="notification_title">Re-check reminder</string>
+    <string name="channel_name">cow visit reminder</string>
+    <string name="edit">edit</string>
+    <string name="remove">remove</string>
+    <string name="change_language">تغییر زبان به فارسی</string>
+    <string name="export">export</string>
+    <string name="day">day</string>
+    <string name="month">month</string>
+    <string name="year">year</string>
+
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="ten">10</string>
+    <string name="eleven">11</string>
+    <string name="twelve">12</string>
+    <string name="finger">finger</string>
+
+    <string name="injury_row_0">Interdigital necrobacillosis</string>
+    <string name="injury_row_1">Digital dermatitis</string>
+    <string name="injury_row_2">Sole ulcer</string>
+    <string name="injury_row_3">White line disease</string>
+    <string name="injury_row_4">Toe ulcer</string>
+    <string name="injury_row_5">Heel erosion</string>
+    <string name="injury_row_6">Vertical and horizontal fissure</string>
+    <string name="injury_row_7">zone 9</string>
+
+    <string name="column_name_1">AVG operation in day</string>
+    <string name="column_name_2">New case</string>
+    <string name="column_name_3">Re-check</string>
+    <string name="column_name_4">120 DIM hoof trimming</string>
+    <string name="column_name_5">Dry-off hoof trimming</string>
+    <string name="column_name_6">Delayed reproduction</string>
+    <string name="column_name_7">Group hoof trimming</string>
+    <string name="column_name_8">Long toe</string>
+    <string name="column_name_9">Hoof Trim</string>
+    <string name="column_name_10">High locomotion score inspection</string>
+    <string name="column_name_11">Heifer</string>
+    <string name="column_name_12">Referred for lameness</string>
+    <string name="column_name_13">Block/shoe</string>
+    <string name="edit_profile">edit profile</string>
+    <string name="password">password</string>
+    <string name="old_password">old password</string>
+    <string name="new_password">new password</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="edit_password">edit password</string>
+    <string name="email">email</string>
+    <string name="username">username</string>
+    <string name="save">save</string>
+    <string name="more_info_text_one">In first filed you should enter primary information of the cow like cow ID and date</string>
+    <string name="more_info_three">In the third field, you can mark the affected zone in case of new lesions or re-checks and then fill the digit number. Numbering the digits in this application starts from one for lateral right forelimb digit following a ‘S’ Pattern as the medial right forelimb (2), medial left forelimb (3), lateral left forelimb (4), lateral right hindlimb (5), medial right hindlimb (6), medial left hindlimb (7) and lateral left hindlimb (8)</string>
+    <string name="forget_password">forgot password?</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="reset_password">Request new password</string>
+    <string name="reset_password_text">We send you an email that allows you to reset your password</string>
+    <string name="enter_finger_number">enter finger number</string>
+    <string name="date_selection">date selection</string>
+    <string name="clear">clear</string>
+
+
 </resources>
