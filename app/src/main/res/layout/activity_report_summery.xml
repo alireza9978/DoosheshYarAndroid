@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Theme.App.MainConstraint"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,43 +49,20 @@
             app:layout_constraintTop_toBottomOf="@id/back_icon" />
 
         <TextView
-            android:id="@+id/cause_title"
+            android:id="@+id/cartie_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/anjoman_bold"
-            android:text="@string/reason"
+            android:text="@string/cartie_state"
             android:textColor="@color/hit_gray"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cow_title" />
 
-        <ir.coleo.varam.ui_element.ExpandableHeightGridView
-            android:id="@+id/reason_grid"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:numColumns="2"
-            android:verticalSpacing="4dp"
-            app:layout_constraintTop_toBottomOf="@id/cause_title" />
-
-        <TextView
-            android:id="@+id/involved_area"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/anjoman_bold"
-            android:text="@string/injury_area"
-            android:textColor="@color/hit_gray"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reason_grid" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/area_container"
+            android:id="@+id/cartie_state_container"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -94,10 +70,10 @@
             android:padding="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/involved_area">
+            app:layout_constraintTop_toBottomOf="@id/cartie_state">
 
             <TextView
-                android:id="@+id/green_circle"
+                android:id="@+id/cartie_state_green_circle"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:background="@drawable/circle_background"
@@ -106,7 +82,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/area_text"
+                android:id="@+id/cartie_state_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/anjoman_medium"
@@ -117,33 +93,83 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/green_circle"
+                app:layout_constraintStart_toEndOf="@id/cartie_state_green_circle"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/other_info"
+            android:id="@+id/cartie_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/anjoman_bold"
+            android:text="@string/cartie_number"
+            android:textColor="@color/hit_gray"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cartie_state_container" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cartie_number_container"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cartie_number">
+
+            <TextView
+                android:id="@+id/cartie_number_green_circle"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/circle_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cartie_number_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/anjoman_medium"
+                android:gravity="start|center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cartie_number_green_circle"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/drug_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/anjoman_bold"
-            android:text="@string/other_info"
+            android:text="@string/drug_to_use"
             android:textColor="@color/hit_gray"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/area_container" />
+            app:layout_constraintTop_toBottomOf="@id/cartie_number_container" />
 
         <ir.coleo.varam.ui_element.ExpandableHeightGridView
-            android:id="@+id/more_info_grid"
+            android:id="@+id/drug_list"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:numColumns="2"
             android:verticalSpacing="4dp"
-            app:layout_constraintTop_toBottomOf="@id/other_info" />
+            app:layout_constraintTop_toBottomOf="@id/drug_text" />
 
         <TextView
             android:id="@+id/last_visit_title"
@@ -156,7 +182,7 @@
             android:textColor="@color/hit_gray"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/more_info_grid" />
+            app:layout_constraintTop_toBottomOf="@id/drug_list" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/last_visit_container"

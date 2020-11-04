@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.FarmSelectionActivity;
-import ir.coleo.varam.database.models.Farm;
+import ir.coleo.varam.database.models.main.Farm;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class RecyclerViewAdapterFarmSimple extends RecyclerView.Adapter<Recycler
 
         public Holder(@NonNull View itemView) {
             super(itemView);
-            farmName = itemView.findViewById(R.id.livestock_title);
+            farmName = itemView.findViewById(R.id.drug_title);
         }
     }
 

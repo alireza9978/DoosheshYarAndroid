@@ -14,9 +14,9 @@ import ir.coleo.varam.adapters.GridViewAdapterCowProfile;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
-import ir.coleo.varam.database.models.Cow;
+import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.LastReport;
-import ir.coleo.varam.database.models.Report;
+import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.AppExecutors;
 
 import java.util.List;

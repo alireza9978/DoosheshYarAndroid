@@ -13,7 +13,7 @@ import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.activities.reports.ReportSummery;
 import ir.coleo.varam.constants.Constants;
-import ir.coleo.varam.database.models.Report;
+import ir.coleo.varam.database.models.main.Report;
 
 import java.util.List;
 

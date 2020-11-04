@@ -1,4 +1,4 @@
-package ir.coleo.varam.database.models;
+package ir.coleo.varam.database.models.main;
 
 import android.content.Context;
 

@@ -122,7 +122,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/livestock_title"
+            android:id="@+id/drug_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -148,7 +148,7 @@
             app:layout_constraintBottom_toTopOf="@id/create_first_livestock"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/livestock_title"
+            app:layout_constraintTop_toBottomOf="@id/drug_title"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
@@ -200,7 +200,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/livestock_title"
+            app:layout_constraintTop_toBottomOf="@id/drug_title"
             tools:listitem="@layout/livestock_grid_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

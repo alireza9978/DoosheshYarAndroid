@@ -22,6 +22,8 @@ public class Constants {
     public static final String FARM_ID = "sdaxce";
     public static final String REPORT_ID = "sda32xc2e";
     public static final String COW_ID = "Addssaxce";
+    public static final String DRUG_ID = "AddssIddsaxce";
+    public static final String DRUG_TYPE = "drugdasknal";
     public static final String MORE_INFO_STATE = "sdwvvgr";
     public static final int CHOOSE_FILE_REQUEST_CODE = 99;
     public static final int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 98;
@@ -36,6 +38,9 @@ public class Constants {
     public static final int FARM_SELECTION_REPORT_INJURY = 108;
     public static final int DATE_SELECTION_OK = 200;
     public static final int DATE_SELECTION_FAIL = 400;
+
+    public static final int DRUG_SELECTION = 500;
+
     public static final String DATE_SELECTION_RESULT = "res_xc";
     public static String ADD_FARM_MODE = "SADASDXCVV";
     public static String FARM_CREATE = "CREATE_NEW_FARM";

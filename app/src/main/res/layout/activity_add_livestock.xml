@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Theme.App.MainConstraint"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.App.MainConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.tabs.AddLivestockActivity">
@@ -44,105 +43,290 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_add_cow_container">
 
-        <EditText
-            android:id="@+id/farm_title_input"
-            style="@style/Theme.App.EditText.Login.Input"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/login_input_height"
-            android:layout_margin="30dp"
-            android:hint="@string/enter_farm_name"
-            android:inputType="text"
-            android:lines="1"
-            android:singleLine="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="0dp"
+            android:padding="5dp">
 
-        <EditText
-            android:id="@+id/control_system_input"
-            style="@style/Theme.App.EditText.Login.Input"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/login_input_height"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="30dp"
-            android:hint="@string/control_system"
-            android:inputType="text"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/farm_title_input" />
+            <EditText
+                android:id="@+id/farm_title_input"
+                style="@style/Theme.App.EditText.Login.Input"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_input_height"
+                android:layout_margin="30dp"
+                android:hint="@string/enter_farm_name"
+                android:inputType="text"
+                android:lines="1"
+                android:singleLine="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/something_count"
-            style="@style/Theme.App.EditText.Login.Input"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/login_input_height"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="30dp"
-            android:hint="@string/birth_count"
-            android:inputType="number"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/control_system_input" />
+            <EditText
+                android:id="@+id/bed_count"
+                style="@style/Theme.App.EditText.Login.Input.LowPadding"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/bed_type"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/shower_count"
+                app:layout_constraintTop_toBottomOf="@id/farm_title_input" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/livestock_title"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="30dp"-->
-        <!--            android:layout_marginTop="15dp"-->
-        <!--            android:layout_marginEnd="30dp"-->
-        <!--            android:fontFamily="@font/anjoman_bold"-->
-        <!--            android:text="@string/livestocks"-->
-        <!--            android:textColor="@color/selected_tab_home"-->
-        <!--            android:textSize="18sp"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/something_count" />-->
+            <EditText
+                android:id="@+id/shower_count"
+                style="@style/Theme.App.EditText.Login.Input.LowPadding"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="5dp"
+                android:hint="@string/showerCount"
+                android:inputType="number"
+                app:layout_constraintEnd_toStartOf="@id/bed_count"
+                app:layout_constraintStart_toEndOf="@id/birth_count"
+                app:layout_constraintTop_toBottomOf="@id/farm_title_input" />
+
+            <EditText
+                android:id="@+id/birth_count"
+                style="@style/Theme.App.EditText.Login.Input.LowPadding"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/birth_count"
+                android:inputType="number"
+                app:layout_constraintEnd_toStartOf="@id/shower_count"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/farm_title_input" />
+
+            <TextView
+                android:id="@+id/dry_method_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/anjoman_bold"
+                android:text="@string/dry_method"
+                android:textColor="@color/selected_tab_home"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/birth_count" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/item_one_container"
+                style="@style/Theme.App.MainConstraint"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dry_method_text">
+
+                <CheckBox
+                    android:id="@+id/one_check"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/one_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anjoman_regular"
+                    android:text="@string/gradual"
+                    android:textColor="@color/report_gray"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/one_check"
+                    app:layout_constraintStart_toEndOf="@id/one_check"
+                    app:layout_constraintTop_toTopOf="@id/one_check" />
 
 
-        <!--        <GridView-->
-        <!--            android:id="@+id/livestocks_grid"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            android:layout_margin="15dp"-->
-        <!--            android:layout_marginTop="5dp"-->
-        <!--            android:numColumns="2"-->
-        <!--            android:overScrollMode="never"-->
-        <!--            android:paddingStart="15dp"-->
-        <!--            android:paddingEnd="15dp"-->
-        <!--            android:paddingBottom="5dp"-->
-        <!--            app:layout_constraintBottom_toTopOf="@id/submit"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/livestock_title"-->
-        <!--            tools:listitem="@layout/livestock_grid_item" />-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/persian_green"
-            android:fontFamily="@font/anjoman_bold"
-            android:text="@string/create_farm"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:cornerRadius="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/something_count" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/item_two_container"
+                style="@style/Theme.App.MainConstraint"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_one_container">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <CheckBox
+                    android:id="@+id/two_check"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/two_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anjoman_regular"
+                    android:text="@string/single_step"
+                    android:textColor="@color/report_gray"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/two_check"
+                    app:layout_constraintStart_toEndOf="@id/two_check"
+                    app:layout_constraintTop_toTopOf="@id/two_check" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/score_method_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/anjoman_bold"
+                android:text="@string/score_method"
+                android:textColor="@color/selected_tab_home"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_two_container" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/item_three_container"
+                style="@style/Theme.App.MainConstraint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/score_method_text">
+
+                <CheckBox
+                    android:id="@+id/three_check"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/three_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anjoman_regular"
+                    android:text="@string/three_level"
+                    android:textColor="@color/report_gray"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/three_check"
+                    app:layout_constraintStart_toEndOf="@id/three_check"
+                    app:layout_constraintTop_toTopOf="@id/three_check" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/item_four_container"
+                style="@style/Theme.App.MainConstraint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_three_container">
+
+                <CheckBox
+                    android:id="@+id/four_check"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/four_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anjoman_regular"
+                    android:text="@string/four_level"
+                    android:textColor="@color/report_gray"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/four_check"
+                    app:layout_constraintStart_toEndOf="@id/four_check"
+                    app:layout_constraintTop_toTopOf="@id/four_check" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/milk_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/anjoman_bold"
+                android:text="@string/information_about_milk"
+                android:textColor="@color/selected_tab_home"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_four_container" />
+
+            <EditText
+                android:id="@+id/shower_unit_count"
+                style="@style/Theme.App.EditText.Login.Input.LowPadding"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/shower_unit_count"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/shower_pit_count"
+                app:layout_constraintTop_toBottomOf="@id/milk_info" />
+
+            <EditText
+                android:id="@+id/shower_pit_count"
+                style="@style/Theme.App.EditText.Login.Input.LowPadding"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:hint="@string/pit_count"
+                android:inputType="number"
+                app:layout_constraintEnd_toStartOf="@id/shower_unit_count"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/milk_info" />
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/persian_green"
+                android:fontFamily="@font/anjoman_bold"
+                android:text="@string/create_farm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:cornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shower_pit_count" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

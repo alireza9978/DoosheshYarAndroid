@@ -10,7 +10,6 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TypefaceSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,14 +21,17 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import org.jetbrains.annotations.NotNull;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.menu.ContactActivity;
 import ir.coleo.varam.activities.menu.ProfileActivity;
 import ir.coleo.varam.adapters.TabAdapterHome;
 import ir.coleo.varam.constants.Constants;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import static ir.coleo.varam.constants.Constants.CHOOSE_FILE_REQUEST_CODE;
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_FACTOR;
@@ -43,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabAdapterHome adapter;
     private TabLayout tabLayout;
     private DrawerLayout drawerLayout;
-    private String TAG = "MAIN ACTIVITY";
 
     public static void applyFontToMenu(Menu m, Context mContext) {
         for (int i = 0; i < m.size(); i++) {
@@ -90,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult: " + requestCode + " " + resultCode);
         switch (requestCode) {
             case Constants.DATE_SELECTION_SEARCH_COW:
             case Constants.FARM_SELECTION_SEARCH_COW:
@@ -187,12 +187,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         @Override
-        public void updateDrawState(TextPaint ds) {
+        public void updateDrawState(@NotNull TextPaint ds) {
             applyCustomTypeFace(ds, newType);
         }
 
         @Override
-        public void updateMeasureState(TextPaint paint) {
+        public void updateMeasureState(@NotNull TextPaint paint) {
             applyCustomTypeFace(paint, newType);
         }
     }

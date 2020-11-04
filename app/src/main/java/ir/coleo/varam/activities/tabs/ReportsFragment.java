@@ -10,18 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import ir.coleo.varam.R;
-import ir.coleo.varam.activities.MainActivity;
-import ir.coleo.varam.activities.tabs.report_activites.FactorFragment;
-import ir.coleo.varam.activities.tabs.report_activites.ImportFragment;
-import ir.coleo.varam.activities.tabs.report_activites.InjuriesFragment;
-import ir.coleo.varam.activities.tabs.report_activites.ReportVisitFragment;
-import ir.coleo.varam.adapters.TabAdapterLongText;
-import ir.coleo.varam.constants.Constants;
-import ir.coleo.varam.models.DateContainer;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Objects;
+import ir.coleo.varam.R;
+import ir.coleo.varam.activities.MainActivity;
+import ir.coleo.varam.activities.tabs.report_activites.ImportFragment;
+import ir.coleo.varam.activities.tabs.report_activites.ReportVisitFragment;
+import ir.coleo.varam.adapters.TabAdapterLongText;
 
 import static ir.coleo.varam.constants.Constants.CHOOSE_FILE_REQUEST_CODE;
 
@@ -45,8 +40,6 @@ public class ReportsFragment extends Fragment {
         adapter = new TabAdapterLongText(requireContext(), requireActivity().getSupportFragmentManager());
         adapter.addFragment(new ImportFragment(), getResources().getString(R.string.import_file));
         adapter.addFragment(new ReportVisitFragment(), getResources().getString(R.string.visits));
-//        adapter.addFragment(new FactorFragment(), getResources().getString(R.string.facor));
-//        adapter.addFragment(new InjuriesFragment(), getResources().getString(R.string.injeries));
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -81,46 +74,9 @@ public class ReportsFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode) {
-            case CHOOSE_FILE_REQUEST_CODE: {
-                assert data != null;
-                ((ImportFragment) adapter.getItem(0)).importFile(data);
-                break;
-            }
-            case Constants.FARM_SELECTION_REPORT_FACTOR: {
-                if (resultCode == Constants.DATE_SELECTION_OK) {
-                    assert data != null;
-                    int id = Objects.requireNonNull(data.getExtras()).getInt(Constants.FARM_ID);
-                    ((FactorFragment) adapter.getItem(2)).setFarm(id);
-                }
-                break;
-            }
-            case Constants.DATE_SELECTION_REPORT_FACTOR: {
-                if (resultCode == Constants.DATE_SELECTION_OK) {
-                    assert data != null;
-                    DateContainer container = (DateContainer) Objects.requireNonNull(data.getExtras()).get(Constants.DATE_SELECTION_RESULT);
-                    assert container != null;
-                    ((FactorFragment) adapter.getItem(2)).setDate(container);
-                }
-                break;
-            }
-            case Constants.FARM_SELECTION_REPORT_INJURY: {
-                if (resultCode == Constants.DATE_SELECTION_OK) {
-                    assert data != null;
-                    int id = Objects.requireNonNull(data.getExtras()).getInt(Constants.FARM_ID);
-                    ((InjuriesFragment) adapter.getItem(3)).setFarm(id);
-                }
-                break;
-            }
-            case Constants.DATE_SELECTION_REPORT_INJURY: {
-                if (resultCode == Constants.DATE_SELECTION_OK) {
-                    assert data != null;
-                    DateContainer container = (DateContainer) Objects.requireNonNull(data.getExtras()).get(Constants.DATE_SELECTION_RESULT);
-                    assert container != null;
-                    ((InjuriesFragment) adapter.getItem(3)).setDate(container);
-                }
-                break;
-            }
+        if (requestCode == CHOOSE_FILE_REQUEST_CODE) {
+            assert data != null;
+            ((ImportFragment) adapter.getItem(0)).importFile(data);
         }
     }
 

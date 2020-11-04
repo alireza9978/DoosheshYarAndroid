@@ -19,7 +19,7 @@ import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.utils.AppExecutors;
 
-public class FarmSelectionActivity extends AppCompatActivity {
+public class DrugSelectionActivity extends AppCompatActivity {
 
 
     private Context context = this;
@@ -27,6 +27,8 @@ public class FarmSelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //todo make this page
         setContentView(R.layout.activity_live_strock_selection);
 
         findViewById(R.id.close_image).setOnClickListener(view -> {

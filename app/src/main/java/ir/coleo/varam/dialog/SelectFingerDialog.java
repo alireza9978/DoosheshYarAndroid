@@ -27,29 +27,7 @@ public class SelectFingerDialog extends Dialog {
     public SelectFingerDialog(@NonNull final Context context) {
         super(context);
         setContentView(R.layout.select_finger_dialog_layout);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
-        setCancelable(false);
 
-        RelativeLayout relativeLayout = new RelativeLayout(context);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        relativeLayout.setLayoutParams(layoutParams);
-        EditText edit = findViewById(R.id.input);
-        Button ok = findViewById(R.id.ok);
-        ok.setOnClickListener(v -> {
-            int number = -1;
-            if (edit.getText().toString().isEmpty()) {
-                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
-            } else {
-                number = Integer.parseInt(edit.getText().toString());
-            }
-            if (number >= 1 && number <= 8) {
-                dismiss();
-                ((AddReportActivity) context).setFingerNumber(number);
-            } else {
-                Toast.makeText(context, "value error", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public SelectFingerDialog(@NonNull Context context, int themeResId) {

@@ -21,7 +21,7 @@ import ir.coleo.varam.adapters.GridViewAdapterHomeFarm;
 import ir.coleo.varam.adapters.RecyclerViewAdapterHomeNextVisit;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
-import ir.coleo.varam.database.models.Farm;
+import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.FarmWithCowCount;
 import ir.coleo.varam.database.models.NextReport;
 import ir.coleo.varam.database.utils.AppExecutors;

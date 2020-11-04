@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-
+        <activity android:name=".activities.menu.AddDrugActivity" />
         <activity android:name=".activities.login_fragments.ForgetPasswordActivity" />
         <activity android:name=".activities.reports.ReportSummery" />
 
@@ -61,7 +61,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

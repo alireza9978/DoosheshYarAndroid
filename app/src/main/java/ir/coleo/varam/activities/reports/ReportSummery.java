@@ -9,19 +9,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.adapters.GridViewAdapterItemInSummery;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.MyReport;
-import ir.coleo.varam.database.models.Report;
+import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.DateContainer;
 import ir.coleo.varam.ui_element.ExpandableHeightGridView;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class ReportSummery extends AppCompatActivity {
 
@@ -29,13 +29,12 @@ public class ReportSummery extends AppCompatActivity {
     private ImageView menu;
     private ConstraintLayout menuLayout;
     private TextView cowText;
-    private ExpandableHeightGridView reasonsGrid;
-    private ExpandableHeightGridView moreInfoGrid;
-    private TextView area;
+    private ExpandableHeightGridView drugsGrid;
     private TextView lastVisit;
     private TextView description;
-    private GridViewAdapterItemInSummery reasonAdapter;
-    private GridViewAdapterItemInSummery moreInfoAdapter;
+    private TextView cartieNumber;
+    private TextView cartieState;
+    private GridViewAdapterItemInSummery drugAdapter;
     private Integer reportId;
 
     @Override
@@ -51,14 +50,13 @@ public class ReportSummery extends AppCompatActivity {
         outside = findViewById(R.id.outside);
         menu = findViewById(R.id.dropdown_menu);
         cowText = findViewById(R.id.cow_title);
-        reasonsGrid = findViewById(R.id.reason_grid);
-        moreInfoGrid = findViewById(R.id.more_info_grid);
-        area = findViewById(R.id.area_text);
         lastVisit = findViewById(R.id.last_visit_text);
         description = findViewById(R.id.description_text);
+        cartieNumber = findViewById(R.id.cartie_number_text);
+        cartieState = findViewById(R.id.cartie_state_text);
+        drugsGrid = findViewById(R.id.drug_list);
 
-        reasonAdapter = new GridViewAdapterItemInSummery(this, new ArrayList<>());
-        moreInfoAdapter = new GridViewAdapterItemInSummery(this, new ArrayList<>());
+        drugAdapter = new GridViewAdapterItemInSummery(this, new ArrayList<>());
 
         MyDao dao = DataBase.getInstance(this).dao();
 
@@ -97,8 +95,31 @@ public class ReportSummery extends AppCompatActivity {
                 cowText.append(getString(R.string.cow_title));
                 cowText.append("" + myReport.cowNumber);
 
-                area.setText(getString(R.string.injury_area) + " " + report.legAreaNumber +
-                        ", " + getString(R.string.finger) + " " + report.fingerNumber);
+                cartieNumber.setText(R.string.area);
+                cartieNumber.append(" " + report.areaNumber);
+
+                switch (report.cartieState) {
+                    case 0: {
+                        cartieState.setText(R.string.cartie_one);
+                        break;
+                    }
+                    case 1: {
+                        cartieState.setText(R.string.cartie_two);
+                        break;
+                    }
+                    case 2: {
+                        cartieState.setText(R.string.cartie_three);
+                        break;
+                    }
+                    case 3: {
+                        cartieState.setText(R.string.cartie_four);
+                        break;
+                    }
+                    default:
+                        cartieState.setText(R.string.unknown);
+                }
+
+
                 DateContainer container;
                 if (Constants.getDefualtlanguage(this).equals("fa")) {
                     int[] temp = report.visit.convert(this);
@@ -111,13 +132,10 @@ public class ReportSummery extends AppCompatActivity {
                 lastVisit.setText(container.toString(this));
                 description.setText(report.description);
 
-                reasonAdapter.setItems(report.getSelectedReason());
-                reasonsGrid.setAdapter(reasonAdapter);
-                reasonAdapter.notifyDataSetChanged();
-
-                moreInfoAdapter.setItems(report.getSelectedOtherInfo());
-                moreInfoGrid.setAdapter(moreInfoAdapter);
-                moreInfoAdapter.notifyDataSetChanged();
+                //todo set drugs
+//                drugAdapter.setItems(report.get);
+//                drugsGrid.setAdapter(drugAdapter);
+//                drugAdapter.notifyDataSetChanged();
             });
         });
     }

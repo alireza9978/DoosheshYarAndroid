@@ -1,85 +1,110 @@
 package ir.coleo.varam.models;
 
-import ir.coleo.varam.R;
-import ir.coleo.varam.database.models.Report;
-
 import java.util.ArrayList;
+
+import ir.coleo.varam.R;
+import ir.coleo.varam.database.models.main.Report;
 
 public class CheckBoxManager {
 
     private static CheckBoxManager checkBoxManager;
-    private ArrayList<CheckBoxItem> reasons;
-    private ArrayList<CheckBoxItem> moreInfo;
+    private ArrayList<CheckBoxItem> cartie;
+    private ArrayList<CheckBoxItem> score;
+    private boolean scoreModel;
 
-    private CheckBoxManager() {
-        moreInfo = new ArrayList<>();
-        moreInfo.add(new CheckBoxItem(R.string.more_info_reason_1));
-        moreInfo.add(new CheckBoxItem(R.string.more_info_reason_2));
-        moreInfo.add(new CheckBoxItem(R.string.more_info_reason_3));
-        moreInfo.add(new CheckBoxItem(R.string.more_info_reason_4));
-        moreInfo.add(new CheckBoxItem(R.string.more_info_reason_5));
-        moreInfo.add(new CheckBoxItem(R.string.more_info_reason_6));
-        moreInfo.add(new CheckBoxItem(R.string.more_info_reason_7));
-        moreInfo.get(0).add(moreInfo.get(1));
-        moreInfo.get(0).add(moreInfo.get(2));
-        moreInfo.get(0).add(moreInfo.get(3));
-        moreInfo.get(1).add(moreInfo.get(0));
-        moreInfo.get(1).add(moreInfo.get(3));
-        moreInfo.get(1).add(moreInfo.get(4));
-        moreInfo.get(2).add(moreInfo.get(0));
-        moreInfo.get(2).add(moreInfo.get(4));
-        moreInfo.get(2).add(moreInfo.get(5));
-        moreInfo.get(3).add(moreInfo.get(0));
-        moreInfo.get(3).add(moreInfo.get(1));
-        moreInfo.get(3).add(moreInfo.get(4));
-        moreInfo.get(3).add(moreInfo.get(5));
+    private CheckBoxManager(boolean scoreModel) {
+        this.scoreModel = scoreModel;
+        score = new ArrayList<>();
+        if (scoreModel) {
+            score.add(new CheckBoxItem(R.string.score_three_one));
+            score.add(new CheckBoxItem(R.string.score_three_two));
+            score.add(new CheckBoxItem(R.string.score_three_three));
+            score.add(new CheckBoxItem(R.string.score_three_four));
+        } else {
+            score.add(new CheckBoxItem(R.string.score_four_one));
+            score.add(new CheckBoxItem(R.string.score_four_two));
+            score.add(new CheckBoxItem(R.string.score_four_three));
+            score.add(new CheckBoxItem(R.string.score_four_four));
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (i == j)
+                    continue;
+                score.get(i).add(score.get(j));
+            }
+        }
+        score.add(new CheckBoxItem(R.string.score_zero));
+        score.add(new CheckBoxItem(R.string.score_one));
+        score.add(new CheckBoxItem(R.string.score_two));
 
-        reasons = new ArrayList<>();
-        reasons.add(new CheckBoxItem(R.string.reason_1));
-        reasons.add(new CheckBoxItem(R.string.reason_2));
-        reasons.add(new CheckBoxItem(R.string.reason_3));
-        reasons.add(new CheckBoxItem(R.string.reason_4));
-        reasons.add(new CheckBoxItem(R.string.reason_5));
-        reasons.add(new CheckBoxItem(R.string.reason_6));
-        reasons.add(new CheckBoxItem(R.string.reason_7));
-        reasons.add(new CheckBoxItem(R.string.reason_8));
-        reasons.add(new CheckBoxItem(R.string.reason_9));
-        reasons.add(new CheckBoxItem(R.string.reason_10));
-        reasons.get(0).add(reasons.get(1));
-        reasons.get(0).add(reasons.get(2));
-        reasons.get(1).add(reasons.get(0));
-        reasons.get(1).add(reasons.get(2));
-        reasons.get(2).add(reasons.get(0));
-        reasons.get(2).add(reasons.get(1));
-        reasons.get(3).add(reasons.get(4));
-        reasons.get(4).add(reasons.get(3));
+        cartie = new ArrayList<>();
+        cartie.add(new CheckBoxItem(R.string.cartie_one));
+        cartie.add(new CheckBoxItem(R.string.cartie_two));
+        cartie.add(new CheckBoxItem(R.string.cartie_three));
+        cartie.add(new CheckBoxItem(R.string.cartie_four));
 
     }
 
-    public static CheckBoxManager getCheckBoxManager() {
+    public static CheckBoxManager getCheckBoxManager(boolean scoreModel) {
         if (checkBoxManager == null) {
-            checkBoxManager = new CheckBoxManager();
+            checkBoxManager = new CheckBoxManager(scoreModel);
+        } else {
+            if (scoreModel != checkBoxManager.scoreModel) {
+                checkBoxManager = new CheckBoxManager(scoreModel);
+            }
         }
         return checkBoxManager;
     }
 
-    private void reset() {
-        for (CheckBoxItem item : moreInfo) {
-            item.setCheck(false);
-            item.setActive(true);
+    private void reset(boolean scoreModel) {
+        if (this.scoreModel == scoreModel) {
+            for (CheckBoxItem item : score) {
+                item.setCheck(false);
+                item.setActive(true);
+            }
+        } else {
+            this.scoreModel = scoreModel;
+            score = new ArrayList<>();
+            if (scoreModel) {
+                score.add(new CheckBoxItem(R.string.score_three_one));
+                score.add(new CheckBoxItem(R.string.score_three_two));
+                score.add(new CheckBoxItem(R.string.score_three_three));
+                score.add(new CheckBoxItem(R.string.score_three_four));
+            } else {
+                score.add(new CheckBoxItem(R.string.score_four_one));
+                score.add(new CheckBoxItem(R.string.score_four_two));
+                score.add(new CheckBoxItem(R.string.score_four_three));
+                score.add(new CheckBoxItem(R.string.score_four_four));
+            }
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    if (i == j)
+                        continue;
+                    score.get(i).add(score.get(j));
+                }
+            }
+            score.add(new CheckBoxItem(R.string.score_zero));
+            score.add(new CheckBoxItem(R.string.score_one));
+            score.add(new CheckBoxItem(R.string.score_two));
+
         }
-        for (CheckBoxItem item : reasons) {
+        for (CheckBoxItem item : cartie) {
             item.setCheck(false);
             item.setActive(true);
         }
     }
 
-    public boolean moreInfoSelected() {
-        return !(moreInfo.get(0).isCheck() || moreInfo.get(1).isCheck() || moreInfo.get(6).isCheck());
+    public boolean cartieSelected() {
+        for (CheckBoxItem item : cartie) {
+            if (item.isCheck() && item.isActive()) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public boolean reasonSelected() {
-        for (CheckBoxItem item : reasons) {
+    public boolean scoreSelected() {
+        for (CheckBoxItem item : score) {
             if (item.isCheck() && item.isActive()) {
                 return true;
             }
@@ -88,54 +113,42 @@ public class CheckBoxManager {
     }
 
     public void setBooleansFromReport(Report report) {
-        reset();
-        reasons.get(0).setCheck(report.referenceCauseHundredDays);
-        reasons.get(1).setCheck(report.referenceCauseDryness);
-        reasons.get(2).setCheck(report.referenceCauseLagged);
-        reasons.get(3).setCheck(report.referenceCauseNewLimp);
-        reasons.get(4).setCheck(report.referenceCauseLimpVisit);
-        reasons.get(5).setCheck(report.referenceCauseHighScore);
-        reasons.get(6).setCheck(report.referenceCauseReferential);
-        reasons.get(7).setCheck(report.referenceCauseLongHoof);
-        reasons.get(8).setCheck(report.referenceCauseHeifer);
-        reasons.get(9).setCheck(report.referenceCauseGroupHoofTrim);
+        reset(report.scoreType);
+        score.get(report.score).setCheck(true);
+        score.get(report.score).disableOther();
+        score.get(4).setCheck(report.sardalme);
+        score.get(5).setCheck(report.khoni);
+        score.get(6).setCheck(report.kor);
 
-        moreInfo.get(0).setCheck(report.otherInfoWound);
-        moreInfo.get(1).setCheck(report.otherInfoEcchymosis);
-        moreInfo.get(2).setCheck(report.otherInfoRecovered);
-        moreInfo.get(3).setCheck(report.otherInfoNoInjury);
-        moreInfo.get(4).setCheck(report.otherInfoGel);
-        moreInfo.get(5).setCheck(report.otherInfoBoarding);
-        moreInfo.get(6).setCheck(report.otherInfoHoofTrim);
+        cartie.get(report.cartieState).setCheck(true);
+        cartie.get(report.cartieState).disableOther();
     }
 
     public void setBooleansOnReport(Report report) {
-        report.referenceCauseHundredDays = reasons.get(0).isCheck();
-        report.referenceCauseDryness = reasons.get(1).isCheck();
-        report.referenceCauseLagged = reasons.get(2).isCheck();
-        report.referenceCauseNewLimp = reasons.get(3).isCheck();
-        report.referenceCauseLimpVisit = reasons.get(4).isCheck();
-        report.referenceCauseHighScore = reasons.get(5).isCheck();
-        report.referenceCauseReferential = reasons.get(6).isCheck();
-        report.referenceCauseLongHoof = reasons.get(7).isCheck();
-        report.referenceCauseHeifer = reasons.get(8).isCheck();
-        report.referenceCauseGroupHoofTrim = reasons.get(9).isCheck();
-
-        report.otherInfoWound = moreInfo.get(0).isCheck();
-        report.otherInfoEcchymosis = moreInfo.get(1).isCheck();
-        report.otherInfoRecovered = moreInfo.get(2).isCheck();
-        report.otherInfoNoInjury = moreInfo.get(3).isCheck();
-        report.otherInfoGel = moreInfo.get(4).isCheck();
-        report.otherInfoBoarding = moreInfo.get(5).isCheck();
-        report.otherInfoHoofTrim = moreInfo.get(6).isCheck();
-        reset();
+        for (int i = 0; i < 4; i++) {
+            if (score.get(i).isCheck()) {
+                report.score = i;
+                break;
+            }
+        }
+        report.sardalme = score.get(4).isCheck();
+        report.khoni = score.get(5).isCheck();
+        report.kor = score.get(6).isCheck();
+        report.scoreType = scoreModel;
+        for (int i = 0; i < cartie.size(); i++) {
+            if (cartie.get(i).isCheck()) {
+                report.cartieState = i;
+                break;
+            }
+        }
+        reset(this.scoreModel);
     }
 
-    public ArrayList<CheckBoxItem> getReasons() {
-        return reasons;
+    public ArrayList<CheckBoxItem> getCartie() {
+        return cartie;
     }
 
-    public ArrayList<CheckBoxItem> getMoreInfo() {
-        return moreInfo;
+    public ArrayList<CheckBoxItem> getScore() {
+        return score;
     }
 }

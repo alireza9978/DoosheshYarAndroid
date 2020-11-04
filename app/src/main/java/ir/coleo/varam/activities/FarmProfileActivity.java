@@ -26,13 +26,13 @@ import ir.coleo.varam.adapters.RecyclerViewAdapterNextVisitFarmProfile;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
-import ir.coleo.varam.database.models.Cow;
+import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.CowWithLastVisit;
-import ir.coleo.varam.database.models.Farm;
+import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.FarmWithNextVisit;
 import ir.coleo.varam.database.models.MyReport;
 import ir.coleo.varam.database.models.NextVisit;
-import ir.coleo.varam.database.models.Report;
+import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.MyDate;
 
@@ -86,7 +86,7 @@ public class FarmProfileActivity extends AppCompatActivity {
 
     private TextView title;
     private TextView visitTitle;
-    private TextView system;
+    private TextView showerCount;
     private TextView birthCount;
     private TextView nextVisit;
     private ImageView bookmark;
@@ -109,7 +109,7 @@ public class FarmProfileActivity extends AppCompatActivity {
         title = findViewById(R.id.title_livestrok);
         visitTitle = findViewById(R.id.next_visit_title);
         birthCount = findViewById(R.id.count_value);
-        system = findViewById(R.id.system_value);
+        showerCount = findViewById(R.id.system_value);
         nextVisit = findViewById(R.id.next_visit_value);
         bookmark = findViewById(R.id.bookmark_image);
         cowsGridView = findViewById(R.id.cows_grid);
@@ -205,7 +205,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                 }
                 title.setText(farm.name);
                 birthCount.setText("" + farm.birthCount);
-                system.setText(farm.controlSystem);
+                showerCount.setText("" + farm.showerCount);
                 if (farmWithNextVisit.nextVisit != null)
                     nextVisit.setText(farmWithNextVisit.nextVisit.toStringWithoutYear(this));
                 else
@@ -250,180 +250,180 @@ public class FarmProfileActivity extends AppCompatActivity {
 
     public void export() {
 
-        if (Constants.checkPermission(this))
-            return;
-
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("Sample sheet");
-
-        Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
-                reason_1, reason_2, reason_3,
-                reason_6, reason_7, reason_9, reason_8, reason_4,
-                reason_5, reason_10, zero, one, two, three, four, five, six, seven, eight, nine,
-                ten, eleven, twelve, more_info_reason_1, more_info_reason_2, more_info_reason_7,
-                more_info_reason_5, more_info_reason_6, more_info_reason_4, more_info_reason_3,
-                next_visit, more_info};
-
-        MyDao dao = DataBase.getInstance(this).dao();
-        AppExecutors.getInstance().diskIO().execute(() -> {
-            List<MyReport> reports = dao.getAllMyReportFarm(id);
-            runOnUiThread(() -> {
-                //add headers
-                Row row = sheet.createRow(0);
-                for (int i = 0; i < headers.length; i++) {
-                    Cell cell = row.createCell(i);
-                    cell.setCellValue(getString(headers[i]));
-                }
-                //add reports
-                for (int i = 0; i < reports.size(); i++) {
-                    MyReport myReport = reports.get(i);
-                    Report report = myReport.report;
-                    row = sheet.createRow(i + 1);
-
-                    Cell cell = row.createCell(0);
-                    cell.setCellValue(myReport.cowNumber);
-
-                    int[] date = report.visit.convert(this);
-                    cell = row.createCell(1);
-                    cell.setCellValue(date[2]);
-
-                    cell = row.createCell(2);
-                    cell.setCellValue(date[1]);
-
-                    cell = row.createCell(3);
-                    cell.setCellValue(date[0]);
-
-                    cell = row.createCell(4);
-                    if (report.referenceCauseHundredDays)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(5);
-                    if (report.referenceCauseDryness)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(6);
-                    if (report.referenceCauseLagged)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(7);
-                    if (report.referenceCauseHighScore)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(8);
-                    if (report.referenceCauseReferential)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(9);
-                    if (report.referenceCauseHeifer)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(10);
-                    if (report.referenceCauseLongHoof)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(11);
-                    if (report.referenceCauseNewLimp)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(12);
-                    if (report.referenceCauseLimpVisit)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(13);
-                    if (report.referenceCauseGroupHoofTrim)
-                        cell.setCellValue("*");
-
-                    for (int k = 0; k < 13; k++) {
-                        cell = row.createCell(k + 14);
-                        if (report.legAreaNumber == k)
-                            cell.setCellValue(report.fingerNumber);
-                    }
-
-                    cell = row.createCell(27);
-                    if (report.otherInfoWound)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(28);
-                    if (report.otherInfoEcchymosis)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(29);
-                    if (report.otherInfoHoofTrim)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(30);
-                    if (report.otherInfoGel)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(31);
-                    if (report.otherInfoBoarding)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(32);
-                    if (report.otherInfoNoInjury)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(33);
-                    if (report.otherInfoRecovered)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(34);
-                    if (report.nextVisit != null)
-                        cell.setCellValue(report.nextVisit.toString(this));
-
-                    cell = row.createCell(35);
-                    cell.setCellValue(report.description);
-
-                }
-            });
-        });
-
-        AppExecutors.getInstance().diskIO().execute(() -> {
-            Farm farm = dao.getFarm(id);
-            runOnUiThread(() -> {
-                try {
-
-                    String storage = Environment.getExternalStorageDirectory().toString() + String.format("/%s.xls", farm.name);
-                    File file = new File(storage);
-                    if (file.exists()) {
-                        if (file.delete()) {
-                            Log.i("TAG", "export: deleted ok");
-                        } else {
-                            Log.i("TAG", "export: deleted fuck");
-                        }
-                    }
-                    if (file.createNewFile()) {
-                        FileOutputStream out = new FileOutputStream(file);
-                        workbook.write(out);
-                        out.close();
-                        Log.i("TAG", "export: Excel written successfully..");
-                    } else {
-                        Log.i("TAG", "export: Excel written fuck..");
-                    }
-
-                    Uri uri;
-                    if (Build.VERSION.SDK_INT < 24) {
-                        uri = Uri.fromFile(file);
-                    } else {
-                        uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
-                    }
-
-                    Intent intent = ShareCompat.IntentBuilder.from(this)
-                            .setType("*/*")
-                            .setStream(uri)
-                            .setChooserTitle("Choose bar")
-                            .createChooserIntent()
-                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                    startActivity(intent);
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            });
-        });
+//        if (Constants.checkPermission(this))
+//            return;
+//
+//        HSSFWorkbook workbook = new HSSFWorkbook();
+//        HSSFSheet sheet = workbook.createSheet("Sample sheet");
+//
+//        Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
+//                reason_1, reason_2, reason_3,
+//                reason_6, reason_7, reason_9, reason_8, reason_4,
+//                reason_5, reason_10, zero, one, two, three, four, five, six, seven, eight, nine,
+//                ten, eleven, twelve, more_info_reason_1, more_info_reason_2, more_info_reason_7,
+//                more_info_reason_5, more_info_reason_6, more_info_reason_4, more_info_reason_3,
+//                next_visit, more_info};
+//
+//        MyDao dao = DataBase.getInstance(this).dao();
+//        AppExecutors.getInstance().diskIO().execute(() -> {
+//            List<MyReport> reports = dao.getAllMyReportFarm(id);
+//            runOnUiThread(() -> {
+//                //add headers
+//                Row row = sheet.createRow(0);
+//                for (int i = 0; i < headers.length; i++) {
+//                    Cell cell = row.createCell(i);
+//                    cell.setCellValue(getString(headers[i]));
+//                }
+//                //add reports
+//                for (int i = 0; i < reports.size(); i++) {
+//                    MyReport myReport = reports.get(i);
+//                    Report report = myReport.report;
+//                    row = sheet.createRow(i + 1);
+//
+//                    Cell cell = row.createCell(0);
+//                    cell.setCellValue(myReport.cowNumber);
+//
+//                    int[] date = report.visit.convert(this);
+//                    cell = row.createCell(1);
+//                    cell.setCellValue(date[2]);
+//
+//                    cell = row.createCell(2);
+//                    cell.setCellValue(date[1]);
+//
+//                    cell = row.createCell(3);
+//                    cell.setCellValue(date[0]);
+//
+//                    cell = row.createCell(4);
+//                    if (report.referenceCauseHundredDays)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(5);
+//                    if (report.referenceCauseDryness)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(6);
+//                    if (report.referenceCauseLagged)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(7);
+//                    if (report.referenceCauseHighScore)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(8);
+//                    if (report.referenceCauseReferential)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(9);
+//                    if (report.referenceCauseHeifer)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(10);
+//                    if (report.referenceCauseLongHoof)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(11);
+//                    if (report.referenceCauseNewLimp)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(12);
+//                    if (report.referenceCauseLimpVisit)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(13);
+//                    if (report.referenceCauseGroupHoofTrim)
+//                        cell.setCellValue("*");
+//
+//                    for (int k = 0; k < 13; k++) {
+//                        cell = row.createCell(k + 14);
+//                        if (report.legAreaNumber == k)
+//                            cell.setCellValue(report.fingerNumber);
+//                    }
+//
+//                    cell = row.createCell(27);
+//                    if (report.otherInfoWound)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(28);
+//                    if (report.otherInfoEcchymosis)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(29);
+//                    if (report.otherInfoHoofTrim)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(30);
+//                    if (report.otherInfoGel)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(31);
+//                    if (report.otherInfoBoarding)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(32);
+//                    if (report.otherInfoNoInjury)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(33);
+//                    if (report.otherInfoRecovered)
+//                        cell.setCellValue("*");
+//
+//                    cell = row.createCell(34);
+//                    if (report.nextVisit != null)
+//                        cell.setCellValue(report.nextVisit.toString(this));
+//
+//                    cell = row.createCell(35);
+//                    cell.setCellValue(report.description);
+//
+//                }
+//            });
+//        });
+//
+//        AppExecutors.getInstance().diskIO().execute(() -> {
+//            Farm farm = dao.getFarm(id);
+//            runOnUiThread(() -> {
+//                try {
+//
+//                    String storage = Environment.getExternalStorageDirectory().toString() + String.format("/%s.xls", farm.name);
+//                    File file = new File(storage);
+//                    if (file.exists()) {
+//                        if (file.delete()) {
+//                            Log.i("TAG", "export: deleted ok");
+//                        } else {
+//                            Log.i("TAG", "export: deleted fuck");
+//                        }
+//                    }
+//                    if (file.createNewFile()) {
+//                        FileOutputStream out = new FileOutputStream(file);
+//                        workbook.write(out);
+//                        out.close();
+//                        Log.i("TAG", "export: Excel written successfully..");
+//                    } else {
+//                        Log.i("TAG", "export: Excel written fuck..");
+//                    }
+//
+//                    Uri uri;
+//                    if (Build.VERSION.SDK_INT < 24) {
+//                        uri = Uri.fromFile(file);
+//                    } else {
+//                        uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
+//                    }
+//
+//                    Intent intent = ShareCompat.IntentBuilder.from(this)
+//                            .setType("*/*")
+//                            .setStream(uri)
+//                            .setChooserTitle("Choose bar")
+//                            .createChooserIntent()
+//                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//
+//                    startActivity(intent);
+//
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            });
+//        });
 
 
     }

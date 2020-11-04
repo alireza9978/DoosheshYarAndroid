@@ -25,7 +25,7 @@ import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.CowForMarked;
-import ir.coleo.varam.database.models.Farm;
+import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.DateContainer;
 

@@ -6,21 +6,22 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import ir.coleo.varam.database.models.Cow;
+import java.util.List;
+
 import ir.coleo.varam.database.models.CowForMarked;
 import ir.coleo.varam.database.models.CowWithLastVisit;
-import ir.coleo.varam.database.models.Farm;
 import ir.coleo.varam.database.models.FarmWithCowCount;
 import ir.coleo.varam.database.models.FarmWithNextVisit;
 import ir.coleo.varam.database.models.LastReport;
 import ir.coleo.varam.database.models.MyReport;
 import ir.coleo.varam.database.models.NextReport;
 import ir.coleo.varam.database.models.NextVisit;
-import ir.coleo.varam.database.models.Report;
 import ir.coleo.varam.database.models.SearchFarm;
+import ir.coleo.varam.database.models.main.Cow;
+import ir.coleo.varam.database.models.main.Farm;
+import ir.coleo.varam.database.models.main.Drug;
+import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.models.MyDate;
-
-import java.util.List;
 
 @Dao
 public interface MyDao {
@@ -159,6 +160,9 @@ public interface MyDao {
     @Query("SELECT * FROM Farm WHERE Farm.id == :id")
     Farm getFarm(Integer id);
 
+    @Query("SELECT * FROM Drug WHERE Drug.id == :id")
+    Drug getDrug(Integer id);
+
     @Query("SELECT Farm.id AS farmId, MIN(Report.next_visit_date) AS nextVisit " +
             "FROM Farm,Cow,Report " +
             "WHERE Farm.id == :id " +
@@ -176,6 +180,9 @@ public interface MyDao {
     @Query("SELECT * FROM Report WHERE Report.id == :id")
     Report getReport(Integer id);
 
+    @Query("SELECT * FROM Drug WHERE Drug.type == :type")
+    List<Drug> getAllDrug(Integer type);
+
     @Delete
     void deleteCow(Cow... cows);
 
@@ -185,6 +192,9 @@ public interface MyDao {
     @Delete
     void deleteReport(Report... reports);
 
+    @Delete
+    void deleteDrug(Drug drug);
+
     @Update
     void update(Cow cow);
 
@@ -193,6 +203,9 @@ public interface MyDao {
 
     @Update
     void update(Report report);
+
+    @Insert
+    void insert(Drug drug);
 
     @Insert
     void insert(Report report);

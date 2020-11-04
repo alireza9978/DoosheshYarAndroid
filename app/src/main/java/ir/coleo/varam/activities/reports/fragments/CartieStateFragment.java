@@ -15,23 +15,28 @@ import ir.coleo.varam.adapters.GridViewAdapterReasonAddReport;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.models.CheckBoxManager;
 
+public class CartieStateFragment extends Fragment {
 
-public class CowReasonFragment extends Fragment {
+    public boolean scoreMode;
+
+    public CartieStateFragment(boolean scoreMode) {
+        this.scoreMode = scoreMode;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cow_reason, container, false);
-        Constants.setImageFront(requireContext(), view.findViewById(R.id.next_icon));
+        View view = inflater.inflate(R.layout.fragment_cartie_state, container, false);
         Constants.setImageBack(requireContext(), view.findViewById(R.id.back_icon));
 
-        GridView gridView = view.findViewById(R.id.reason_container);
-        GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(requireContext(), CheckBoxManager.getCheckBoxManager().getReasons());
+        GridView gridView = view.findViewById(R.id.cartie_state_container);
+        GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(requireContext(),
+                CheckBoxManager.getCheckBoxManager(scoreMode).getCartie());
         gridView.setAdapter(adapter);
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
-            if (!CheckBoxManager.getCheckBoxManager().reasonSelected()) {
-                Toast.makeText(requireContext(), R.string.toast_select_one, Toast.LENGTH_SHORT).show();
+            if (CheckBoxManager.getCheckBoxManager(scoreMode).cartieSelected()) {
+                Toast.makeText(requireContext(), "select at least one item", Toast.LENGTH_SHORT).show();
                 return;
             }
             ((AddReportActivity) requireActivity()).next();
@@ -39,7 +44,12 @@ public class CowReasonFragment extends Fragment {
         view.findViewById(R.id.back_button).setOnClickListener(v -> {
             ((AddReportActivity) requireActivity()).back();
         });
-
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
 }

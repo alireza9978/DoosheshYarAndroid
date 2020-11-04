@@ -15,9 +15,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import ir.coleo.varam.R;
-import ir.coleo.varam.constants.Constants;
-import ir.coleo.varam.service.AlarmReceiver;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
@@ -26,6 +23,10 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import ir.coleo.varam.R;
+import ir.coleo.varam.constants.Constants;
+import ir.coleo.varam.service.AlarmReceiver;
 
 /**
  * صفحه‌ی اغازین برنامه
@@ -65,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 runOnUiThread(() -> {
-                    checkConnection();
+                    goApp();
                 });
             }
         }, 1000);

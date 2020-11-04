@@ -1,12 +1,6 @@
 <resources>
 
-    <array name="spinner_value">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-    </array>
-
-    <string name="app_name">SomChin</string>
+    <string name="app_name">Varam</string>
     <string name="logo_content">logo image</string>
 
     <string name="login">login</string>
@@ -30,8 +24,6 @@
     <string name="visits">Re-check list</string>
     <string name="facor">Invoice</string>
     <string name="injeries">Dairy farm digital lesions</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="next_visits">next visits</string>
     <string name="next_visit">next visit</string>
     <string name="no_next_visit">there is no visit</string>
@@ -43,7 +35,7 @@
     <string name="enter_farm_name">enter farm name</string>
     <string name="create_farm">create farm</string>
     <string name="control_system">Housing system</string>
-    <string name="birth_count">Herd size‌(Dairy cows)</string>
+    <string name="birth_count">Dairy cows</string>
 
     <string name="check_fields">check fields</string>
     <string name="not_found">not found</string>
@@ -202,6 +194,46 @@
     <string name="enter_finger_number">enter finger number</string>
     <string name="date_selection">date selection</string>
     <string name="clear">clear</string>
+    <string name="dry_method">dry method</string>
+    <string name="score_method">score method</string>
+    <string name="four_level">four level</string>
+    <string name="three_level">three level</string>
+    <string name="information_about_milk">information about milk</string>
+    <string name="enter_pomade_name">نام پماد را وارد کنید</string>
+    <string name="pomade_list">لیست پماد‌‌ها</string>
+    <string name="create_drug">افزودن</string>
+    <string name="drug_title_1">پماد</string>
+    <string name="drug_title_2">آنتی‌بیوتیک</string>
+    <string name="drug_title_3">سرم</string>
+    <string name="drug_title_4">درمان‌ حمایتی</string>
+    <string name="drug_title_5">ضد التهاب</string>
+    <string name="score_three_one">۱</string>
+    <string name="score_three_two">۲.۱</string>
+    <string name="score_three_three">۲.۲</string>
+    <string name="score_three_four">۳</string>
+    <string name="score_four_one">۱</string>
+    <string name="score_four_two">۲</string>
+    <string name="score_four_three">۳</string>
+    <string name="score_four_four">۴</string>
+    <string name="cartie_two">جدید</string>
+    <string name="cartie_one">استراحت</string>
+    <string name="cartie_three">ادامه درمان</string>
+    <string name="cartie_four">ترخیص</string>
+    <string name="score_zero">سردلمه</string>
+    <string name="score_one">خونی</string>
+    <string name="score_two">کور</string>
+    <string name="drug_to_use">دارو‌های مورد استفاده</string>
+    <string name="cartie_number">کارتیه درگیر</string>
+    <string name="cartie_state">وضعیت کارتیه</string>
+    <string name="unknown">unknown</string>
+    <string name="area">ناحیه</string>
+    <string name="used_drug">دارو‌های مورد استفاده را انتخاب کنید</string>
+    <string name="showerCount">تعداد دوشا</string>
+    <string name="bed_type">نوع بستر</string>
+    <string name="gradual">تدریجی</string>
+    <string name="single_step">یک مرحله‌ای</string>
+    <string name="shower_unit_count">تعداد واحد دوشنده</string>
+    <string name="pit_count">تعداد چاله شیردوشی</string>
 
 
 </resources>

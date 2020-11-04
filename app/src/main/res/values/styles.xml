@@ -118,7 +118,42 @@
         <item name="android:paddingBottom">8dp</item>
         <item name="android:cursorVisible">true</item>
         <item name="android:background">@drawable/login_input_selector</item>
+    </style>
 
+    <style name="Theme.App.EditText.Login.Input.LowPadding" parent="Theme.App">
+        <item name="android:textSize">16sp</item>
+        <item name="hintTextColor">@color/hit_gray</item>
+        <item name="android:textColorHint">@color/hit_gray</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="fontFamily">@font/anjoman_medium</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:background">@drawable/login_input_selector</item>
+    </style>
+
+    <style name="Theme.App.TextView.Drug" parent="Theme.App">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/hit_gray</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="fontFamily">@font/anjoman_medium</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:background">@drawable/drug_text_background</item>
+    </style>
+
+    <style name="Theme.App.TextView.Drug.End" parent="Theme.App.TextView.Drug">
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginStart">8dp</item>
     </style>
 
     <style name="Theme.App.EditText.Login.Button" parent="Theme.App">

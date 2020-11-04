@@ -7,14 +7,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import ir.coleo.varam.database.dao.InjuryDao;
 import ir.coleo.varam.database.dao.MyDao;
-import ir.coleo.varam.database.models.Cow;
-import ir.coleo.varam.database.models.Farm;
-import ir.coleo.varam.database.models.Report;
+import ir.coleo.varam.database.models.main.Cow;
+import ir.coleo.varam.database.models.main.Drug;
+import ir.coleo.varam.database.models.main.Farm;
+import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.DateConverter;
 
-@Database(entities = {Farm.class, Cow.class, Report.class}, version = 1, exportSchema = false)
+@Database(entities = {Farm.class, Cow.class, Report.class, Drug.class}, version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class})
 public abstract class DataBase extends RoomDatabase {
     private static final String dataBaseName = "temp";
@@ -30,7 +30,5 @@ public abstract class DataBase extends RoomDatabase {
     }
 
     public abstract MyDao dao();
-
-    public abstract InjuryDao injuryDao();
 
 }
