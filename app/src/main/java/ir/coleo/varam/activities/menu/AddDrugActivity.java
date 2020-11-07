@@ -1,7 +1,7 @@
 package ir.coleo.varam.activities.menu;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,24 +61,24 @@ public class AddDrugActivity extends AppCompatActivity {
             }
         }
 
-        findViewById(R.id.close_image).setOnClickListener(view -> {
-            finish();
-        });
+        findViewById(R.id.close_image).setOnClickListener(view -> finish());
 
         dao = DataBase.getInstance(this).dao();
         EditText drugName = findViewById(R.id.enter_drug_name);
         findViewById(R.id.create_drug).setOnClickListener(view -> {
             if (drugName.getText().toString().isEmpty()) {
                 Toast.makeText(this, "field is empty", Toast.LENGTH_SHORT).show();
+                return;
             }
             AppExecutors.getInstance().diskIO().execute(() -> {
                 Drug drug = new Drug();
                 drug.type = type;
                 drug.name = drugName.getText().toString();
-                drugName.setText("");
                 dao.insert(drug);
                 runOnUiThread(() -> {
+                    drugName.setText("");
                     Toast.makeText(this, "added", Toast.LENGTH_SHORT).show();
+                    updateList(type);
                 });
             });
         });
@@ -104,18 +104,12 @@ public class AddDrugActivity extends AppCompatActivity {
     public void updateList(int type) {
         AppExecutors.getInstance().diskIO().execute(() -> {
             List<Drug> drugs = dao.getAllDrug(type);
+            Log.i("DRUGS", "updateList: " + drugs.size());
             runOnUiThread(() -> {
                 adapterDrugList.setDrugs(drugs);
                 adapterDrugList.notifyDataSetChanged();
             });
         });
-    }
-
-    public void selectedFarm(int id) {
-        Intent intent = new Intent();
-        intent.putExtra(Constants.FARM_ID, id);
-        setResult(Constants.DATE_SELECTION_OK, intent);
-        finish();
     }
 
 }

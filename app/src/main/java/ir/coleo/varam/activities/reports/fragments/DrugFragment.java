@@ -19,6 +19,7 @@ import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Drug;
+import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.AppExecutors;
 
 public class DrugFragment extends Fragment {
@@ -66,8 +67,10 @@ public class DrugFragment extends Fragment {
         MyDao dao = DataBase.getInstance(requireContext()).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
             Drug temp = dao.getDrug(pair.second);
-            drugTextList.get(pair.first).setText(temp.name);
-            drugTextList.get(pair.first).setTextColor(requireContext().getResources().getColor(R.color.black));
+            requireActivity().runOnUiThread(() -> {
+                drugTextList.get(pair.first).setText(temp.name);
+                drugTextList.get(pair.first).setTextColor(requireContext().getResources().getColor(R.color.black));
+            });
         });
     }
 
@@ -80,6 +83,33 @@ public class DrugFragment extends Fragment {
         Pair<Integer, Integer> pair = new Pair<>(type, id);
         setDrugs.add(pair);
         updateText(pair);
+    }
+
+    public void setDrugOnReport(Report report) {
+        for (Pair<Integer, Integer> pair : setDrugs) {
+            switch (pair.first) {
+                case 0: {
+                    report.pomadeId = pair.second;
+                    break;
+                }
+                case 1: {
+                    report.antibioticId = pair.second;
+                    break;
+                }
+                case 2: {
+                    report.serumId = pair.second;
+                    break;
+                }
+                case 3: {
+                    report.cureId = pair.second;
+                    break;
+                }
+                case 4: {
+                    report.AntiInflammatoryId = pair.second;
+                    break;
+                }
+            }
+        }
     }
 
 }

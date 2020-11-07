@@ -28,6 +28,7 @@ public class CartieStateFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cartie_state, container, false);
         Constants.setImageBack(requireContext(), view.findViewById(R.id.back_icon));
+        Constants.setImageFront(requireContext(), view.findViewById(R.id.next_icon));
 
         GridView gridView = view.findViewById(R.id.cartie_state_container);
         GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(requireContext(),
@@ -35,7 +36,7 @@ public class CartieStateFragment extends Fragment {
         gridView.setAdapter(adapter);
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
-            if (CheckBoxManager.getCheckBoxManager(scoreMode).cartieSelected()) {
+            if (!CheckBoxManager.getCheckBoxManager(scoreMode).cartieSelected()) {
                 Toast.makeText(requireContext(), "select at least one item", Toast.LENGTH_SHORT).show();
                 return;
             }

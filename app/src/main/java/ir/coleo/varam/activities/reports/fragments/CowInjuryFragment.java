@@ -71,6 +71,10 @@ public class CowInjuryFragment extends Fragment {
         Toast.makeText(requireContext(), R.string.toast_select_only_one, Toast.LENGTH_SHORT).show();
     }
 
+    public int getSelected() {
+        return selected;
+    }
+
     @Override
     public void onResume() {
         super.onResume();

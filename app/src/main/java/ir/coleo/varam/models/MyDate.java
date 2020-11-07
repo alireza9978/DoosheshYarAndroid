@@ -96,7 +96,7 @@ public class MyDate implements Serializable, Cloneable, Comparable<MyDate> {
     }
 
     public String convertDay(Context context) {
-        if (Constants.getDefualtlanguage(context).equals("fa")) {
+        if (Constants.getDefaultLanguage(context).equals("fa")) {
             PersianDate pdate = new PersianDate();
             int[] temp = pdate.toJalali(year, month, day);
             return "" + temp[2];
@@ -106,7 +106,7 @@ public class MyDate implements Serializable, Cloneable, Comparable<MyDate> {
     }
 
     public int[] convert(Context context) {
-        if (Constants.getDefualtlanguage(context).equals("fa")) {
+        if (Constants.getDefaultLanguage(context).equals("fa")) {
             PersianDate pdate = new PersianDate();
             return pdate.toJalali(year, month, day);
         } else {
@@ -116,7 +116,7 @@ public class MyDate implements Serializable, Cloneable, Comparable<MyDate> {
 
     @NotNull
     public String toString(Context context) {
-        if (Constants.getDefualtlanguage(context).equals("fa")) {
+        if (Constants.getDefaultLanguage(context).equals("fa")) {
             PersianDate pdate = new PersianDate();
             int[] temp = pdate.toJalali(year, month, day);
             return "" + temp[0] + "/" + temp[1] + "/" + temp[2];
@@ -127,7 +127,7 @@ public class MyDate implements Serializable, Cloneable, Comparable<MyDate> {
 
     @NotNull
     public String toStringWithoutYear(Context context) {
-        if (Constants.getDefualtlanguage(context).equals("fa")) {
+        if (Constants.getDefaultLanguage(context).equals("fa")) {
             PersianDate pdate = new PersianDate();
             Log.i("TAG", "toStringWithoutYear: " + year + " " + month + " " + day);
             int[] temp = pdate.toJalali(year, month, day);

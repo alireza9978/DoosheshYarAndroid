@@ -77,7 +77,7 @@ public class ReportVisitFragment extends Fragment {
         visitText = view.findViewById(R.id.visitDate);
         nextVisitList = view.findViewById(R.id.next_visits_list);
 
-        if (Constants.getDefualtlanguage(context).equals("fa")) {
+        if (Constants.getDefaultLanguage(context).equals("fa")) {
             setPersian();
         } else {
             setEnglish();

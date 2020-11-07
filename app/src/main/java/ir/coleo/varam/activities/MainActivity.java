@@ -29,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.menu.ContactActivity;
+import ir.coleo.varam.activities.menu.DrugsListActivity;
 import ir.coleo.varam.activities.menu.ProfileActivity;
 import ir.coleo.varam.adapters.TabAdapterHome;
 import ir.coleo.varam.constants.Constants;
@@ -38,7 +39,7 @@ import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_FACTOR;
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_INJURY;
 import static ir.coleo.varam.constants.Constants.FARM_SELECTION_REPORT_FACTOR;
 import static ir.coleo.varam.constants.Constants.FARM_SELECTION_REPORT_INJURY;
-import static ir.coleo.varam.constants.Constants.getDefualtlanguage;
+import static ir.coleo.varam.constants.Constants.getDefaultLanguage;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -132,13 +133,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 return true;
             }
-            case R.id.contact: {
-                Intent intent = new Intent(this, ContactActivity.class);
+            case R.id.drugs: {
+                Intent intent = new Intent(this, DrugsListActivity.class);
                 startActivity(intent);
                 return true;
             }
             case R.id.lang: {
-                if (getDefualtlanguage(this).equals("fa")) {
+                if (getDefaultLanguage(this).equals("fa")) {
                     Constants.setLanguage(this, "en");
                 } else {
                     Constants.setLanguage(this, "fa");

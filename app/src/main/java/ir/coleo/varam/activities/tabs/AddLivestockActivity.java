@@ -77,10 +77,10 @@ public class AddLivestockActivity extends AppCompatActivity {
                         farmTitle.setText(farm.name);
                         farmTitle.setEnabled(false);
                         bedType.setText(farm.bedType);
-                        birthCount.setText(farm.birthCount);
-                        showerCount.setText(farm.showerCount);
-                        showerPitCount.setText(farm.showerPitCount);
-                        showerUnitCount.setText(farm.showerUnitCount);
+                        birthCount.setText("" + farm.birthCount);
+                        showerCount.setText("" + farm.showerCount);
+                        showerPitCount.setText("" + farm.showerPitCount);
+                        showerUnitCount.setText("" + farm.showerUnitCount);
                         this.dryMethod = farm.dryMethod;
                         this.scoreMethod = farm.scoreMethod;
                         if (this.dryMethod){

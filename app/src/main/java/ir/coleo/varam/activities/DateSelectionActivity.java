@@ -18,10 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.res.ResourcesCompat;
 
-import ir.coleo.varam.R;
-import ir.coleo.varam.constants.Constants;
-import ir.coleo.varam.constants.Utilities;
-import ir.coleo.varam.models.DateContainer;
 import com.dariushm2.PersianCaldroid.caldroidfragment.PersianCaldroidFragment;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -29,18 +25,22 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import calendar.PersianDate;
+import ir.coleo.varam.R;
+import ir.coleo.varam.constants.Constants;
+import ir.coleo.varam.constants.Utilities;
+import ir.coleo.varam.models.DateContainer;
 
-import static ir.coleo.varam.constants.Constants.DateSelectionMode.RANG;
-import static ir.coleo.varam.constants.Constants.DateSelectionMode.SINGLE;
-import static ir.coleo.varam.models.DateContainer.MyDate;
 import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.SELECTION_MODE_NONE;
 import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.SELECTION_MODE_RANGE;
 import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.SELECTION_MODE_SINGLE;
+import static ir.coleo.varam.constants.Constants.DateSelectionMode.RANG;
+import static ir.coleo.varam.constants.Constants.DateSelectionMode.SINGLE;
+import static ir.coleo.varam.models.DateContainer.MyDate;
+
 public class DateSelectionActivity extends AppCompatActivity {
 
     private Context context = this;
@@ -76,7 +76,7 @@ public class DateSelectionActivity extends AppCompatActivity {
         calendar = findViewById(R.id.calendarView);
         FrameLayout calendarView = findViewById(R.id.persianCaldroid);
 
-        String language = Constants.getDefualtlanguage(context);
+        String language = Constants.getDefaultLanguage(context);
 
 
         String action = getIntent().getAction();
@@ -115,7 +115,7 @@ public class DateSelectionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String language = Constants.getDefualtlanguage(context);
+        String language = Constants.getDefaultLanguage(context);
 
         if (language.equals("fa")) {
             View view = persianCaldroidFragment.getView();

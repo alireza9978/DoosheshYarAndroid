@@ -11,7 +11,7 @@ import java.util.Locale;
 public class Utilities {
 
     public static String monthToString(CalendarDay date, Context context) {
-        String language = Constants.getDefualtlanguage(context);
+        String language = Constants.getDefaultLanguage(context);
         if (language.isEmpty()) {
             language = "en";
         }
@@ -106,7 +106,7 @@ public class Utilities {
     }
 
     public static String yearToString(CalendarDay date, Context context) {
-        String language = Constants.getDefualtlanguage(context);
+        String language = Constants.getDefaultLanguage(context);
         if (language.isEmpty()) {
             language = "en";
         }

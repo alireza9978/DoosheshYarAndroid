@@ -235,5 +235,7 @@
     <string name="single_step">یک مرحله‌ای</string>
     <string name="shower_unit_count">تعداد واحد دوشنده</string>
     <string name="pit_count">تعداد چاله شیردوشی</string>
+    <string name="report_added">report added</string>
+
 
 </resources>

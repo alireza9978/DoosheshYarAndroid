@@ -2,17 +2,17 @@ package ir.coleo.varam.models;
 
 import android.content.Context;
 
-import ir.coleo.varam.constants.FormatHelper;
-import ir.coleo.varam.constants.Utilities;
-
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import ir.coleo.varam.constants.FormatHelper;
+import ir.coleo.varam.constants.Utilities;
 import saman.zamani.persiandate.PersianDate;
 
 import static ir.coleo.varam.constants.Constants.DateSelectionMode.RANG;
+import static ir.coleo.varam.constants.Constants.DateSelectionMode.SINGLE;
 
 public class DateContainer implements Serializable {
 
@@ -37,6 +37,13 @@ public class DateContainer implements Serializable {
         } else
             return "other_day";
 
+    }
+
+    public static DateContainer getToday(Context context, boolean persian) {
+        Date date = new Date();
+        ir.coleo.varam.models.MyDate myDate = new ir.coleo.varam.models.MyDate(date);
+        int[] dateConverted = myDate.convert(context);
+        return new DateContainer(SINGLE, new MyDate(persian, dateConverted[2], dateConverted[1], dateConverted[0]));
     }
 
     public int getRange() {

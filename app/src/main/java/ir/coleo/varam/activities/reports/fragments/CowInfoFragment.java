@@ -119,7 +119,8 @@ public class CowInfoFragment extends Fragment {
     public void setDate(String date) {
         if (date != null) {
             this.date = date;
-            date_text.setText(date);
+            if (date_text != null)
+                date_text.setText(date);
         }
     }
 

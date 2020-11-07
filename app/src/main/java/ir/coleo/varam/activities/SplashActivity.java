@@ -94,7 +94,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public Context updateBaseContextLocale(Context context) {
-        String language = Constants.getDefualtlanguage(context);
+        String language = Constants.getDefaultLanguage(context);
         if (language.isEmpty()) {
             //when first time enter into app (get the device language and set it
             language = Locale.getDefault().getLanguage();

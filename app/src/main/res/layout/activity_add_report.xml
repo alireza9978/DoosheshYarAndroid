@@ -71,13 +71,13 @@
         app:stpi_lineMargin="0dp"
         app:stpi_stepCount="5" />
 
-    <ir.coleo.varam.ui_element.MyViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager_id"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/state_indicator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

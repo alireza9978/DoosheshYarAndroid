@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.badoualy.stepperindicator.StepperIndicator;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
 import ir.coleo.varam.R;
-import ir.coleo.varam.activities.reports.fragments.CartieStateFragment;
 import ir.coleo.varam.activities.reports.fragments.CowInfoFragment;
 import ir.coleo.varam.activities.reports.fragments.CowInjuryFragment;
 import ir.coleo.varam.activities.reports.fragments.DrugFragment;
@@ -27,8 +27,8 @@ import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.AppExecutors;
+import ir.coleo.varam.models.CheckBoxManager;
 import ir.coleo.varam.models.DateContainer;
-import ir.coleo.varam.ui_element.MyViewPager;
 
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_CREATE;
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_CREATE_END;
@@ -40,14 +40,15 @@ public class AddReportActivity extends AppCompatActivity {
     private State state;
     private Cow cow;
     private TabAdapterReport adapter;
-    private TabLayout tabLayout;
     private StepperIndicator stepperIndicator;
-    private int fingerNumber;
     private DateContainer one;
     private DateContainer two;
     private int farmId;
     private String mode;
     private Integer reportId;
+    private ViewPager2 viewPager;
+    private Farm farm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,17 @@ public class AddReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_report);
         Bundle bundle = Objects.requireNonNull(getIntent().getExtras());
         mode = bundle.getString(Constants.REPORT_MODE);
-
         assert mode != null;
+
+        boolean persian = Constants.getDefaultLanguage(this).equals("fa");
+        stepperIndicator = findViewById(R.id.state_indicator);
+        if (persian) {
+            stepperIndicator.setRotation(180);
+            stepperIndicator.setRotationX(180);
+            stepperIndicator.setShowDoneIcon(false);
+        }
+        viewPager = findViewById(R.id.pager_id);
+
         if (mode.equals(Constants.EDIT_REPORT)) {
             Log.i("ADD_REPORT", "onCreate: edit mode");
             reportId = bundle.getInt(Constants.REPORT_ID);
@@ -74,35 +84,30 @@ public class AddReportActivity extends AppCompatActivity {
 
             MyDao dao = DataBase.getInstance(this).dao();
             AppExecutors.getInstance().diskIO().execute(() -> {
-                Farm farm;
                 if (id != -1) {
                     cow = dao.getCow(id);
                     farm = dao.getFarm(cow.getFarm());
                     if (cow != null)
-                        ((CowInfoFragment) adapter.getItem(0)).setCowNumber(cow.getNumber());
+                        ((CowInfoFragment) adapter.getFragment(0)).setCowNumber(cow.getNumber());
                 } else {
                     cow = null;
                     farm = dao.getFarm(farmId);
                 }
 
                 runOnUiThread(() -> {
-                    tabLayout = new TabLayout(this);
-                    state = State.info;
-                    adapter = new TabAdapterReport(this, getSupportFragmentManager());
-                    adapter.addFragment(new CowInfoFragment());
-                    adapter.addFragment(new CowInjuryFragment(farm.scoreMethod));
-                    adapter.addFragment(new CartieStateFragment(farm.scoreMethod));
-                    adapter.addFragment(new DrugFragment());
-                    adapter.addFragment(new MoreInfoFragment());
 
-                    MyViewPager viewPager = findViewById(R.id.pager_id);
+                    state = State.info;
+                    adapter = new TabAdapterReport(this, farm.scoreMethod);
+
+                    viewPager.setOffscreenPageLimit(2);
+                    viewPager.setUserInputEnabled(false);
                     viewPager.setAdapter(adapter);
-                    viewPager.setEnableSwipe(false);
-                    tabLayout.setupWithViewPager(viewPager);
 
                     stepperIndicator = findViewById(R.id.state_indicator);
                     ImageView exit = findViewById(R.id.close_image);
                     exit.setOnClickListener(view -> finish());
+                    one = DateContainer.getToday(this, persian);
+                    ((CowInfoFragment) adapter.getFragment(0)).setDate(one.toString(this));
                 });
 
             });
@@ -115,10 +120,32 @@ public class AddReportActivity extends AppCompatActivity {
 
     private void addCowAndReport() {
         MyDao dao = DataBase.getInstance(this).dao();
-        if (mode.equals(Constants.EDIT_REPORT)) {
+        if (mode.equals(Constants.REPORT_CREATE)) {
+            Report report = new Report();
+            report.visit = one.exportStart();
+            if (two != null) {
+                report.nextVisit = two.exportStart();
+            }
+            report.scoreType = farm.scoreMethod;
+            report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected();
+            ((DrugFragment) adapter.getFragment(3)).setDrugOnReport(report);
+            CheckBoxManager.getCheckBoxManager(farm.scoreMethod).setBooleansOnReport(report);
+            report.description = ((MoreInfoFragment) adapter.getFragment(4)).getMoreInfo();
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                if (cow == null) {
+                    Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
+                    cow = new Cow(cowNumber, false, farmId);
+                    cow.setId((int) dao.insertGetId(cow));
+                }
+                report.cowId = cow.getId();
+                dao.insert(report);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
+                    finish();
+                });
 
+            });
         } else {
-
         }
     }
 
@@ -127,11 +154,11 @@ public class AddReportActivity extends AppCompatActivity {
             case info:
                 state = State.injury;
                 break;
-            case cartieState:
-                state = State.drugs;
-                break;
             case injury:
                 state = State.cartieState;
+                break;
+            case cartieState:
+                state = State.drugs;
                 break;
             case drugs:
                 state = State.moreInfo;
@@ -140,7 +167,7 @@ public class AddReportActivity extends AppCompatActivity {
                 addCowAndReport();
                 return;
         }
-        tabLayout.selectTab(tabLayout.getTabAt(State.getNumber(state)));
+        viewPager.setCurrentItem(State.getNumber(state));
         stepperIndicator.setCurrentStep(State.getNumber(state));
     }
 
@@ -148,20 +175,20 @@ public class AddReportActivity extends AppCompatActivity {
         switch (state) {
             case info:
                 break;
-            case cartieState:
+            case injury:
                 state = State.info;
                 break;
-            case injury:
-                state = State.cartieState;
+            case cartieState:
+                state = State.injury;
                 break;
             case drugs:
-                state = State.injury;
+                state = State.cartieState;
                 break;
             case moreInfo:
                 state = State.drugs;
                 break;
         }
-        tabLayout.selectTab(tabLayout.getTabAt(State.getNumber(state)));
+        viewPager.setCurrentItem(State.getNumber(state));
         stepperIndicator.setCurrentStep(State.getNumber(state));
     }
 
@@ -176,7 +203,7 @@ public class AddReportActivity extends AppCompatActivity {
                     DateContainer container = (DateContainer) Objects.requireNonNull(data.getExtras()).get(DATE_SELECTION_RESULT);
                     assert container != null;
                     one = container;
-                    ((CowInfoFragment) adapter.getItem(0)).setDate(container.toString(this));
+                    ((CowInfoFragment) adapter.getFragment(0)).setDate(container.toString(this));
                 }
                 break;
             }
@@ -186,7 +213,7 @@ public class AddReportActivity extends AppCompatActivity {
                     DateContainer container = (DateContainer) Objects.requireNonNull(data.getExtras()).get(DATE_SELECTION_RESULT);
                     assert container != null;
                     two = container;
-                    ((MoreInfoFragment) adapter.getItem(3)).setDate(container.toString(this));
+                    ((MoreInfoFragment) adapter.getFragment(4)).setDate(container.toString(this));
                 }
                 break;
             }
@@ -197,7 +224,7 @@ public class AddReportActivity extends AppCompatActivity {
                     assert bundle != null;
                     int drugId = bundle.getInt(Constants.DRUG_ID, -1);
                     int drugType = bundle.getInt(Constants.DRUG_TYPE, -1);
-                    ((DrugFragment) adapter.getItem(3)).setDrug(drugType, drugId);
+                    ((DrugFragment) adapter.getFragment(3)).setDrug(drugType, drugId);
                     break;
                 }
             }

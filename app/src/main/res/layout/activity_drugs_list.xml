@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Theme.App.MainConstraint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp">
+
+    <ImageView
+        android:id="@+id/back_icon"
+        style="@style/Theme.App.ImageView.Edit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:padding="10dp"
+        android:rotationY="180"
+        android:src="@drawable/ic_next"
+        app:layout_constraintBottom_toBottomOf="@id/info_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/info_title" />
+
+    <TextView
+        android:id="@+id/info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/anjoman_bold"
+        android:text="@string/drug_to_use"
+        android:textColor="@color/selected_tab_home"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/drug_text_one"
+        style="@style/Theme.App.TextView.Drug"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/login_input_height"
+        android:text="@string/drug_title_1"
+        app:layout_constraintEnd_toStartOf="@id/drug_text_two"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_title" />
+
+    <TextView
+        android:id="@+id/drug_text_two"
+        style="@style/Theme.App.TextView.Drug.End"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/login_input_height"
+        android:text="@string/drug_title_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/drug_text_one"
+        app:layout_constraintTop_toBottomOf="@id/info_title" />
+
+    <TextView
+        android:id="@+id/drug_text_three"
+        style="@style/Theme.App.TextView.Drug"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/login_input_height"
+        android:text="@string/drug_title_3"
+        app:layout_constraintEnd_toStartOf="@id/drug_text_four"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/drug_text_two" />
+
+    <TextView
+        android:id="@+id/drug_text_four"
+        style="@style/Theme.App.TextView.Drug.End"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/login_input_height"
+        android:text="@string/drug_title_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/drug_text_three"
+        app:layout_constraintTop_toBottomOf="@id/drug_text_one" />
+
+    <TextView
+        android:id="@+id/drug_text_five"
+        style="@style/Theme.App.TextView.Drug"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/login_input_height"
+        android:text="@string/drug_title_5"
+        app:layout_constraintEnd_toStartOf="@id/drug_text_six"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/drug_text_three" />
+
+    <TextView
+        android:id="@+id/drug_text_six"
+        style="@style/Theme.App.TextView.Drug.End"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/login_input_height"
+        android:text="@string/drug_title_5"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/drug_text_five"
+        app:layout_constraintTop_toBottomOf="@id/drug_text_three" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

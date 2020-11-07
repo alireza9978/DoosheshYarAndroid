@@ -50,11 +50,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/next_button"
-                android:layout_width="150dp"
+                android:layout_width="140dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="35dp"
+                android:layout_margin="35dp"
                 android:background="@drawable/login_button_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cartie_state_container">
@@ -62,39 +60,50 @@
                 <TextView
                     android:id="@+id/next_text"
                     style="@style/Theme.App.TransBack"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/anjoman_medium"
-                    android:text="@string/create"
+                    android:paddingStart="20dp"
+                    android:text="@string/next"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/next_icon"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/next_icon"
+                    style="@style/Theme.App.ImageView.Edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_front"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/next_text"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/back_button"
-                android:layout_width="150dp"
+                android:layout_width="140dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="35dp"
+                android:layout_margin="35dp"
                 android:background="@drawable/back_button_background"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cartie_state_container">
 
-
                 <TextView
                     android:id="@+id/back_text"
                     style="@style/Theme.App.TransBack"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:fontFamily="@font/anjoman_medium"
                     android:paddingEnd="20dp"
                     android:text="@string/prevois"
@@ -121,6 +130,7 @@
                     app:tint="@color/hit_gray" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

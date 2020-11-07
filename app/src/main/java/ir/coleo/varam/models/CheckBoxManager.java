@@ -1,5 +1,7 @@
 package ir.coleo.varam.models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import ir.coleo.varam.R;
@@ -42,6 +44,13 @@ public class CheckBoxManager {
         cartie.add(new CheckBoxItem(R.string.cartie_two));
         cartie.add(new CheckBoxItem(R.string.cartie_three));
         cartie.add(new CheckBoxItem(R.string.cartie_four));
+        for (int i = 0; i < cartie.size(); i++) {
+            for (int j = 0; j < cartie.size(); j++) {
+                if (i == j)
+                    continue;
+                cartie.get(i).add(cartie.get(j));
+            }
+        }
 
     }
 
@@ -50,6 +59,7 @@ public class CheckBoxManager {
             checkBoxManager = new CheckBoxManager(scoreModel);
         } else {
             if (scoreModel != checkBoxManager.scoreModel) {
+                Log.i("MANAGER", "getCheckBoxManager: ");
                 checkBoxManager = new CheckBoxManager(scoreModel);
             }
         }
