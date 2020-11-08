@@ -88,7 +88,20 @@ public class ReportSummery extends AppCompatActivity {
         MyDao dao = DataBase.getInstance(this).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
             MyReport myReport = dao.myReportWithCow(reportId);
+            ArrayList<String> drugs = new ArrayList<>();
             Report report = myReport.report;
+            if (report.pomadeId != null)
+                drugs.add(dao.getDrug(report.pomadeId).name);
+            if (report.serumId != null)
+                drugs.add(dao.getDrug(report.serumId).name);
+            if (report.AntiInflammatoryId != null)
+                drugs.add(dao.getDrug(report.AntiInflammatoryId).name);
+            if (report.antibioticId != null)
+                drugs.add(dao.getDrug(report.antibioticId).name);
+            if (report.cureId != null)
+                drugs.add(dao.getDrug(report.cureId).name);
+
+
             runOnUiThread(() -> {
                 cowText.setText(getString(R.string.report));
                 cowText.append(" " + myReport.report.id);
@@ -97,7 +110,9 @@ public class ReportSummery extends AppCompatActivity {
 
                 cartieNumber.setText(R.string.area);
                 cartieNumber.append(" " + report.areaNumber);
-
+                if (report.cartieState == null) {
+                    report.cartieState = -1;
+                }
                 switch (report.cartieState) {
                     case 0: {
                         cartieState.setText(R.string.cartie_one);
@@ -119,7 +134,6 @@ public class ReportSummery extends AppCompatActivity {
                         cartieState.setText(R.string.unknown);
                 }
 
-
                 DateContainer container;
                 if (Constants.getDefaultLanguage(this).equals("fa")) {
                     int[] temp = report.visit.convert(this);
@@ -132,10 +146,9 @@ public class ReportSummery extends AppCompatActivity {
                 lastVisit.setText(container.toString(this));
                 description.setText(report.description);
 
-                //todo set drugs
-//                drugAdapter.setItems(report.get);
-//                drugsGrid.setAdapter(drugAdapter);
-//                drugAdapter.notifyDataSetChanged();
+                drugAdapter.setItems(drugs);
+                drugsGrid.setAdapter(drugAdapter);
+                drugAdapter.notifyDataSetChanged();
             });
         });
     }

@@ -1,9 +1,13 @@
 package ir.coleo.varam.adapters;
 
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import java.util.ArrayList;
 
 import ir.coleo.varam.activities.reports.fragments.CartieStateFragment;
 import ir.coleo.varam.activities.reports.fragments.CowInfoFragment;
@@ -20,13 +24,13 @@ public class TabAdapterReport extends FragmentStateAdapter {
 
     private Fragment[] fragments = new Fragment[5];
     private int cowNumber;
-    private int legAreaNumber;
+    private int areaNumber;
     private String date;
     private String nextDate;
     private String description;
-    private boolean rightSide;
     private final boolean edit;
     private boolean scoreMode;
+    private ArrayList<Pair<Integer, Integer>> drugs;
 
     public TabAdapterReport(@NonNull FragmentActivity fragmentActivity, boolean scoreMode) {
         super(fragmentActivity);
@@ -35,15 +39,17 @@ public class TabAdapterReport extends FragmentStateAdapter {
     }
 
     public TabAdapterReport(@NonNull FragmentActivity fragmentActivity, int cowNumber, String date,
-                            String nextDate, int legAreaNumber, boolean rightSide, String description) {
+                            String nextDate, int areaNumber, String description, boolean scoreMode,
+                            ArrayList<Pair<Integer, Integer>> drugs) {
         super(fragmentActivity);
         this.edit = true;
         this.description = description;
         this.cowNumber = cowNumber;
         this.date = date;
+        this.drugs = drugs;
         this.nextDate = nextDate;
-        this.legAreaNumber = legAreaNumber;
-        this.rightSide = rightSide;
+        this.areaNumber = areaNumber;
+        this.scoreMode = scoreMode;
     }
 
     @NonNull
@@ -52,33 +58,35 @@ public class TabAdapterReport extends FragmentStateAdapter {
         if (fragments[position] == null)
             switch (position) {
                 case 4: {
-                    fragments[4] = new MoreInfoFragment();
+                    if (edit) {
+                        fragments[4] = new MoreInfoFragment(nextDate, description);
+                    } else
+                        fragments[4] = new MoreInfoFragment();
                     break;
                 }
                 case 3: {
                     if (edit) {
-//                        fragments[3] = new DrugFragment(nextDate, description);
+                        fragments[3] = new DrugFragment(drugs);
                     } else {
                         fragments[3] = new DrugFragment();
                     }
                     break;
                 }
                 case 2: {
-                    if (edit) {
-//                        fragments[2] = new CartieStateFragment();
-                    } else {
-                        fragments[2] = new CartieStateFragment(scoreMode);
-                    }
+                    fragments[2] = new CartieStateFragment(scoreMode);
                     break;
                 }
                 case 1: {
-                    fragments[1] = new CowInjuryFragment(scoreMode);
+                    if (edit) {
+                        fragments[1] = new CowInjuryFragment(areaNumber, scoreMode);
+                    } else {
+                        fragments[1] = new CowInjuryFragment(scoreMode);
+                    }
                     break;
                 }
                 case 0: {
                     if (edit) {
-                        fragments[0] = new CowInfoFragment();
-//                        ((CowInfoFragment) fragments[0]).setCowInfoFragment(cowNumber, date);
+                        fragments[0] = new CowInfoFragment(cowNumber, date);
                     } else {
                         fragments[0] = new CowInfoFragment();
                     }

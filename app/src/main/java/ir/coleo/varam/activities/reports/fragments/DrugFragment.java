@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.DrugSelectionActivity;
@@ -24,13 +25,19 @@ import ir.coleo.varam.database.utils.AppExecutors;
 
 public class DrugFragment extends Fragment {
 
+    public DrugFragment(ArrayList<Pair<Integer, Integer>> setDrugs) {
+        this.setDrugs = setDrugs;
+    }
+
     public DrugFragment() {
+        setDrugs = new ArrayList<>();
     }
 
     private int[] drugsId = new int[]{R.id.drug_text_one, R.id.drug_text_two,
             R.id.drug_text_three, R.id.drug_text_four, R.id.drug_text_five};
-    ArrayList<Pair<Integer, Integer>> setDrugs = new ArrayList<>();
+    ArrayList<Pair<Integer, Integer>> setDrugs;
     ArrayList<TextView> drugTextList = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,12 +56,12 @@ public class DrugFragment extends Fragment {
             });
         }
 
-        view.findViewById(R.id.next_button).setOnClickListener(v -> {
-            ((AddReportActivity) requireActivity()).next();
-        });
-        view.findViewById(R.id.back_button).setOnClickListener(v -> {
-            ((AddReportActivity) requireActivity()).back();
-        });
+        for (Pair<Integer, Integer> pair : setDrugs) {
+            updateText(pair);
+        }
+
+        view.findViewById(R.id.next_button).setOnClickListener(v -> ((AddReportActivity) requireActivity()).next());
+        view.findViewById(R.id.back_button).setOnClickListener(v -> ((AddReportActivity) requireActivity()).back());
         return view;
     }
 
@@ -75,14 +82,23 @@ public class DrugFragment extends Fragment {
     }
 
     public void setDrug(int type, int id) {
-        for (Pair<Integer, Integer> pair : setDrugs) {
-            if (pair.first == type) {
-                setDrugs.remove(pair);
+        requireActivity().runOnUiThread(() -> {
+            Pair<Integer, Integer> pair = new Pair<>(type, id);
+            int find = -1;
+            for (int i = 0; i < setDrugs.size(); i++) {
+                Pair<Integer, Integer> temp = setDrugs.get(i);
+                if (Objects.equals(temp.first, pair.first)) {
+                    find = i;
+                    break;
+                }
             }
-        }
-        Pair<Integer, Integer> pair = new Pair<>(type, id);
-        setDrugs.add(pair);
-        updateText(pair);
+            if (find != -1) {
+                setDrugs.remove(find);
+                setDrugs.add(pair);
+            }
+            setDrugs.add(pair);
+            updateText(pair);
+        });
     }
 
     public void setDrugOnReport(Report report) {

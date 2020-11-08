@@ -23,6 +23,15 @@ public class MoreInfoFragment extends Fragment {
     private ConstraintLayout date_container;
     private TextView date_text;
     private String date;
+    private String description;
+
+    public MoreInfoFragment(String date, String description) {
+        this.date = date;
+        this.description = description;
+    }
+
+    public MoreInfoFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +58,17 @@ public class MoreInfoFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        this.description = moreInfo.getText().toString();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        if (description != null) {
+            moreInfo.setText(description);
+        }
         if (date != null) {
             if (this.date.length() == 0) {
                 date_container.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.login_input_background));
@@ -62,7 +80,8 @@ public class MoreInfoFragment extends Fragment {
     }
 
     public String getMoreInfo() {
-        return moreInfo.getText().toString();
+        this.description = moreInfo.getText().toString();
+        return description;
     }
 
     public void setDate(String date) {

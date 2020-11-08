@@ -27,6 +27,11 @@ public class CowInjuryFragment extends Fragment {
             R.drawable.ic_cartie_three, R.drawable.ic_cartie_four};
     private boolean scoreMode;
 
+    public CowInjuryFragment(int selected, boolean scoreMode) {
+        this.selected = selected;
+        this.scoreMode = scoreMode;
+    }
+
     public CowInjuryFragment(boolean scoreMode) {
         this.scoreMode = scoreMode;
     }

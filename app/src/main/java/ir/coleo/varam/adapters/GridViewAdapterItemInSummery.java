@@ -13,15 +13,15 @@ import java.util.List;
 
 public class GridViewAdapterItemInSummery extends BaseAdapter {
 
-    private List<Integer> items;
+    private List<String> items;
     private Context context;
 
-    public GridViewAdapterItemInSummery(Context context, List<Integer> farms) {
+    public GridViewAdapterItemInSummery(Context context, List<String> farms) {
         this.items = farms;
         this.context = context;
     }
 
-    public void setItems(List<Integer> items) {
+    public void setItems(List<String> items) {
         this.items = items;
     }
 
@@ -43,7 +43,7 @@ public class GridViewAdapterItemInSummery extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         Holder holder;
-        Integer item = items.get(i);
+        String item = items.get(i);
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.report_item, viewGroup, false);
             holder = new Holder();
