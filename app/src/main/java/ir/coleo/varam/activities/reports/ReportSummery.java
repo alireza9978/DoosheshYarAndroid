@@ -94,8 +94,8 @@ public class ReportSummery extends AppCompatActivity {
                 drugs.add(dao.getDrug(report.pomadeId).name);
             if (report.serumId != null)
                 drugs.add(dao.getDrug(report.serumId).name);
-            if (report.AntiInflammatoryId != null)
-                drugs.add(dao.getDrug(report.AntiInflammatoryId).name);
+            if (report.antiInflammatoryId != null)
+                drugs.add(dao.getDrug(report.antiInflammatoryId).name);
             if (report.antibioticId != null)
                 drugs.add(dao.getDrug(report.antibioticId).name);
             if (report.cureId != null)

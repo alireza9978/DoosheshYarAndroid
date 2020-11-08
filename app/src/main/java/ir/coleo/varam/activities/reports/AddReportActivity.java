@@ -118,8 +118,8 @@ public class AddReportActivity extends AppCompatActivity {
                     if (report.cureId != null) {
                         list.add(new Pair<>(3, report.cureId));
                     }
-                    if (report.AntiInflammatoryId != null) {
-                        list.add(new Pair<>(4, report.AntiInflammatoryId));
+                    if (report.antiInflammatoryId != null) {
+                        list.add(new Pair<>(4, report.antiInflammatoryId));
                     }
                     adapter = new TabAdapterReport(this, cow.getNumber(),
                             one.toString(this), nextDate, report.areaNumber,

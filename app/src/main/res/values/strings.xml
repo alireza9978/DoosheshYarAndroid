@@ -236,6 +236,9 @@
     <string name="pit_count">تعداد چاله شیردوشی</string>
     <string name="report_added">report added</string>
     <string name="report_updated">report updated</string>
-
+    <string name="score_type">نحوه اسکوردهی</string>
+    <string name="score">امتیاز</string>
+    <string name="four_level_text">چهار سطحی</string>
+    <string name="three_level_text">سه سطحی</string>
 
 </resources>

@@ -121,7 +121,7 @@ public class DrugFragment extends Fragment {
                     break;
                 }
                 case 4: {
-                    report.AntiInflammatoryId = pair.second;
+                    report.antiInflammatoryId = pair.second;
                     break;
                 }
             }

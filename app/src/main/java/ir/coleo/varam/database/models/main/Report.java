@@ -41,7 +41,7 @@ public class Report {
     @ColumnInfo(name = "serum_id")
     public Integer serumId;
     @ColumnInfo(name = "anti_inflammatory_id")
-    public Integer AntiInflammatoryId;
+    public Integer antiInflammatoryId;
     @ColumnInfo(name = "antibiotic_id")
     public Integer antibioticId;
     @ColumnInfo(name = "cure_id")

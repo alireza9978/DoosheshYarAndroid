@@ -199,6 +199,8 @@
     <string name="score_method">نحوه اسکوردهی ورم‌پستان</string>
     <string name="four_level">چهار سطحی (۱، ۲، ۳، ۴)</string>
     <string name="three_level">سه سطحی (۱، ۲.۱، ۲.۲، ۳)</string>
+    <string name="four_level_text">چهار سطحی</string>
+    <string name="three_level_text">سه سطحی</string>
     <string name="information_about_milk">اطلاعات مربوط به شیردوشی</string>
     <string name="enter_pomade_name">نام پماد را وارد کنید</string>
     <string name="pomade_list">لیست پماد‌‌ها</string>
@@ -237,6 +239,8 @@
     <string name="pit_count">تعداد چاله شیردوشی</string>
     <string name="report_added">گزارش ثبت شد</string>
     <string name="report_updated">گزارش برروز شد</string>
+    <string name="score_type">نحوه اسکوردهی</string>
+    <string name="score">امتیاز</string>
 
 
 </resources>

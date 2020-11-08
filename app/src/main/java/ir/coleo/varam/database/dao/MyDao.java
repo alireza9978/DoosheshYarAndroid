@@ -180,6 +180,9 @@ public interface MyDao {
     @Query("SELECT * FROM Report WHERE Report.id == :id")
     Report getReport(Integer id);
 
+    @Query("SELECT * FROM Drug")
+    List<Drug> getAllDrug();
+
     @Query("SELECT * FROM Drug WHERE Drug.type == :type")
     List<Drug> getAllDrug(Integer type);
 
