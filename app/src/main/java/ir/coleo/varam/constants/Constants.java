@@ -57,6 +57,18 @@ public class Constants {
     private static String TOKEN_STORAGE = "someWhereInDarknessTOK";
     private static String TOKEN_DATA = "someWhereInDarkness12TOKTOK";
 
+    public static boolean checkPermissionRead(Context context) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
+            return true;
+        }
+        return false;
+    }
+
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

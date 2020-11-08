@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.App.MainConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/Theme.App.MainConstraint"
     tools:context=".activities.MainActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -22,8 +22,8 @@
                 android:layout_height="0dp"
                 android:overScrollMode="never"
                 app:layout_constraintBottom_toTopOf="@id/tab_layout_id"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.tabs.TabLayout

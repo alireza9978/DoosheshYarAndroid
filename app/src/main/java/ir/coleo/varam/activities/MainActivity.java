@@ -30,7 +30,6 @@ import org.jetbrains.annotations.NotNull;
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.menu.ContactActivity;
 import ir.coleo.varam.activities.menu.DrugsListActivity;
-import ir.coleo.varam.activities.menu.ProfileActivity;
 import ir.coleo.varam.adapters.TabAdapterHome;
 import ir.coleo.varam.constants.Constants;
 
@@ -125,11 +124,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.about_us:
-            case R.id.user_guid:
-                return true;
-            case R.id.username: {
-                Intent intent = new Intent(this, ProfileActivity.class);
+            case R.id.about_us: {
+                Intent intent = new Intent(this, ContactActivity.class);
                 startActivity(intent);
                 return true;
             }

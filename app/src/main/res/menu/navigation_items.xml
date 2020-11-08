@@ -2,14 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
         <item
-            android:id="@+id/username"
-            android:icon="@drawable/ic_profile"
-            android:title="@string/username" />
-        <item
-            android:id="@+id/user_guid"
-            android:icon="@drawable/ic_info"
-            android:title="@string/help" />
-        <item
             android:id="@+id/drugs"
             android:icon="@drawable/ic_add"
             android:title="@string/drug_to_use" />

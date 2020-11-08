@@ -1,11 +1,11 @@
 package ir.coleo.varam.database.models.main;
 
 import androidx.room.ColumnInfo;
-import androidx.room.PrimaryKey;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity
-public class Drug {
+public class Drug implements Comparable<Drug> {
 
     @PrimaryKey
     public Integer id;
@@ -21,4 +21,11 @@ public class Drug {
     @ColumnInfo(name = "name")
     public String name;
 
+    @Override
+    public int compareTo(Drug drug) {
+        if (drug.type.equals(this.type) && drug.name.equals(this.name)) {
+            return 0;
+        }
+        return -1;
+    }
 }

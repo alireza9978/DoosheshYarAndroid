@@ -15,7 +15,6 @@
         android:paddingTop="8dp"
         android:paddingEnd="50dp"
         android:paddingBottom="8dp"
-        android:text="پماد خوب"
         android:textColor="@color/report_price_add_color"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
