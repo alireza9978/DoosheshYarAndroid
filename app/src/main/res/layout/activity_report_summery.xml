@@ -83,7 +83,7 @@
 
             <TextView
                 android:id="@+id/cartie_state_text"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/anjoman_medium"
                 android:gravity="start|center_vertical"
@@ -92,7 +92,6 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cartie_state_green_circle"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,7 +132,7 @@
 
             <TextView
                 android:id="@+id/cartie_number_text"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/anjoman_medium"
                 android:gravity="start|center_vertical"
@@ -142,7 +141,6 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cartie_number_green_circle"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -243,7 +241,7 @@
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/anjoman_regular"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"

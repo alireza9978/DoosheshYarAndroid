@@ -67,7 +67,7 @@ public class AddDrugActivity extends AppCompatActivity {
         EditText drugName = findViewById(R.id.enter_drug_name);
         findViewById(R.id.create_drug).setOnClickListener(view -> {
             if (drugName.getText().toString().isEmpty()) {
-                Toast.makeText(this, "field is empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.check_fields, Toast.LENGTH_SHORT).show();
                 return;
             }
             AppExecutors.getInstance().diskIO().execute(() -> {
@@ -77,7 +77,7 @@ public class AddDrugActivity extends AppCompatActivity {
                 dao.insert(drug);
                 runOnUiThread(() -> {
                     drugName.setText("");
-                    Toast.makeText(this, "added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.added, Toast.LENGTH_SHORT).show();
                     updateList(type);
                 });
             });

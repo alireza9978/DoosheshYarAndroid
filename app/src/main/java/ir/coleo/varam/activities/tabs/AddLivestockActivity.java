@@ -45,6 +45,16 @@ public class AddLivestockActivity extends AppCompatActivity {
             makeCheckBoxList(R.id.three_check, R.id.three_text, R.id.four_check, R.id.four_text, false);
             if (mode.equals(Constants.FARM_CREATE)) {
                 submit.setOnClickListener((View v) -> {
+                    if (birthCount.getText().toString().isEmpty() ||
+                            showerCount.getText().toString().isEmpty() ||
+                            showerPitCount.getText().toString().isEmpty() ||
+                            showerUnitCount.getText().toString().isEmpty() ||
+                            dryMethod == null || scoreMethod == null
+                    ) {
+                        Toast.makeText(this, R.string.check_fields, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     Farm farm = new Farm();
                     farm.favorite = false;
                     farm.name = farmTitle.getText().toString();
@@ -55,10 +65,11 @@ public class AddLivestockActivity extends AppCompatActivity {
                     farm.showerUnitCount = Integer.parseInt(showerUnitCount.getText().toString());
                     farm.dryMethod = dryMethod;
                     farm.scoreMethod = scoreMethod;
-                    if (farm.name.isEmpty()) {
+                    if (farm.name.isEmpty() || farm.bedType.isEmpty()) {
                         Toast.makeText(this, R.string.check_fields, Toast.LENGTH_SHORT).show();
                         return;
                     }
+
 
                     MyDao dao = DataBase.getInstance(this).dao();
                     AppExecutors.getInstance().diskIO().execute(() -> {
@@ -83,17 +94,18 @@ public class AddLivestockActivity extends AppCompatActivity {
                         showerUnitCount.setText("" + farm.showerUnitCount);
                         this.dryMethod = farm.dryMethod;
                         this.scoreMethod = farm.scoreMethod;
-                        if (this.dryMethod){
-                            CheckBox checkBox = findViewById(R.id.one_check);
-                            checkBox.setChecked(true);
-                        }else{
-                            CheckBox checkBox = findViewById(R.id.two_check);
-                            checkBox.setChecked(true);
-                        }
-                        if (this.scoreMethod){
+                        if (this.dryMethod != null)
+                            if (this.dryMethod) {
+                                CheckBox checkBox = findViewById(R.id.one_check);
+                                checkBox.setChecked(true);
+                            } else {
+                                CheckBox checkBox = findViewById(R.id.two_check);
+                                checkBox.setChecked(true);
+                            }
+                        if (this.scoreMethod) {
                             CheckBox checkBox = findViewById(R.id.three_check);
                             checkBox.setChecked(true);
-                        }else{
+                        } else {
                             CheckBox checkBox = findViewById(R.id.four_check);
                             checkBox.setChecked(true);
                         }

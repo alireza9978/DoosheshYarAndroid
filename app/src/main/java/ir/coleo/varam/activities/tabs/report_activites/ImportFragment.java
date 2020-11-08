@@ -141,9 +141,21 @@ public class ImportFragment extends Fragment {
                 farm.showerCount = 0;
                 farm.bedType = "";
                 farm.dryMethod = null;
-                farm.scoreMethod = null;
                 farm.showerUnitCount = 0;
                 farm.showerPitCount = 0;
+                {
+                    Iterator<Row> rows = dataTypeSheet.iterator();
+                    rows.next();
+                    String scoreType = rows.next().getCell(5).getStringCellValue();
+                    if (scoreType.equals(getString(R.string.three_level_text))) {
+                        farm.scoreMethod = true;
+                    } else if (scoreType.equals(getString(R.string.four_level_text))) {
+                        farm.scoreMethod = false;
+                    } else {
+                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score type error", Toast.LENGTH_SHORT).show());
+                        return;
+                    }
+                }
                 farm.id = (int) dao.insertGetId(farm);
 
                 HashSet<Integer> cowNumbers = new HashSet<>();

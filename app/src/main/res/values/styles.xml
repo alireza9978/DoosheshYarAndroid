@@ -135,6 +135,14 @@
         <item name="android:background">@drawable/login_input_selector</item>
     </style>
 
+    <style name="Theme.App.TextView.Drug.List.End" parent="Theme.App.TextView.Drug.End">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Theme.App.TextView.Drug.List" parent="Theme.App.TextView.Drug">
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="Theme.App.TextView.Drug" parent="Theme.App">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/hit_gray</item>

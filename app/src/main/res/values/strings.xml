@@ -222,7 +222,7 @@
     <string name="score_zero">سردلمه</string>
     <string name="score_one">خونی</string>
     <string name="score_two">کور</string>
-    <string name="drug_to_use">دارو‌های مورد استفاده</string>
+    <string name="drug_to_use">drugs to use</string>
     <string name="cartie_number">کارتیه درگیر</string>
     <string name="cartie_state">وضعیت کارتیه</string>
     <string name="unknown">unknown</string>
@@ -240,5 +240,6 @@
     <string name="score">امتیاز</string>
     <string name="four_level_text">چهار سطحی</string>
     <string name="three_level_text">سه سطحی</string>
+    <string name="added">افزوده شد</string>
 
 </resources>
