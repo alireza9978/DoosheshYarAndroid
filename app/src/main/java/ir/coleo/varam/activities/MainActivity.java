@@ -134,17 +134,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 return true;
             }
-            case R.id.lang: {
-                if (getDefaultLanguage(this).equals("fa")) {
-                    Constants.setLanguage(this, "en");
-                } else {
-                    Constants.setLanguage(this, "fa");
-                }
-                Intent intent = new Intent(this, SplashActivity.class);
-                startActivity(intent);
-                finish();
-                return true;
-            }
+//            case R.id.lang: {
+//                if (getDefaultLanguage(this).equals("fa")) {
+//                    Constants.setLanguage(this, "en");
+//                } else {
+//                    Constants.setLanguage(this, "fa");
+//                }
+//                Intent intent = new Intent(this, SplashActivity.class);
+//                startActivity(intent);
+//                finish();
+//                return true;
+//            }
         }
         return false;
     }

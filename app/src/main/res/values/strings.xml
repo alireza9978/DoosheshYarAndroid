@@ -199,7 +199,11 @@
     <string name="four_level">four level</string>
     <string name="three_level">three level</string>
     <string name="information_about_milk">information about milk</string>
-    <string name="enter_pomade_name">نام پماد را وارد کنید</string>
+    <string name="enter_drug_1_name">نام پماد را وارد کنید</string>
+    <string name="enter_drug_2_name">نام آنتی‌بیوتیک را وارد کنید</string>
+    <string name="enter_drug_3_name">نام سرم را وارد کنید</string>
+    <string name="enter_drug_4_name">نام درمان‌ حمایتی را وارد کنید</string>
+    <string name="enter_drug_5_name">نام ضد التهاب را وارد کنید</string>
     <string name="pomade_list">لیست پماد‌‌ها</string>
     <string name="create_drug">افزودن</string>
     <string name="drug_title_1">پماد</string>

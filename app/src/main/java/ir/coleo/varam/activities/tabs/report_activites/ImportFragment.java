@@ -36,6 +36,7 @@ import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.MyDate;
+import saman.zamani.persiandate.PersianDate;
 
 import static ir.coleo.varam.R.string.more_info;
 import static ir.coleo.varam.R.string.next_visit;
@@ -49,7 +50,6 @@ public class ImportFragment extends Fragment {
 
         ConstraintLayout button = view.findViewById(R.id.import_button);
         button.setOnClickListener(view1 -> showFileChooser());
-
 
         return view;
     }
@@ -185,9 +185,18 @@ public class ImportFragment extends Fragment {
                     Report report = new Report();
                     report.cowId = (int) row.getCell(0).getNumericCellValue();
                     cowNumbers.add(report.cowId);
-                    report.visit = new MyDate((int) row.getCell(1).getNumericCellValue(),
-                            (int) row.getCell(2).getNumericCellValue(),
-                            (int) row.getCell(3).getNumericCellValue());
+                    if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
+                        PersianDate pdate = new PersianDate();
+                        int[] dateArray = pdate.toGregorian((int) row.getCell(3).getNumericCellValue(),
+                                (int) row.getCell(2).getNumericCellValue(),
+                                (int) row.getCell(1).getNumericCellValue());
+                        report.visit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
+                    } else {
+                        report.visit = new MyDate((int) row.getCell(1).getNumericCellValue(),
+                                (int) row.getCell(2).getNumericCellValue(),
+                                (int) row.getCell(3).getNumericCellValue());
+                    }
+
                     report.areaNumber = (int) row.getCell(4).getNumericCellValue();
 
                     String scoreType = row.getCell(5).getStringCellValue();
@@ -292,9 +301,17 @@ public class ImportFragment extends Fragment {
                     Cell nextVisitCell = row.getCell(16);
                     if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
                         String[] date = nextVisitCell.getStringCellValue().split("/");
-                        report.nextVisit = new MyDate(Integer.parseInt(date[2]),
-                                Integer.parseInt(date[1]),
-                                Integer.parseInt(date[0]));
+                        if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
+                            PersianDate pdate = new PersianDate();
+                            int[] dateArray = pdate.toGregorian(Integer.parseInt(date[0]),
+                                    Integer.parseInt(date[1]),
+                                    Integer.parseInt(date[2]));
+                            report.nextVisit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
+                        } else {
+                            report.nextVisit = new MyDate(Integer.parseInt(date[2]),
+                                    Integer.parseInt(date[1]),
+                                    Integer.parseInt(date[0]));
+                        }
                     }
                     Cell moreInfo = row.getCell(17);
                     if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {

@@ -83,7 +83,7 @@ public class DrugSelectionActivity extends AppCompatActivity {
                 if (drugs.isEmpty()) {
                     String message;
                     if (Constants.getDefaultLanguage(this).equals("fa")) {
-                        message = "هیچ " + finalDrugName + "‌ای" + "پیدا نشد";
+                        message = "هیچ " + finalDrugName + " ‌ای" + " پیدا نشد";
                     } else {
                         message = "no " + finalDrugName + " available";
                     }

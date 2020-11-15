@@ -9,10 +9,10 @@
             android:id="@+id/about_us"
             android:icon="@drawable/ic_user_guide"
             android:title="@string/about_us" />
-        <item
-            android:id="@+id/lang"
-            android:icon="@drawable/ic_language"
-            android:title="@string/change_language" />
+<!--        <item-->
+<!--            android:id="@+id/lang"-->
+<!--            android:icon="@drawable/ic_language"-->
+<!--            android:title="@string/change_language" />-->
 
     </group>
 

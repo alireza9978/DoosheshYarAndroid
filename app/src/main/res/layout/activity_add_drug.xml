@@ -52,7 +52,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/login_input_height"
                 android:layout_margin="30dp"
-                android:hint="@string/enter_pomade_name"
                 android:inputType="text"
                 android:lines="1"
                 android:singleLine="true"

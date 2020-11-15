@@ -30,6 +30,7 @@ public class AddDrugActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_drug);
+        EditText drugName = findViewById(R.id.enter_drug_name);
 
         int type = Objects.requireNonNull(getIntent().getExtras()).getInt(Constants.DRUG_TYPE, -1);
         if (type == -1) {
@@ -39,22 +40,27 @@ public class AddDrugActivity extends AppCompatActivity {
             switch (type) {
                 case 0: {
                     textView.setText(R.string.drug_title_1);
+                    drugName.setHint(R.string.enter_drug_1_name);
                     break;
                 }
                 case 1: {
                     textView.setText(R.string.drug_title_2);
+                    drugName.setHint(R.string.enter_drug_2_name);
                     break;
                 }
                 case 2: {
                     textView.setText(R.string.drug_title_3);
+                    drugName.setHint(R.string.enter_drug_3_name);
                     break;
                 }
                 case 3: {
                     textView.setText(R.string.drug_title_4);
+                    drugName.setHint(R.string.enter_drug_4_name);
                     break;
                 }
                 case 4: {
                     textView.setText(R.string.drug_title_5);
+                    drugName.setHint(R.string.enter_drug_5_name);
                     break;
                 }
 
@@ -62,9 +68,7 @@ public class AddDrugActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.close_image).setOnClickListener(view -> finish());
-
         dao = DataBase.getInstance(this).dao();
-        EditText drugName = findViewById(R.id.enter_drug_name);
         findViewById(R.id.create_drug).setOnClickListener(view -> {
             if (drugName.getText().toString().isEmpty()) {
                 Toast.makeText(this, R.string.check_fields, Toast.LENGTH_SHORT).show();

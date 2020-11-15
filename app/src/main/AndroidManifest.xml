@@ -12,11 +12,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.App">
-        <activity android:name=".activities.menu.DrugsListActivity"></activity>
-        <activity android:name=".activities.menu.AddDrugActivity" />
-        <activity android:name=".activities.login_fragments.ForgetPasswordActivity" />
-        <activity android:name=".activities.reports.ReportSummery" />
+        android:theme="@style/Theme.App"
+        android:windowSoftInputMode="stateAlwaysHidden">
+        <activity
+            android:name=".activities.menu.DrugsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.menu.AddDrugActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.login_fragments.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.reports.ReportSummery"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -28,28 +37,55 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".activities.reports.MoreInfoActivity" />
-        <activity android:name=".activities.FarmSelectionActivity" />
-        <activity android:name=".activities.DateSelectionActivity" />
-        <activity android:name=".activities.menu.ContactActivity" />
-        <activity android:name=".activities.MainActivity" />
+        <activity
+            android:name=".activities.reports.MoreInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.FarmSelectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DateSelectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.menu.ContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.reports.AddReportActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activities.FarmProfileActivity" />
-        <activity android:name=".activities.CowProfileActivity" />
-        <activity android:name=".activities.tabs.AddLivestockActivity" />
-        <activity android:name=".activities.menu.ProfileActivity" />
-        <activity android:name=".activities.tabs.home_activites.VisitActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.SplashActivity">
+        <activity
+            android:name=".activities.FarmProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CowProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.tabs.AddLivestockActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.menu.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.tabs.home_activites.VisitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.DrugSelectionActivity" />
+        <activity
+            android:name=".activities.DrugSelectionActivity"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".service.AlarmReceiver">
             <intent-filter>

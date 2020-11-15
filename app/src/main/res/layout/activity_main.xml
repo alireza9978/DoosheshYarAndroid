@@ -32,7 +32,6 @@
                 android:layout_height="50dp"
                 android:animateLayoutChanges="false"
                 android:background="@android:color/transparent"
-                android:layoutDirection="ltr"
                 android:overScrollMode="never"
                 app:barrierMargin="24dp"
                 app:flow_verticalGap="15dp"
