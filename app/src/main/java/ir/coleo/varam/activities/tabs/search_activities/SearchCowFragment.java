@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.DateSelectionActivity;
 import ir.coleo.varam.activities.FarmSelectionActivity;
+import ir.coleo.varam.activities.MainActivity;
 import ir.coleo.varam.adapters.RecyclerViewAdapterSearchCow;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
@@ -73,7 +74,7 @@ public class SearchCowFragment extends Fragment {
         search.setOnClickListener((v) -> {
             MyDao dao = DataBase.getInstance(requireContext()).dao();
             AppExecutors.getInstance().diskIO().execute(() -> {
-                requireActivity().runOnUiThread(() -> Constants.hideKeyboard(requireActivity()));
+                requireActivity().runOnUiThread(() -> ((MainActivity) requireActivity()).hideKeyboard());
                 String cowIdString = cowNumber.getText().toString();
                 if (cowIdString.isEmpty()) {
                     requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "input error", Toast.LENGTH_SHORT).show());

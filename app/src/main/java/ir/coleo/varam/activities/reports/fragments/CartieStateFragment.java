@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
-import ir.coleo.varam.adapters.GridViewAdapterReasonAddReport;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.models.CheckBoxManager;
 
@@ -31,12 +30,12 @@ public class CartieStateFragment extends Fragment {
         Constants.setImageFront(requireContext(), view.findViewById(R.id.next_icon));
 
         GridView gridView = view.findViewById(R.id.cartie_state_container);
-        GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(requireContext(),
-                CheckBoxManager.getCheckBoxManager(scoreMode).getCartie());
-        gridView.setAdapter(adapter);
+//        GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(requireContext(),
+//                CheckBoxManager.getCheckBoxManager(scoreMode).getCartie());
+//        gridView.setAdapter(adapter);
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
-            if (!CheckBoxManager.getCheckBoxManager(scoreMode).cartieSelected()) {
+            if (CheckBoxManager.getCheckBoxManager(scoreMode).cartieSelected()) {
                 Toast.makeText(requireContext(), "select at least one item", Toast.LENGTH_SHORT).show();
                 return;
             }

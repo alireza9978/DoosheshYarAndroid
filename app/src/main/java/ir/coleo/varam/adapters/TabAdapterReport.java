@@ -9,7 +9,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 
-import ir.coleo.varam.activities.reports.fragments.CartieStateFragment;
 import ir.coleo.varam.activities.reports.fragments.CowInfoFragment;
 import ir.coleo.varam.activities.reports.fragments.CowInjuryFragment;
 import ir.coleo.varam.activities.reports.fragments.DrugFragment;
@@ -57,23 +56,19 @@ public class TabAdapterReport extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (fragments[position] == null)
             switch (position) {
-                case 4: {
-                    if (edit) {
-                        fragments[4] = new MoreInfoFragment(nextDate, description);
-                    } else
-                        fragments[4] = new MoreInfoFragment();
-                    break;
-                }
                 case 3: {
                     if (edit) {
-                        fragments[3] = new DrugFragment(drugs);
-                    } else {
-                        fragments[3] = new DrugFragment();
-                    }
+                        fragments[3] = new MoreInfoFragment(nextDate, description);
+                    } else
+                        fragments[3] = new MoreInfoFragment();
                     break;
                 }
                 case 2: {
-                    fragments[2] = new CartieStateFragment(scoreMode);
+                    if (edit) {
+                        fragments[2] = new DrugFragment(drugs);
+                    } else {
+                        fragments[2] = new DrugFragment();
+                    }
                     break;
                 }
                 case 1: {
@@ -105,6 +100,6 @@ public class TabAdapterReport extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 4;
     }
 }

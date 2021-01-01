@@ -123,7 +123,7 @@
     <string name="toast_select_one">یکی از موارد را انتخاب کنید</string>
     <string name="toast_select_only_one">انتخاب دو مورد امکان‌پذیر نیست</string>
     <string name="ok">تایید</string>
-    <string name="other_info">سایر اعلاعات</string>
+    <string name="other_info">سایر اطلاعات</string>
     <string name="cow_reports">گزارشات دام</string>
     <string name="last_visit">آخرین بازدید</string>
     <string name="add_new_cow">افزودن گاو جدید</string>
@@ -246,6 +246,11 @@
     <string name="score_type">نحوه اسکوردهی</string>
     <string name="score">امتیاز</string>
     <string name="added">افزوده شد</string>
+    <string name="finger_number">۱~۸</string>
+    <string name="add_new_injury">ثبت جراحت جدید برای این دام</string>
+    <string name="empty_error">ورودی خالی است</string>
+    <string name="cartie_error">وضعیت کارتیه را انتخاب کنید</string>
+    <string name="score_error">امتیاز را انتخاب کنید</string>
 
 
 </resources>

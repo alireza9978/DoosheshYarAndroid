@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Theme.App.MainConstraint"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.reports.AddReportActivity">
@@ -69,7 +70,7 @@
         app:stpi_indicatorColor="@color/calender_blue"
         app:stpi_lineDoneColor="@color/calender_blue"
         app:stpi_lineMargin="0dp"
-        app:stpi_stepCount="5" />
+        app:stpi_stepCount="4" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager_id"

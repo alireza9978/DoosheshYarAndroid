@@ -2,19 +2,17 @@ package ir.coleo.varam.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.util.Log;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import ir.coleo.varam.R;
-import ir.coleo.varam.activities.reports.AddReportActivity;
+import ir.coleo.varam.adapters.GridViewAdapterReasonAddReport;
+import ir.coleo.varam.models.CheckBoxManager;
 
 
 /**
@@ -22,12 +20,45 @@ import ir.coleo.varam.activities.reports.AddReportActivity;
  */
 public class SelectFingerDialog extends Dialog {
 
-    String TAG = "ErrorDialog";
 
-    public SelectFingerDialog(@NonNull final Context context) {
+    public SelectFingerDialog(@NonNull final Context context, boolean editMode, boolean scoreMode) {
         super(context);
         setContentView(R.layout.select_finger_dialog_layout);
 
+        GridView gridView = findViewById(R.id.grid);
+        CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMode);
+        GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(context, manager.getScore());
+        gridView.setAdapter(adapter);
+
+        Button newInput = findViewById(R.id.new_input);
+        if (editMode) {
+            newInput.setVisibility(View.GONE);
+        } else {
+            newInput.setOnClickListener(view -> {
+                if (manager.cartieSelected()){
+                    Toast.makeText(context,R.string.cartie_error,Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (manager.scoreSelected()){
+                    Toast.makeText(context,R.string.score_error,Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+            });
+        }
+
+        Button ok = findViewById(R.id.ok);
+        ok.setOnClickListener(v -> {
+            if (manager.cartieSelected()){
+                Toast.makeText(context,R.string.cartie_error,Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (manager.scoreSelected()){
+                Toast.makeText(context,R.string.score_error,Toast.LENGTH_LONG).show();
+                return;
+            }
+            dismiss();
+        });
     }
 
     public SelectFingerDialog(@NonNull Context context, int themeResId) {
@@ -41,7 +72,6 @@ public class SelectFingerDialog extends Dialog {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart: ");
     }
 
     @Override

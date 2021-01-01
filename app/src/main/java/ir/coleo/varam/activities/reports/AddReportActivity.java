@@ -132,10 +132,7 @@ public class AddReportActivity extends AppCompatActivity {
                     stepperIndicator = findViewById(R.id.state_indicator);
                     ImageView exit = findViewById(R.id.close_image);
                     exit.setOnClickListener(view -> finish());
-
                 });
-
-
             });
 
         } else if (mode.equals(Constants.REPORT_CREATE)) {
@@ -173,13 +170,12 @@ public class AddReportActivity extends AppCompatActivity {
                         ((CowInfoFragment) adapter.getFragment(0)).setCowNumber(cow.getNumber());
 
                 });
-
             });
-
-
         }
+    }
 
-
+    public void hideKeyboard() {
+        Constants.hideKeyboard(this, findViewById(R.id.root).getWindowToken());
     }
 
     private void addCowAndReport() {
@@ -192,15 +188,16 @@ public class AddReportActivity extends AppCompatActivity {
         }
         report.scoreType = farm.scoreMethod;
         report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected();
-        ((DrugFragment) adapter.getFragment(3)).setDrugOnReport(report);
+        ((DrugFragment) adapter.getFragment(2)).setDrugOnReport(report);
         CheckBoxManager.getCheckBoxManager(farm.scoreMethod).setBooleansOnReport(report);
-        report.description = ((MoreInfoFragment) adapter.getFragment(4)).getMoreInfo();
+        report.description = ((MoreInfoFragment) adapter.getFragment(3)).getMoreInfo();
 
         if (mode.equals(Constants.REPORT_CREATE)) {
 
             AppExecutors.getInstance().diskIO().execute(() -> {
+                Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
+                cow = dao.getCow(cowNumber, farmId);
                 if (cow == null) {
-                    Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
                     cow = new Cow(cowNumber, false, farmId);
                     cow.setId((int) dao.insertGetId(cow));
                 }
@@ -210,7 +207,6 @@ public class AddReportActivity extends AppCompatActivity {
                     Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
                     finish();
                 });
-
             });
         } else {
             AppExecutors.getInstance().diskIO().execute(() -> {
@@ -231,9 +227,6 @@ public class AddReportActivity extends AppCompatActivity {
                 state = State.injury;
                 break;
             case injury:
-                state = State.cartieState;
-                break;
-            case cartieState:
                 state = State.drugs;
                 break;
             case drugs:
@@ -254,11 +247,8 @@ public class AddReportActivity extends AppCompatActivity {
             case injury:
                 state = State.info;
                 break;
-            case cartieState:
-                state = State.injury;
-                break;
             case drugs:
-                state = State.cartieState;
+                state = State.injury;
                 break;
             case moreInfo:
                 state = State.drugs;
@@ -289,7 +279,7 @@ public class AddReportActivity extends AppCompatActivity {
                     DateContainer container = (DateContainer) Objects.requireNonNull(data.getExtras()).get(DATE_SELECTION_RESULT);
                     assert container != null;
                     two = container;
-                    ((MoreInfoFragment) adapter.getFragment(4)).setDate(container.toString(this));
+                    ((MoreInfoFragment) adapter.getFragment(3)).setDate(container.toString(this));
                 }
                 break;
             }
@@ -300,7 +290,7 @@ public class AddReportActivity extends AppCompatActivity {
                     assert bundle != null;
                     int drugId = bundle.getInt(Constants.DRUG_ID, -1);
                     int drugType = bundle.getInt(Constants.DRUG_TYPE, -1);
-                    ((DrugFragment) adapter.getFragment(3)).setDrug(drugType, drugId);
+                    ((DrugFragment) adapter.getFragment(2)).setDrug(drugType, drugId);
                     break;
                 }
             }

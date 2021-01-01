@@ -245,5 +245,10 @@
     <string name="four_level_text">چهار سطحی</string>
     <string name="three_level_text">سه سطحی</string>
     <string name="added">افزوده شد</string>
+    <string name="finger_number">1~8</string>
+    <string name="add_new_injury">add new injury for this cow</string>
+    <string name="empty_error">enter value</string>
+    <string name="cartie_error">select one of cartie states</string>
+    <string name="score_error">select score</string>
 
 </resources>

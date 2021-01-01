@@ -4,18 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import java.util.Objects;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
-import ir.coleo.varam.adapters.GridViewAdapterReasonAddReport;
 import ir.coleo.varam.constants.Constants;
-import ir.coleo.varam.models.CheckBoxManager;
-import ir.coleo.varam.ui_element.ExpandableHeightGridView;
+import ir.coleo.varam.dialog.SelectFingerDialog;
 
 
 public class CowInjuryFragment extends Fragment {
@@ -26,8 +26,10 @@ public class CowInjuryFragment extends Fragment {
     private int[] cartieImage = new int[]{R.drawable.ic_cartie_one, R.drawable.ic_cartie_two,
             R.drawable.ic_cartie_three, R.drawable.ic_cartie_four};
     private boolean scoreMode;
+    private boolean edit = false;
 
     public CowInjuryFragment(int selected, boolean scoreMode) {
+        this.edit = true;
         this.selected = selected;
         this.scoreMode = scoreMode;
     }
@@ -49,6 +51,7 @@ public class CowInjuryFragment extends Fragment {
                 if (selected == -1) {
                     selected = finalI;
                     mainImage.setImageResource(cartieImage[finalI]);
+                    getFingerNumber();
                 } else if (selected == finalI) {
                     selected = -1;
                     mainImage.setImageResource(R.drawable.ic_area_zero);
@@ -58,11 +61,6 @@ public class CowInjuryFragment extends Fragment {
             });
         }
 
-        GridView gridView = view.findViewById(R.id.score_container);
-        GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(requireContext(),
-                CheckBoxManager.getCheckBoxManager(scoreMode).getScore());
-        gridView.setAdapter(adapter);
-
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
             ((AddReportActivity) requireActivity()).next();
         });
@@ -70,6 +68,23 @@ public class CowInjuryFragment extends Fragment {
             ((AddReportActivity) requireActivity()).back();
         });
         return view;
+    }
+
+    public void getFingerNumber() {
+        SelectFingerDialog dialog = new SelectFingerDialog(requireContext(), edit, scoreMode);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setOnDismissListener(dialogInterface -> {
+            if (selected == -1) {
+                reset();
+            }
+            ((AddReportActivity) requireActivity()).hideKeyboard();
+        });
+        dialog.show();
+    }
+
+    public void reset() {
+        selected = -1;
+        mainImage.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_area_zero));
     }
 
     private void errorOnlyOne() {

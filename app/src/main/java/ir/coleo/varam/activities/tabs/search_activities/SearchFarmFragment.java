@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.DateSelectionActivity;
+import ir.coleo.varam.activities.MainActivity;
 import ir.coleo.varam.adapters.RecyclerViewAdapterSearchFarm;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
@@ -61,7 +62,7 @@ public class SearchFarmFragment extends Fragment {
         search.setOnClickListener((v) -> {
             MyDao dao = DataBase.getInstance(requireContext()).dao();
             AppExecutors.getInstance().diskIO().execute(() -> {
-                requireActivity().runOnUiThread(() -> Constants.hideKeyboard(requireActivity()));
+                requireActivity().runOnUiThread(() -> ((MainActivity) requireActivity()).hideKeyboard());
                 if (date == null) {
                     requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "input error", Toast.LENGTH_SHORT).show());
                     return;

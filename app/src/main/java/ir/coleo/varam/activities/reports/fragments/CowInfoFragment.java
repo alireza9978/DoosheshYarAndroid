@@ -82,7 +82,7 @@ public class CowInfoFragment extends Fragment {
                 Toast.makeText(requireContext(), R.string.toast_enter_date, Toast.LENGTH_SHORT).show();
                 return;
             }
-            Constants.hideKeyboard(requireActivity());
+            ((AddReportActivity) requireActivity()).hideKeyboard();
             ((AddReportActivity) requireActivity()).next();
         });
         return view;

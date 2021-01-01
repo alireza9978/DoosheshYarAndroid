@@ -1,56 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
-    android:layout_height="250dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="360dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/dialoge_back"
-    android:paddingTop="12dp">
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
 
-    <TextView
-        android:id="@+id/select_finger_title"
+    <ir.coleo.varam.ui_element.ExpandableHeightGridView
+        android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:fontFamily="@font/anjoman_medium"
-        android:text="@string/enter_finger_number"
-        android:textAlignment="center"
-        android:textColor="@color/report_gray"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/input"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/my_edit_text_height"
-        android:layout_margin="8dp"
-        android:fontFamily="@font/anjoman_medium"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
         android:gravity="center"
-        android:hint="1~8"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorHint="@color/report_gray"
+        android:numColumns="2"
+        android:overScrollMode="never"
+        android:verticalSpacing="4dp"
+        app:layout_constraintBottom_toTopOf="@id/new_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/select_finger_title" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/reason_list_item" />
+
+    <Button
+        android:id="@+id/new_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:visibility="gone"
+        android:fontFamily="@font/anjoman_semi_bold"
+        android:text="@string/add_new_injury"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/ok"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="64dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/anjoman_semi_bold"
         android:text="@string/ok"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input"
-
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

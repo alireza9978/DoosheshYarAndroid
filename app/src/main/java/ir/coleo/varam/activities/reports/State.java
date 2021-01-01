@@ -2,7 +2,7 @@ package ir.coleo.varam.activities.reports;
 
 enum State {
 
-    info, injury, cartieState, drugs, moreInfo;
+    info, injury, drugs, moreInfo;
 
     public static int getNumber(State state) {
         switch (state) {
@@ -10,12 +10,10 @@ enum State {
                 return 0;
             case injury:
                 return 1;
-            case cartieState:
-                return 2;
             case drugs:
-                return 3;
+                return 2;
             case moreInfo:
-                return 4;
+                return 3;
         }
         return 0;
     }

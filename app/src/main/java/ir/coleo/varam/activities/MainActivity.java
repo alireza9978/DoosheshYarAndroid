@@ -38,7 +38,6 @@ import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_FACTOR;
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_INJURY;
 import static ir.coleo.varam.constants.Constants.FARM_SELECTION_REPORT_FACTOR;
 import static ir.coleo.varam.constants.Constants.FARM_SELECTION_REPORT_INJURY;
-import static ir.coleo.varam.constants.Constants.getDefaultLanguage;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -63,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNewTitle.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.hit_gray)), 0, mNewTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         mi.setTitle(mNewTitle);
+    }
+
+    public void hideKeyboard() {
+        Constants.hideKeyboard(this, findViewById(R.id.root).getWindowToken());
     }
 
     @Override
