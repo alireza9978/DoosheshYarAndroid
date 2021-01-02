@@ -35,7 +35,7 @@ public class CartieStateFragment extends Fragment {
 //        gridView.setAdapter(adapter);
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
-            if (CheckBoxManager.getCheckBoxManager(scoreMode).cartieSelected()) {
+            if (!CheckBoxManager.getCheckBoxManager(scoreMode).cartieSelected()) {
                 Toast.makeText(requireContext(), "select at least one item", Toast.LENGTH_SHORT).show();
                 return;
             }

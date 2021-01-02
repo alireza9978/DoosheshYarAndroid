@@ -1,8 +1,11 @@
 package ir.coleo.varam.activities.tabs.report_activites;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeSet;
 
 import ir.coleo.varam.R;
@@ -74,6 +81,7 @@ public class ImportFragment extends Fragment {
                 return;
             }
             Uri fileUri = intent.getData();
+            String fileName = null;
             InputStream stream;
             try {
                 if (fileUri == null) {
@@ -81,16 +89,40 @@ public class ImportFragment extends Fragment {
                     return;
                 }
                 stream = requireContext().getContentResolver().openInputStream(fileUri);
+
+                if (Objects.equals(fileUri.getScheme(), "file")) {
+                    fileName = fileUri.getLastPathSegment();
+                } else {
+                    try (Cursor cursor = requireContext().getContentResolver().query(fileUri, new String[]{
+                            MediaStore.Images.ImageColumns.DISPLAY_NAME
+                    }, null, null, null)) {
+                        if (cursor != null && cursor.moveToFirst()) {
+                            fileName = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DISPLAY_NAME));
+                            Log.d("IMPORTS", "name is " + fileName);
+                        }
+                    }
+                }
+
             } catch (FileNotFoundException e) {
                 Toast.makeText(requireContext(), "file not found", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            POIFSFileSystem myFileSystem = new POIFSFileSystem(stream);
-
-            // Create a workbook using the File System
-            HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
-            Sheet dataTypeSheet = myWorkBook.getSheetAt(0);
+            assert stream != null;
+            assert fileName != null;
+            Sheet dataTypeSheet = null;
+            String farmName = "imported";
+            if (fileName.endsWith(".xls")) {
+                POIFSFileSystem myFileSystem = new POIFSFileSystem(stream);
+                HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+                dataTypeSheet = myWorkBook.getSheetAt(0);
+                farmName = fileName.substring(0, fileName.length() - 4);
+            } else if (fileName.endsWith(".xlsx")) {
+                OPCPackage opcPackage = OPCPackage.open(stream);
+                XSSFWorkbook myWorkBook = new XSSFWorkbook(opcPackage);
+                dataTypeSheet = myWorkBook.getSheetAt(0);
+                farmName = fileName.substring(0, fileName.length() - 5);
+            }
 
             Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
                     R.string.injury_area, R.string.score_type, R.string.score, R.string.score_zero,
@@ -106,6 +138,7 @@ public class ImportFragment extends Fragment {
 
             //read headers
             int count = 0;
+            assert dataTypeSheet != null;
             for (Cell cell : dataTypeSheet.getRow(0)) {
                 if (!cell.getStringCellValue().equals(getString(headers[count]))) {
                     Toast.makeText(requireContext(), "expected : " + getString(headers[count])
@@ -133,9 +166,11 @@ public class ImportFragment extends Fragment {
             }
 
             MyDao dao = DataBase.getInstance(requireContext()).dao();
+            Sheet finalDataTypeSheet = dataTypeSheet;
+            String finalFarmName = farmName;
             AppExecutors.getInstance().diskIO().execute(() -> {
                 Farm farm = new Farm();
-                farm.name = "imported farm";
+                farm.name = finalFarmName;
                 farm.favorite = false;
                 farm.birthCount = 0;
                 farm.showerCount = 0;
@@ -144,7 +179,7 @@ public class ImportFragment extends Fragment {
                 farm.showerUnitCount = 0;
                 farm.showerPitCount = 0;
                 {
-                    Iterator<Row> rows = dataTypeSheet.iterator();
+                    Iterator<Row> rows = finalDataTypeSheet.iterator();
                     rows.next();
                     String scoreType = rows.next().getCell(5).getStringCellValue();
                     if (scoreType.equals(getString(R.string.three_level_text))) {
@@ -178,7 +213,7 @@ public class ImportFragment extends Fragment {
                 drugList = dao.getAllDrug();
 
 
-                Iterator<Row> rows = dataTypeSheet.iterator();
+                Iterator<Row> rows = finalDataTypeSheet.iterator();
                 rows.next();
                 while (rows.hasNext()) {
                     Row row = rows.next();
@@ -339,7 +374,7 @@ public class ImportFragment extends Fragment {
                 requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "imported", Toast.LENGTH_LONG).show());
             });
 
-        } catch (IOException e) {
+        } catch (IOException | InvalidFormatException e) {
             Toast.makeText(requireContext(), "reading error", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }

@@ -35,26 +35,26 @@ public class SelectFingerDialog extends Dialog {
             newInput.setVisibility(View.GONE);
         } else {
             newInput.setOnClickListener(view -> {
-                if (manager.cartieSelected()){
-                    Toast.makeText(context,R.string.cartie_error,Toast.LENGTH_LONG).show();
+                if (!manager.cartieSelected()) {
+                    Toast.makeText(context, R.string.cartie_error, Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (manager.scoreSelected()){
-                    Toast.makeText(context,R.string.score_error,Toast.LENGTH_LONG).show();
+                if (!manager.scoreSelected()) {
+                    Toast.makeText(context, R.string.score_error, Toast.LENGTH_LONG).show();
                     return;
                 }
-
+                dismiss();
             });
         }
 
         Button ok = findViewById(R.id.ok);
         ok.setOnClickListener(v -> {
-            if (manager.cartieSelected()){
-                Toast.makeText(context,R.string.cartie_error,Toast.LENGTH_LONG).show();
+            if (!manager.cartieSelected()) {
+                Toast.makeText(context, R.string.cartie_error, Toast.LENGTH_LONG).show();
                 return;
             }
-            if (manager.scoreSelected()){
-                Toast.makeText(context,R.string.score_error,Toast.LENGTH_LONG).show();
+            if (!manager.scoreSelected()) {
+                Toast.makeText(context, R.string.score_error, Toast.LENGTH_LONG).show();
                 return;
             }
             dismiss();

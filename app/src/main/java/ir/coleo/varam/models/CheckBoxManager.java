@@ -71,20 +71,20 @@ public class CheckBoxManager {
         for (int i = 7; i < score.size(); i++) {
             CheckBoxItem item = score.get(i);
             if (item.isCheck() && item.isActive()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public boolean scoreSelected() {
-        for (int i = 0; i < score.size() - 7; i++) {
+        for (int i = 0; i < 4; i++) {
             CheckBoxItem item = score.get(i);
             if (item.isCheck() && item.isActive()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void setBooleansFromReport(Report report) {
@@ -122,4 +122,5 @@ public class CheckBoxManager {
     public ArrayList<CheckBoxItem> getScore() {
         return score;
     }
+
 }

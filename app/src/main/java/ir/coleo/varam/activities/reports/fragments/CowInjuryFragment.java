@@ -16,6 +16,7 @@ import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.dialog.SelectFingerDialog;
+import ir.coleo.varam.models.CheckBoxManager;
 
 
 public class CowInjuryFragment extends Fragment {
@@ -62,6 +63,10 @@ public class CowInjuryFragment extends Fragment {
         }
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
+            if (selected == -1) {
+                Toast.makeText(requireContext(), R.string.empty_error, Toast.LENGTH_SHORT).show();
+                return;
+            }
             ((AddReportActivity) requireActivity()).next();
         });
         view.findViewById(R.id.back_button).setOnClickListener(v -> {
@@ -74,7 +79,8 @@ public class CowInjuryFragment extends Fragment {
         SelectFingerDialog dialog = new SelectFingerDialog(requireContext(), edit, scoreMode);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setOnDismissListener(dialogInterface -> {
-            if (selected == -1) {
+            CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMode);
+            if (!manager.scoreSelected() || !manager.cartieSelected()) {
                 reset();
             }
             ((AddReportActivity) requireActivity()).hideKeyboard();

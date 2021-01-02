@@ -122,7 +122,7 @@ public class AddReportActivity extends AppCompatActivity {
                         list.add(new Pair<>(4, report.antiInflammatoryId));
                     }
                     adapter = new TabAdapterReport(this, cow.getNumber(),
-                            one.toString(this), nextDate, report.areaNumber,
+                            one.toString(this), nextDate, report.areaNumber - 1,
                             report.description, farm.scoreMethod, list);
 
                     viewPager.setOffscreenPageLimit(2);
@@ -187,7 +187,7 @@ public class AddReportActivity extends AppCompatActivity {
             report.nextVisit = two.exportStart();
         }
         report.scoreType = farm.scoreMethod;
-        report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected();
+        report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected() + 1;
         ((DrugFragment) adapter.getFragment(2)).setDrugOnReport(report);
         CheckBoxManager.getCheckBoxManager(farm.scoreMethod).setBooleansOnReport(report);
         report.description = ((MoreInfoFragment) adapter.getFragment(3)).getMoreInfo();
@@ -196,10 +196,12 @@ public class AddReportActivity extends AppCompatActivity {
 
             AppExecutors.getInstance().diskIO().execute(() -> {
                 Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
-                cow = dao.getCow(cowNumber, farmId);
                 if (cow == null) {
-                    cow = new Cow(cowNumber, false, farmId);
-                    cow.setId((int) dao.insertGetId(cow));
+                    cow = dao.getCow(cowNumber, farmId);
+                    if (cow == null) {
+                        cow = new Cow(cowNumber, false, farmId);
+                        cow.setId((int) dao.insertGetId(cow));
+                    }
                 }
                 report.cowId = cow.getId();
                 dao.insert(report);
