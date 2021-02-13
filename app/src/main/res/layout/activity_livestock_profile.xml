@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="205dp"
         android:background="@color/white_ice"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -51,7 +51,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        android:paddingTop="75dp"
+        android:paddingTop="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_bar">
 
@@ -128,8 +128,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/info_card"
         android:layout_width="match_parent"
-        android:layout_height="145dp"
-        android:layout_margin="@dimen/margin_livestrock"
+        android:layout_height="195dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/info_constraint_back"
         android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="@id/top_bar"
@@ -186,7 +188,7 @@
                 style="@style/Theme.App.Profile.Value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/bed_type"
                 app:layout_constraintEnd_toEndOf="@id/count"
                 app:layout_constraintStart_toStartOf="@id/count"
                 app:layout_constraintTop_toBottomOf="@id/count" />
@@ -207,7 +209,7 @@
                 style="@style/Theme.App.Profile.Value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/bed_type"
                 app:layout_constraintEnd_toEndOf="@id/system_title"
                 app:layout_constraintStart_toStartOf="@id/system_title"
                 app:layout_constraintTop_toBottomOf="@id/system_title" />
@@ -221,17 +223,61 @@
                 app:layout_constraintBottom_toTopOf="@id/next_visit_value"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/system_title"
-                app:layout_constraintTop_toTopOf="@id/system_title" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/next_visit_value"
                 style="@style/Theme.App.Profile.Value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/bed_type"
                 app:layout_constraintEnd_toEndOf="@id/next_visit_title_top"
                 app:layout_constraintStart_toStartOf="@id/next_visit_title_top"
                 app:layout_constraintTop_toBottomOf="@id/next_visit_title_top" />
+
+            <TextView
+                android:id="@+id/bed_type"
+                style="@style/Theme.App.Profile.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bed_type"
+                app:layout_constraintBottom_toTopOf="@id/bed_type_value"
+                app:layout_constraintEnd_toStartOf="@id/score_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/count_value" />
+
+            <TextView
+                android:id="@+id/bed_type_value"
+                style="@style/Theme.App.Profile.Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/bed_type"
+                app:layout_constraintEnd_toStartOf="@id/score_type"
+                app:layout_constraintStart_toStartOf="@id/bed_type"
+                app:layout_constraintTop_toBottomOf="@id/bed_type" />
+
+            <TextView
+                android:id="@+id/score_type"
+                style="@style/Theme.App.Profile.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/score_method"
+                app:layout_constraintBottom_toTopOf="@id/score_type_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/bed_type"
+                app:layout_constraintTop_toBottomOf="@id/count_value" />
+
+            <TextView
+                android:id="@+id/score_type_value"
+                style="@style/Theme.App.Profile.Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/score_type"
+                app:layout_constraintStart_toStartOf="@id/score_type"
+                app:layout_constraintTop_toBottomOf="@id/score_type" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

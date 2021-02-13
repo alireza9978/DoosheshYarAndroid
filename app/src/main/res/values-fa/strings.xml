@@ -39,7 +39,7 @@
     <string name="control_system">سیستم نگهداری</string>
     <string name="enter_farm_name">نام گاوداری را وارد کنید</string>
     <string name="birth_count">تعداد مولد</string>
-    <string name="check_fields">ورودی را بررسی کنید</string>
+    <string name="check_fields">تمامی اطلاعات را وارد کنید</string>
     <string name="not_found">نتیجه‌ای یافت نشد!</string>
     <string name="cows_list">لیست دام‌ها</string>
     <string name="submit">اعمال</string>
@@ -51,6 +51,10 @@
     <string name="enter_cow_number_report">شماره گاو را وارد کنید</string>
     <string name="enter_date_report">تاریخ بازدید را وارد کنید</string>
     <string name="information">اطلاعات اولیه</string>
+
+    <string name="enter_farm_search">انتخاب دامداری</string>
+    <string name="enter_cow_number_search">شماره دام</string>
+    <string name="enter_date_search">بازه‌ی زمانی جستجو</string>
 
     <string name="empty"> </string>
     <string name="count">تعداد</string>

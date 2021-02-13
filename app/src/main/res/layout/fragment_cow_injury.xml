@@ -157,7 +157,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/next_button"
-                android:layout_width="140dp"
+                android:layout_width="125dp"
                 android:layout_height="50dp"
                 android:layout_margin="35dp"
                 android:background="@drawable/login_button_background"
@@ -198,7 +198,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/back_button"
-                android:layout_width="140dp"
+                android:layout_width="125dp"
                 android:layout_height="50dp"
                 android:layout_margin="35dp"
                 android:background="@drawable/back_button_background"
@@ -208,7 +208,6 @@
                 <TextView
                     android:id="@+id/back_text"
                     style="@style/Theme.App.TransBack"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/anjoman_medium"

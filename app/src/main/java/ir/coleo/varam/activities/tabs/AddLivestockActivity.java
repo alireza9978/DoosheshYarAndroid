@@ -40,6 +40,9 @@ public class AddLivestockActivity extends AppCompatActivity {
             EditText bedType = findViewById(R.id.bed_count);
             EditText showerUnitCount = findViewById(R.id.shower_unit_count);
             EditText showerPitCount = findViewById(R.id.shower_pit_count);
+
+            farmTitle.requestFocus();
+
             Button submit = findViewById(R.id.submit);
             makeCheckBoxList(R.id.one_check, R.id.one_text, R.id.two_check, R.id.two_text, true);
             makeCheckBoxList(R.id.three_check, R.id.three_text, R.id.four_check, R.id.four_text, false);
@@ -74,6 +77,7 @@ public class AddLivestockActivity extends AppCompatActivity {
                     MyDao dao = DataBase.getInstance(this).dao();
                     AppExecutors.getInstance().diskIO().execute(() -> {
                         dao.insert(farm);
+                        hideKeyboard();
                         finish();
                     });
                 });
@@ -125,6 +129,7 @@ public class AddLivestockActivity extends AppCompatActivity {
                             farm.scoreMethod = scoreMethod;
                             AppExecutors.getInstance().diskIO().execute(() -> {
                                 dao.update(farm);
+                                hideKeyboard();
                                 runOnUiThread(this::finish);
                             });
                         });
@@ -137,6 +142,9 @@ public class AddLivestockActivity extends AppCompatActivity {
 
     }
 
+    public void hideKeyboard() {
+        Constants.hideKeyboard(this, findViewById(R.id.root).getWindowToken());
+    }
 
     private void makeCheckBoxList(Integer one, Integer oneText, Integer two, Integer twoText, boolean up) {
         CheckBox checkBox_0 = findViewById(one);

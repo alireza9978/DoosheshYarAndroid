@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     style="@style/Theme.App.MainConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -64,23 +65,37 @@
                 android:hint="@string/enter_farm_name"
                 android:inputType="text"
                 android:lines="1"
+                android:nextFocusLeft="@id/birth_count"
+                android:nextFocusRight="@id/birth_count"
+                android:nextFocusUp="@id/birth_count"
+                android:nextFocusDown="@id/birth_count"
+                android:nextFocusForward="@id/birth_count"
                 android:singleLine="true"
+                android:imeOptions="actionNext"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <EditText
-                android:id="@+id/bed_count"
+                android:id="@+id/birth_count"
                 style="@style/Theme.App.EditText.Login.Input.LowPadding"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/login_input_height"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="30dp"
-                android:hint="@string/bed_type"
-                android:inputType="text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/shower_count"
+                android:hint="@string/birth_count"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:nextFocusLeft="@id/shower_count"
+                android:nextFocusRight="@id/shower_count"
+                android:nextFocusUp="@id/shower_count"
+                android:nextFocusDown="@id/shower_count"
+                android:nextFocusForward="@id/shower_count"
+                app:layout_constraintEnd_toStartOf="@id/shower_count"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/farm_title_input" />
+
 
             <EditText
                 android:id="@+id/shower_count"
@@ -92,22 +107,35 @@
                 android:layout_marginEnd="5dp"
                 android:hint="@string/showerCount"
                 android:inputType="number"
+                android:imeOptions="actionNext"
+                android:nextFocusLeft="@id/bed_count"
+                android:nextFocusRight="@id/bed_count"
+                android:nextFocusUp="@id/bed_count"
+                android:nextFocusDown="@id/bed_count"
+                android:nextFocusForward="@id/bed_count"
                 app:layout_constraintEnd_toStartOf="@id/bed_count"
                 app:layout_constraintStart_toEndOf="@id/birth_count"
                 app:layout_constraintTop_toBottomOf="@id/farm_title_input" />
 
             <EditText
-                android:id="@+id/birth_count"
+                android:id="@+id/bed_count"
                 style="@style/Theme.App.EditText.Login.Input.LowPadding"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/login_input_height"
-                android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
-                android:hint="@string/birth_count"
-                android:inputType="number"
-                app:layout_constraintEnd_toStartOf="@id/shower_count"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/bed_type"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@id/shower_pit_count"
+                android:nextFocusLeft="@id/shower_pit_count"
+                android:nextFocusRight="@id/shower_pit_count"
+                android:nextFocusUp="@id/shower_pit_count"
+                android:nextFocusDown="@id/shower_pit_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/shower_count"
                 app:layout_constraintTop_toBottomOf="@id/farm_title_input" />
+
 
             <TextView
                 android:id="@+id/dry_method_text"
@@ -280,19 +308,6 @@
                 app:layout_constraintTop_toBottomOf="@id/item_four_container" />
 
             <EditText
-                android:id="@+id/shower_unit_count"
-                style="@style/Theme.App.EditText.Login.Input.LowPadding"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/login_input_height"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="30dp"
-                android:hint="@string/shower_unit_count"
-                android:inputType="number"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/shower_pit_count"
-                app:layout_constraintTop_toBottomOf="@id/milk_info" />
-
-            <EditText
                 android:id="@+id/shower_pit_count"
                 style="@style/Theme.App.EditText.Login.Input.LowPadding"
                 android:layout_width="0dp"
@@ -301,9 +316,29 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
                 android:hint="@string/pit_count"
+                android:imeOptions="actionNext"
                 android:inputType="number"
+                android:nextFocusForward="@id/shower_unit_count"
+                android:nextFocusLeft="@id/shower_unit_count"
+                android:nextFocusRight="@id/shower_unit_count"
+                android:nextFocusUp="@id/shower_unit_count"
+                android:nextFocusDown="@id/shower_unit_count"
                 app:layout_constraintEnd_toStartOf="@id/shower_unit_count"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/milk_info" />
+
+            <EditText
+                android:id="@+id/shower_unit_count"
+                style="@style/Theme.App.EditText.Login.Input.LowPadding"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:hint="@string/shower_unit_count"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/shower_pit_count"
                 app:layout_constraintTop_toBottomOf="@id/milk_info" />
 
             <Button

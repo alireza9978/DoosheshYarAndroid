@@ -81,22 +81,22 @@ public class TabAdapterHome extends FragmentStateAdapter {
         String title = null;
         Drawable drawable = null;
         switch (position) {
-            case 0: {
+            case 4: {
                 title = context.getResources().getString(R.string.marked);
                 drawable = ContextCompat.getDrawable(context, R.drawable.ic_bookmark);
                 break;
             }
-            case 1: {
+            case 3: {
                 title = context.getResources().getString(R.string.report);
                 drawable = ContextCompat.getDrawable(context, R.drawable.ic_report);
                 break;
             }
-            case 3: {
+            case 1: {
                 title = context.getResources().getString(R.string.search);
                 drawable = ContextCompat.getDrawable(context, R.drawable.ic_search);
                 break;
             }
-            case 4: {
+            case 0: {
                 title = context.getResources().getString(R.string.home);
                 drawable = ContextCompat.getDrawable(context, R.drawable.ic_home);
             }
@@ -118,22 +118,22 @@ public class TabAdapterHome extends FragmentStateAdapter {
         String title = null;
         Drawable drawable = null;
         switch (position) {
-            case 0: {
+            case 4: {
                 title = context.getResources().getString(R.string.marked);
                 drawable = ContextCompat.getDrawable(context, R.drawable.ic_bookmark_fill);
                 break;
             }
-            case 1: {
+            case 3: {
                 title = context.getResources().getString(R.string.report);
                 drawable = ContextCompat.getDrawable(context, R.drawable.ic_report_fill);
                 break;
             }
-            case 3: {
+            case 1: {
                 title = context.getResources().getString(R.string.search);
                 drawable = ContextCompat.getDrawable(context, R.drawable.ic_search_fill);
                 break;
             }
-            case 4: {
+            case 0: {
                 title = context.getResources().getString(R.string.home);
                 drawable = ContextCompat.getDrawable(context, R.drawable.ic_home_fill);
             }
@@ -152,24 +152,24 @@ public class TabAdapterHome extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (fragments[position] == null)
             switch (position) {
-                case 0: {
-                    fragments[0] = new MarkedFragment();
+                case 4: {
+                    fragments[4] = new MarkedFragment();
                     break;
                 }
-                case 1: {
-                    fragments[1] = new ReportsFragment();
+                case 3: {
+                    fragments[3] = new ReportsFragment();
                     break;
                 }
                 case 2: {
                     fragments[2] = new BlankFragment();
                     break;
                 }
-                case 3: {
-                    fragments[3] = new SearchFragment();
+                case 1: {
+                    fragments[1] = new SearchFragment();
                     break;
                 }
-                case 4: {
-                    fragments[4] = new HomeFragment();
+                case 0: {
+                    fragments[0] = new HomeFragment();
                     break;
                 }
             }

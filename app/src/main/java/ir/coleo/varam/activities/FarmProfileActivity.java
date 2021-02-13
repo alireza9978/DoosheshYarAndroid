@@ -58,6 +58,8 @@ public class FarmProfileActivity extends AppCompatActivity {
     private TextView title;
     private TextView visitTitle;
     private TextView showerCount;
+    private TextView bedType;
+    private TextView scoreMethod;
     private TextView birthCount;
     private TextView nextVisit;
     private ImageView bookmark;
@@ -77,6 +79,8 @@ public class FarmProfileActivity extends AppCompatActivity {
         menu = findViewById(R.id.dropdown_menu);
         menuLayout = findViewById(R.id.menu_layout);
         outside = findViewById(R.id.outside);
+        bedType = findViewById(R.id.bed_type_value);
+        scoreMethod = findViewById(R.id.score_type_value);
         title = findViewById(R.id.title_livestrok);
         visitTitle = findViewById(R.id.next_visit_title);
         birthCount = findViewById(R.id.count_value);
@@ -158,6 +162,12 @@ public class FarmProfileActivity extends AppCompatActivity {
             FarmWithNextVisit farmWithNextVisit = dao.getFarmWithNextVisit(id);
             Farm farm = dao.getFarm(id);
             runOnUiThread(() -> {
+                bedType.setText(farm.bedType);
+                if (farm.scoreMethod) {
+                    scoreMethod.setText(getString(R.string.three_level_text));
+                } else {
+                    scoreMethod.setText(getString(R.string.four_level_text));
+                }
                 bookmark.setOnClickListener(view -> {
                     farm.favorite = !farm.favorite;
                     if (farm.favorite) {

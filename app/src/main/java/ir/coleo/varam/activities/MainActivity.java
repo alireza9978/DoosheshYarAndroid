@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         applyFontToMenu(navigationView.getMenu(), this);
         navigationView.setNavigationItemSelectedListener(this);
-        tabLayout.selectTab(tabLayout.getTabAt(4));
+        tabLayout.selectTab(tabLayout.getTabAt(0));
     }
 
     @Override
@@ -98,18 +98,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case Constants.DATE_SELECTION_SEARCH_COW:
             case Constants.FARM_SELECTION_SEARCH_COW:
             case Constants.DATE_SELECTION_SEARCH_FARM:
-                adapter.getFragment(3).onActivityResult(requestCode, resultCode, data);
+                adapter.getFragment(1).onActivityResult(requestCode, resultCode, data);
                 break;
 
             case DATE_SELECTION_REPORT_INJURY:
             case FARM_SELECTION_REPORT_INJURY:
             case DATE_SELECTION_REPORT_FACTOR:
             case FARM_SELECTION_REPORT_FACTOR: {
-                adapter.getFragment(1).onActivityResult(requestCode, resultCode, data);
+                adapter.getFragment(3).onActivityResult(requestCode, resultCode, data);
                 break;
             }
             default: {
-                adapter.getFragment(1).onActivityResult(CHOOSE_FILE_REQUEST_CODE, resultCode, data);
+                adapter.getFragment(3).onActivityResult(CHOOSE_FILE_REQUEST_CODE, resultCode, data);
                 break;
             }
         }
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         if (tabLayout.getSelectedTabPosition() == 2) {
-            tabLayout.selectTab(tabLayout.getTabAt(4));
+            tabLayout.selectTab(tabLayout.getTabAt(0));
         }
 
     }

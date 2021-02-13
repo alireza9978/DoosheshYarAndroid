@@ -53,6 +53,10 @@
     <string name="information">information</string>
     <string name="add_report">add report</string>
 
+    <string name="enter_cow_number_search">Search by cow</string>
+    <string name="enter_farm_search">Search by farm</string>
+    <string name="enter_date_search">Search by date</string>
+
     <string name="empty"> </string>
     <string name="count">count</string>
     <string name="price">price</string>
