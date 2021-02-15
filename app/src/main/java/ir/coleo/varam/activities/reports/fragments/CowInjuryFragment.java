@@ -76,7 +76,7 @@ public class CowInjuryFragment extends Fragment {
     }
 
     public void getFingerNumber() {
-        SelectFingerDialog dialog = new SelectFingerDialog(requireContext(), edit, scoreMode);
+        SelectFingerDialog dialog = new SelectFingerDialog(this, edit, scoreMode);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setOnDismissListener(dialogInterface -> {
             CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMode);

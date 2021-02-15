@@ -89,14 +89,14 @@ public class CheckBoxManager {
 
     public void setBooleansFromReport(Report report) {
         reset(report.scoreType);
-        score.get(report.score).setCheck(true);
-        score.get(report.score).disableOther();
-        score.get(4).setCheck(report.sardalme);
-        score.get(5).setCheck(report.khoni);
-        score.get(6).setCheck(report.kor);
+        checkBoxManager.score.get(report.score).setCheck(true);
+        checkBoxManager.score.get(report.score).disableOther();
+        checkBoxManager.score.get(4).setCheck(report.sardalme);
+        checkBoxManager.score.get(5).setCheck(report.khoni);
+        checkBoxManager.score.get(6).setCheck(report.kor);
 
-        score.get(7 + report.cartieState).setCheck(true);
-        score.get(7 + report.cartieState).disableOther();
+        checkBoxManager.score.get(7 + report.cartieState).setCheck(true);
+        checkBoxManager.score.get(7 + report.cartieState).disableOther();
     }
 
     public void setBooleansOnReport(Report report) {

@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import ir.coleo.varam.R;
+import ir.coleo.varam.activities.reports.AddReportActivity;
+import ir.coleo.varam.activities.reports.fragments.CowInjuryFragment;
 import ir.coleo.varam.adapters.GridViewAdapterReasonAddReport;
 import ir.coleo.varam.models.CheckBoxManager;
 
@@ -21,8 +23,9 @@ import ir.coleo.varam.models.CheckBoxManager;
 public class SelectFingerDialog extends Dialog {
 
 
-    public SelectFingerDialog(@NonNull final Context context, boolean editMode, boolean scoreMode) {
-        super(context);
+    public SelectFingerDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, boolean scoreMode) {
+        super(fragment.requireContext());
+        Context context = fragment.requireContext();
         setContentView(R.layout.select_finger_dialog_layout);
 
         GridView gridView = findViewById(R.id.grid);
@@ -43,6 +46,7 @@ public class SelectFingerDialog extends Dialog {
                     Toast.makeText(context, R.string.score_error, Toast.LENGTH_LONG).show();
                     return;
                 }
+                ((AddReportActivity) fragment.requireActivity()).addCowAndReportFast();
                 dismiss();
             });
         }

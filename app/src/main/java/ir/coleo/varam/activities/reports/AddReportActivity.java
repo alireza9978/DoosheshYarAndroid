@@ -2,6 +2,7 @@ package ir.coleo.varam.activities.reports;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -49,7 +50,6 @@ public class AddReportActivity extends AppCompatActivity {
     private String mode;
     private Integer reportId;
     private ViewPager2 viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,7 +193,6 @@ public class AddReportActivity extends AppCompatActivity {
         report.description = ((MoreInfoFragment) adapter.getFragment(3)).getMoreInfo();
 
         if (mode.equals(Constants.REPORT_CREATE)) {
-
             AppExecutors.getInstance().diskIO().execute(() -> {
                 Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
                 if (cow == null) {
@@ -211,6 +210,7 @@ public class AddReportActivity extends AppCompatActivity {
                 });
             });
         } else {
+            Log.i("TAG", "addCowAndReport: " + report.toString());
             AppExecutors.getInstance().diskIO().execute(() -> {
                 report.cowId = cow.getId();
                 report.id = reportId;
@@ -218,6 +218,37 @@ public class AddReportActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     Toast.makeText(this, getString(R.string.report_updated), Toast.LENGTH_SHORT).show();
                     finish();
+                });
+            });
+        }
+    }
+
+    public void addCowAndReportFast() {
+        MyDao dao = DataBase.getInstance(this).dao();
+
+        Report report = new Report();
+        report.visit = one.exportStart();
+        if (two != null) {
+            report.nextVisit = two.exportStart();
+        }
+        report.scoreType = farm.scoreMethod;
+        report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected() + 1;
+        CheckBoxManager.getCheckBoxManager(farm.scoreMethod).setBooleansOnReport(report);
+
+        if (mode.equals(Constants.REPORT_CREATE)) {
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
+                if (cow == null) {
+                    cow = dao.getCow(cowNumber, farmId);
+                    if (cow == null) {
+                        cow = new Cow(cowNumber, false, farmId);
+                        cow.setId((int) dao.insertGetId(cow));
+                    }
+                }
+                report.cowId = cow.getId();
+                dao.insert(report);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
                 });
             });
         }

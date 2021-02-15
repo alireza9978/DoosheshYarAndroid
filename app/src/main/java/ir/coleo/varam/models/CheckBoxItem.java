@@ -30,12 +30,14 @@ public class CheckBoxItem {
     public void disableOther() {
         for (CheckBoxItem item : disable) {
             item.setActive(false);
+            item.setCheck(false);
         }
     }
 
     public void enableOther() {
         for (CheckBoxItem item : disable) {
             item.setActive(true);
+            item.setCheck(false);
         }
     }
 

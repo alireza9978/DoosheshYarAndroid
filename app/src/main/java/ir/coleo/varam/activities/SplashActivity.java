@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
-        AppCenter.start(getApplication(), "f4c019af-38a5-44af-b87a-22c2e0dc8f27",
+        AppCenter.start(getApplication(), "51203f5f-d489-4989-a2fb-01a3195a9a57",
                 Analytics.class, Crashes.class);
 
         loading_state = findViewById(R.id.splash_loading_container);

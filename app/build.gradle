@@ -89,7 +89,7 @@ dependencies {
 
     implementation files('libs/aa-poi-3.10-min-0.1.5.jar')
     implementation files('libs/aa-poi-ooxml-schemas-3.10-reduced-more-0.1.5.jar')
-    def appCenterSdkVersion = '3.3.1'
+    def appCenterSdkVersion = '4.1.0'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 

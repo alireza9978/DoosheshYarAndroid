@@ -23,6 +23,8 @@ public class Report {
     public Boolean scoreType;
     // true -> 3
     // false -> 4
+
+    // zero base
     @ColumnInfo(name = "score")
     public Integer score;
 
@@ -52,12 +54,36 @@ public class Report {
     @ColumnInfo(name = "cow_id")
     public Integer cowId;
 
+//    @Override
+//    public String toString() {
+//        return "Report{" +
+//                "id=" + id +
+//                ", visit=" + visit +
+//                ", nextVisit=" + nextVisit +
+//                ", cowId=" + cowId +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "Report{" +
                 "id=" + id +
                 ", visit=" + visit +
                 ", nextVisit=" + nextVisit +
+                ", areaNumber=" + areaNumber +
+                ", scoreType=" + scoreType +
+                ", score=" + score +
+                ", sardalme=" + sardalme +
+                ", khoni=" + khoni +
+                ", kor=" + kor +
+                ", cartieState=" + cartieState +
+                ", pomadeId=" + pomadeId +
+                ", serumId=" + serumId +
+                ", antiInflammatoryId=" + antiInflammatoryId +
+                ", antibioticId=" + antibioticId +
+                ", cureId=" + cureId +
+                ", description='" + description + '\'' +
                 ", cowId=" + cowId +
                 '}';
     }
