@@ -1,5 +1,7 @@
 package ir.coleo.varam.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -27,11 +30,14 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Calendar;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.menu.ContactActivity;
 import ir.coleo.varam.activities.menu.DrugsListActivity;
 import ir.coleo.varam.adapters.TabAdapterHome;
 import ir.coleo.varam.constants.Constants;
+import ir.coleo.varam.service.MyNotificationPublisher;
 
 import static ir.coleo.varam.constants.Constants.CHOOSE_FILE_REQUEST_CODE;
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_FACTOR;
@@ -89,6 +95,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         applyFontToMenu(navigationView.getMenu(), this);
         navigationView.setNavigationItemSelectedListener(this);
         tabLayout.selectTab(tabLayout.getTabAt(0));
+
+        SwitchCompat switchCompat = navigationView.getMenu().getItem(1).getActionView().findViewById(R.id.switch_id);
+        if (switchCompat != null) {
+            switchCompat.setChecked(Constants.getNotificationStatus(this));
+            switchCompat.setClickable(false);
+        }
+
     }
 
     @Override
@@ -135,6 +148,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.drugs: {
                 Intent intent = new Intent(this, DrugsListActivity.class);
                 startActivity(intent);
+                return true;
+            }
+            case R.id.nav_switch: {
+                SwitchCompat switchCompat = item.getActionView().findViewById(R.id.switch_id);
+                if (switchCompat.isChecked()) {
+                    switchCompat.setChecked(false);
+                    Constants.setNotificationStatus(this, false);
+                    cancelSchedule();
+                } else {
+                    switchCompat.setChecked(true);
+                    Constants.setNotificationStatus(this, true);
+                    scheduleNotification();
+                }
                 return true;
             }
 //            case R.id.lang: {
@@ -195,6 +221,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void updateMeasureState(@NotNull TextPaint paint) {
             applyCustomTypeFace(paint, newType);
         }
+    }
+
+    private void cancelSchedule() {
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE);
+        if (pendingIntent != null && alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+        }
+
+    }
+
+    private void scheduleNotification() {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 14);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Calendar cur = Calendar.getInstance();
+
+        if (cur.after(calendar)) {
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        assert alarmManager != null;
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 }

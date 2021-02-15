@@ -26,7 +26,6 @@ import java.util.TimerTask;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
-import ir.coleo.varam.service.AlarmReceiver;
 
 /**
  * صفحه‌ی اغازین برنامه
@@ -63,11 +62,6 @@ public class SplashActivity extends AppCompatActivity {
                 goApp();
             }
         });
-
-        /* Retrieve a PendingIntent that will perform a broadcast */
-        Intent alarmIntent = new Intent(SplashActivity.this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(SplashActivity.this, 0, alarmIntent, 0);
-        startAtMorning();
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {

@@ -50,6 +50,10 @@ public class Constants {
     public static String REPORT_CREATE = "CREATE_NEW_REPORT";
     public static String EDIT_REPORT = "EDIT_OLD_REPORT";
 
+    public static boolean NO_Notification = false;
+    private static String Notification_STORAGE = "sdcvmcdhereInDads rknessTOK";
+    private static String Notification_DATA = "ssaobfmeqwfja; nDarkness12TOKTOK";
+
     public static String NO_LANGUAGE = "en";
     private static String LANGUAGE_STORAGE = "someWhereInDarkness";
     private static String LANGUAGE_DATA = "someWhereInDarkness12";
@@ -127,14 +131,24 @@ public class Constants {
         }
     }
 
+    public static Boolean getNotificationStatus(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Notification_STORAGE, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(Notification_DATA, NO_Notification);
+    }
 
+    public static void setNotificationStatus(Context context, Boolean state) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Notification_STORAGE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Notification_DATA, state);
+        editor.apply();
+    }
 
     /**
      * گرفتن کلید ارتباط با سرور
      */
     public static String getToken(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(TOKEN_STORAGE, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(TOKEN_DATA,NO_TOKEN);
+        return sharedPreferences.getString(TOKEN_DATA, NO_TOKEN);
     }
 
     /**

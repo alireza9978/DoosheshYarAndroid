@@ -258,4 +258,6 @@
     <string name="cartie_number_two">cartie 2</string>
     <string name="cartie_number_three">cartie 3</string>
     <string name="cartie_number_four">cartie 4</string>
+    <string name="notification">Notification</string>
+
 </resources>
