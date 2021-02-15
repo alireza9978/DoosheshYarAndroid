@@ -254,5 +254,8 @@
     <string name="empty_error">enter value</string>
     <string name="cartie_error">select one of cartie states</string>
     <string name="score_error">select score</string>
-
+    <string name="cartie_number_one">cartie 1</string>
+    <string name="cartie_number_two">cartie 2</string>
+    <string name="cartie_number_three">cartie 3</string>
+    <string name="cartie_number_four">cartie 4</string>
 </resources>

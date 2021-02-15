@@ -238,16 +238,16 @@ public class FarmProfileActivity extends AppCompatActivity {
         HSSFSheet sheet = workbook.createSheet("Sample sheet");
 
         Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
-                R.string.injury_area, R.string.score_type, R.string.score, R.string.score_zero,
-                R.string.score_one, R.string.score_two, R.string.cartie_state, R.string.drug_title_1,
+                R.string.cartie_number_one, R.string.cartie_number_two, R.string.cartie_number_three,
+                R.string.cartie_number_four, R.string.score_zero, R.string.cartie_one,
+                R.string.cartie_two, R.string.cartie_three, R.string.cartie_four,
+                R.string.score_one, R.string.score_two, R.string.drug_title_1,
                 R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
-                R.string.drug_title_5, next_visit, more_info};
+                R.string.drug_title_5, next_visit, more_info, R.string.score_type};
         Integer[] threeLevel = {R.string.score_three_one, R.string.score_three_two,
                 R.string.score_three_three, R.string.score_three_four};
         Integer[] fourLevel = {R.string.score_four_one, R.string.score_four_two,
                 R.string.score_four_three, R.string.score_four_four};
-        Integer[] cartieState = {R.string.cartie_one, R.string.cartie_two,
-                R.string.cartie_three, R.string.cartie_four};
 
         MyDao dao = DataBase.getInstance(this).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
@@ -279,41 +279,37 @@ public class FarmProfileActivity extends AppCompatActivity {
                     cell = row.createCell(3);
                     cell.setCellValue(date[0]);
 
-                    cell = row.createCell(4);
-                    cell.setCellValue(report.areaNumber);
-
-                    cell = row.createCell(5);
-                    if (report.scoreType) {
-                        cell.setCellValue(getString(R.string.three_level_text));
-                    } else {
-                        cell.setCellValue(getString(R.string.four_level_text));
+                    for (int j = 4; j < 8; j++) {
+                        cell = row.createCell(j);
+                        if (j == 4 + (report.areaNumber - 1)) {
+                            if (report.scoreType) {
+                                cell.setCellValue(getString(threeLevel[report.score]));
+                            } else {
+                                cell.setCellValue(getString(fourLevel[report.score]));
+                            }
+                        }
                     }
 
-                    cell = row.createCell(6);
-                    if (report.scoreType) {
-                        cell.setCellValue(getString(threeLevel[report.score]));
-                    } else {
-                        cell.setCellValue(getString(fourLevel[report.score]));
+                    for (int j = 8; j < 12; j++) {
+                        cell = row.createCell(j);
+                        if (j == 8 + report.cartieState) {
+                            cell.setCellValue("*");
+                        }
                     }
 
-
-                    cell = row.createCell(7);
+                    cell = row.createCell(12);
                     if (report.sardalme)
                         cell.setCellValue("*");
 
-                    cell = row.createCell(8);
+                    cell = row.createCell(13);
                     if (report.khoni)
                         cell.setCellValue("*");
 
-                    cell = row.createCell(9);
+                    cell = row.createCell(14);
                     if (report.kor)
                         cell.setCellValue("*");
 
-                    cell = row.createCell(10);
-                    if (report.cartieState != -1)
-                        cell.setCellValue(getString(cartieState[report.cartieState]));
-
-                    cell = row.createCell(11);
+                    cell = row.createCell(15);
                     if (report.pomadeId != null)
                         if (report.pomadeId >= 0) {
                             for (Drug drug : drugs) {
@@ -324,7 +320,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(12);
+                    cell = row.createCell(16);
                     if (report.antibioticId != null)
                         if (report.antibioticId >= 0) {
                             for (Drug drug : drugs) {
@@ -335,7 +331,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(13);
+                    cell = row.createCell(17);
                     if (report.serumId != null)
                         if (report.serumId >= 0) {
                             for (Drug drug : drugs) {
@@ -346,7 +342,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(14);
+                    cell = row.createCell(18);
                     if (report.cureId != null)
                         if (report.cureId >= 0) {
                             for (Drug drug : drugs) {
@@ -357,7 +353,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(15);
+                    cell = row.createCell(19);
                     if (report.antiInflammatoryId != null)
                         if (report.antiInflammatoryId >= 0) {
                             for (Drug drug : drugs) {
@@ -368,13 +364,19 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(16);
+                    cell = row.createCell(20);
                     if (report.nextVisit != null)
                         cell.setCellValue(report.nextVisit.toString(this));
 
-                    cell = row.createCell(17);
+                    cell = row.createCell(21);
                     cell.setCellValue(report.description);
 
+                    cell = row.createCell(22);
+                    if (report.scoreType) {
+                        cell.setCellValue(getString(R.string.three_level_text));
+                    } else {
+                        cell.setCellValue(getString(R.string.four_level_text));
+                    }
                 }
             });
         });

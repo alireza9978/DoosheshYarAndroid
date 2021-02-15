@@ -255,6 +255,10 @@
     <string name="empty_error">ورودی خالی است</string>
     <string name="cartie_error">وضعیت کارتیه را انتخاب کنید</string>
     <string name="score_error">امتیاز را انتخاب کنید</string>
+    <string name="cartie_number_one">کارتیه ۱</string>
+    <string name="cartie_number_two">کارتیه ۲</string>
+    <string name="cartie_number_three">کارتیه ۳</string>
+    <string name="cartie_number_four">کارتیه ۴</string>
 
 
 </resources>
