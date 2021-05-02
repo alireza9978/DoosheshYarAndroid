@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.App.MainConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/Theme.App.MainConstraint"
-
     tools:context=".activities.reports.MoreInfoActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,7 +103,7 @@
             android:fontFamily="@font/anjoman_medium"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:text="In second field, the reason that cow is referred to the trimming chute should be recorded."
+            android:text="@string/two_one_text"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -127,159 +126,36 @@
             android:fontFamily="@font/anjoman_medium"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:text="In this application following reasons presumed to be the reason of hoof trimming:
-            \n
-    1- Trimming cows in 120 days in milk (DIM)
-    \n
-    2- Trimming cows before drying- off
-    \n
-    3- Trimming cows as delayed pregnancy cows (Cows with DIM over 350, and pregnancy less than 150 days).
-    \n
-    4- High locomotion scored cows.
-    \n
-    5- Managerial referred cows
-    \n
-    6- Heifers
-    \n
-    7- Long toe cows
-    \n
-    8- New lameness case
-    \n
-    9- Lesion re-check
-    \n
-    10- Whole herd hoof trimming option"
+            android:text="@string/two_two_text"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/two_two"
             app:layout_constraintTop_toTopOf="@id/two_two" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/two_fa"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_add_cow_container">
-
         <TextView
-            android:id="@+id/two_one_fa"
+            android:id="@+id/two_three"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="4dp"
             android:background="@drawable/circle_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/two_two_text" />
 
         <TextView
-            android:id="@+id/two_one_text_fa"
+            android:id="@+id/two_three_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/anjoman_medium"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:text="در صورت ارجاع به علت سم‌چینی می‌توانید با توجه به الگوی‌ سم‌چینی گله، سم‌چینی دام‌ها بر اساس روز شیردهی و آبستنی در مراحل روز‌های ۱۰۰ تا ۱۲۰ شیردهی، خشکی یا دام‌های عقب مانده‌ی تولید مثلی گزینه‌های مربوط را انتخاب کنید."
+            android:text="@string/two_three_text"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/two_one_fa"
-            app:layout_constraintTop_toTopOf="@id/two_one_fa" />
+            app:layout_constraintStart_toEndOf="@id/two_three"
+            app:layout_constraintTop_toTopOf="@id/two_three" />
 
-        <TextView
-            android:id="@+id/two_two_fa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/circle_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/two_one_text_fa" />
-
-        <TextView
-            android:id="@+id/two_two_text_fa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/anjoman_medium"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="در صورتی که ار این الگو پیروی نمی‌کنید گزینه سم‌چینی گروهی را انتخاب کنید."
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/two_two_fa"
-            app:layout_constraintTop_toTopOf="@id/two_two_fa" />
-
-        <TextView
-            android:id="@+id/two_three_fa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/circle_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/two_two_text_fa" />
-
-        <TextView
-            android:id="@+id/two_three_text_fa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/anjoman_medium"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="اگر دام سم بلند یا تلیسه‌ی سم بلند به باکس ارجاع شد نیز می‌توانید با علامت زدن گزینه‌های مربوط اطلاعات مربوط به آن را وارد کنید."
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/two_three_fa"
-            app:layout_constraintTop_toTopOf="@id/two_three_fa" />
-
-        <TextView
-            android:id="@+id/two_four_fa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/circle_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/two_three_text_fa" />
-
-        <TextView
-            android:id="@+id/two_four_text_fa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/anjoman_medium"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="در این قسمت برای دام‌های با اسکوربالا و دام‌‌هایی که به هر علت دیگری به باکس ارجاع داده می‌شون، گزینه‌ی جدا طراحی شده است."
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/two_four_fa"
-            app:layout_constraintTop_toTopOf="@id/two_four_fa" />
-
-        <TextView
-            android:id="@+id/two_five_fa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/circle_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/two_four_text_fa" />
-
-        <TextView
-            android:id="@+id/two_five_text_fa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/anjoman_medium"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="اگر در دامی که به هر علت وارد باکس سم‌چینی شده(سم‌چینی، اسکوربالا، ارجاعی و ...) جراحت جدید دام مشاهده شد باید گزینه لنگش جدید را علامت بزنید و در صورتی که دام برای بررسی مجدد و بازدید از زخم به باکس آمده می‌توانید بازدید لنگش را علامت بزنید."
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/two_five_fa"
-            app:layout_constraintTop_toTopOf="@id/two_five_fa" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -309,7 +185,7 @@
             android:fontFamily="@font/anjoman_medium"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:text="@string/more_info_three"
+            android:text="@string/three_text"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -344,7 +220,7 @@
             android:fontFamily="@font/anjoman_medium"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:text="And finally, in the fourth field any additional information can be added to the application. Kind of injury (Wound, hemorrhage, without injury), kind of treatment (use of hoof block, bandaging, any medication) and possible cured injury can be marked. By adding a re-check date and any further needed information the application will remind you in due date"
+            android:text="@string/four_text"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -353,108 +229,5 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/four_fa"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_add_cow_container">
-
-        <TextView
-            android:id="@+id/four_one_fa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/circle_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/four_one_text_fa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/anjoman_medium"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="جزپیات جراحت و عملیات درمانی را در این قسمت وارد کنید."
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/four_one_fa"
-            app:layout_constraintTop_toTopOf="@id/four_one_fa" />
-
-        <TextView
-            android:id="@+id/four_two_fa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/circle_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/four_one_text_fa" />
-
-        <TextView
-            android:id="@+id/four_two_text_fa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/anjoman_medium"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="در صورت نیاز به بازدید زخم می توانید تاریخ بازدید مجدد را مشخص کنید و سایر توضیحات را وارد کنید."
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/four_two_fa"
-            app:layout_constraintTop_toTopOf="@id/four_two_fa" />
-
-        <TextView
-            android:id="@+id/four_three_fa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/circle_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/four_two_text_fa" />
-
-        <TextView
-            android:id="@+id/four_three_text_fa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/anjoman_medium"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="در این قسمت حتما باید یکی از گزینه‌های زخم، خونمردگی یا سم‌چینی را علامت بزنید."
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/four_three_fa"
-            app:layout_constraintTop_toTopOf="@id/four_three_fa" />
-
-        <TextView
-            android:id="@+id/four_four_fa"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/circle_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/four_three_text_fa" />
-
-        <TextView
-            android:id="@+id/four_four_text_fa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/anjoman_medium"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="در صورتی که دام به علت لنگش به باکس مراجعه کرده و جراحتی مشاهده نمی‌شود، می‌توانید گزینه بدون جراحت را علامت بزنید"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/four_four_fa"
-            app:layout_constraintTop_toTopOf="@id/four_four_fa" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

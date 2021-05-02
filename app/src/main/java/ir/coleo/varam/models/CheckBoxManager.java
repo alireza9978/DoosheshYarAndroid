@@ -37,6 +37,8 @@ public class CheckBoxManager {
         score.add(new CheckBoxItem(R.string.score_zero));
         score.add(new CheckBoxItem(R.string.score_one));
         score.add(new CheckBoxItem(R.string.score_two));
+        score.get(6).add(score.get(4));
+        score.get(6).add(score.get(5));
         score.add(new CheckBoxItem(R.string.cartie_one));
         score.add(new CheckBoxItem(R.string.cartie_two));
         score.add(new CheckBoxItem(R.string.cartie_three));
@@ -65,6 +67,10 @@ public class CheckBoxManager {
 
     private void reset(boolean scoreModel) {
         checkBoxManager = new CheckBoxManager(scoreModel);
+    }
+
+    public boolean isTarkhis(){
+        return score.get(10).isCheck();
     }
 
     public boolean cartieSelected() {

@@ -108,7 +108,6 @@ public class AddDrugActivity extends AppCompatActivity {
     public void updateList(int type) {
         AppExecutors.getInstance().diskIO().execute(() -> {
             List<Drug> drugs = dao.getAllDrug(type);
-            Log.i("DRUGS", "updateList: " + drugs.size());
             runOnUiThread(() -> {
                 adapterDrugList.setDrugs(drugs);
                 adapterDrugList.notifyDataSetChanged();

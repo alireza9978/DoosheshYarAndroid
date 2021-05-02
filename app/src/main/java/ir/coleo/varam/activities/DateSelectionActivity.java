@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -275,10 +276,18 @@ public class DateSelectionActivity extends AppCompatActivity {
             Intent intent = new Intent();
             DateContainer container = null;
             if (rang) {
+                if (startPersianDate == null || endPersianDate == null) {
+                    Toast.makeText(context, R.string.range_date_error, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 container = new DateContainer(RANG,
                         new MyDate(true, startPersianDate.getDayOfMonth(), startPersianDate.getMonth(), startPersianDate.getYear()),
                         new MyDate(true, endPersianDate.getDayOfMonth(), endPersianDate.getMonth(), endPersianDate.getYear()));
             } else if (calendar.getSelectionMode() == SELECTION_MODE_SINGLE) {
+                if (startPersianDate == null) {
+                    Toast.makeText(context, R.string.single_date_error, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 container = new DateContainer(SINGLE,
                         new MyDate(true, startPersianDate.getDayOfMonth(), startPersianDate.getMonth(), startPersianDate.getYear()));
             }

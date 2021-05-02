@@ -239,9 +239,9 @@ public class FarmProfileActivity extends AppCompatActivity {
 
         Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
                 R.string.cartie_number_one, R.string.cartie_number_two, R.string.cartie_number_three,
-                R.string.cartie_number_four, R.string.score_zero, R.string.cartie_one,
+                R.string.cartie_number_four, R.string.cartie_one,
                 R.string.cartie_two, R.string.cartie_three, R.string.cartie_four,
-                R.string.score_one, R.string.score_two, R.string.drug_title_1,
+                R.string.score_zero, R.string.score_one, R.string.score_two, R.string.drug_title_1,
                 R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
                 R.string.drug_title_5, next_visit, more_info, R.string.score_type};
         Integer[] threeLevel = {R.string.score_three_one, R.string.score_three_two,
@@ -281,13 +281,14 @@ public class FarmProfileActivity extends AppCompatActivity {
 
                     for (int j = 4; j < 8; j++) {
                         cell = row.createCell(j);
-                        if (j == 4 + (report.areaNumber - 1)) {
-                            if (report.scoreType) {
-                                cell.setCellValue(getString(threeLevel[report.score]));
-                            } else {
-                                cell.setCellValue(getString(fourLevel[report.score]));
+                        if (report.score != null)
+                            if (j == 4 + (report.areaNumber - 1)) {
+                                if (report.scoreType) {
+                                    cell.setCellValue(getString(threeLevel[report.score]));
+                                } else {
+                                    cell.setCellValue(getString(fourLevel[report.score]));
+                                }
                             }
-                        }
                     }
 
                     for (int j = 8; j < 12; j++) {

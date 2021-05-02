@@ -58,9 +58,9 @@ public class TabAdapterReport extends FragmentStateAdapter {
             switch (position) {
                 case 3: {
                     if (edit) {
-                        fragments[3] = new MoreInfoFragment(nextDate, description);
+                        fragments[3] = new MoreInfoFragment(nextDate, description, scoreMode);
                     } else
-                        fragments[3] = new MoreInfoFragment();
+                        fragments[3] = new MoreInfoFragment(scoreMode);
                     break;
                 }
                 case 2: {

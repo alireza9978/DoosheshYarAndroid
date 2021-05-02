@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:visibility="gone"
         android:fontFamily="@font/anjoman_semi_bold"
         android:text="@string/add_new_injury"
         android:textSize="16sp"

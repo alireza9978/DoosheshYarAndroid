@@ -19,16 +19,13 @@ public class CowWithLastVisit {
         this.id = id;
     }
 
-    public Integer getNumber() {
-        return number;
-    }
 
     public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public String getNumber(Context context) {
-        return context.getString(R.string.cow_title) + number;
+    public String getNumber() {
+        return String.valueOf(number);
     }
 
     public MyDate getLastVisit() {

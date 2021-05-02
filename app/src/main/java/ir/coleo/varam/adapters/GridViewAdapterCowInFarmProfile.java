@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.CowProfileActivity;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.CowWithLastVisit;
-
-import java.util.List;
 
 public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
 
@@ -55,7 +55,7 @@ public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         Holder holder;
-        if (cows.size() == i) {
+        if (0 == i) {
             view = LayoutInflater.from(context)
                     .inflate(R.layout.add_grid_item, viewGroup, false);
             Constants.gridRtl(context, view);
@@ -67,8 +67,8 @@ public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
                 context.startActivity(intent);
             });
         } else {
-            CowWithLastVisit cow = cows.get(i);
-            if (view == null) {
+            CowWithLastVisit cow = cows.get(i - 1);
+            if (view == null || view.getTag() == null) {
                 view = LayoutInflater.from(context)
                         .inflate(R.layout.livestock_grid_item, viewGroup, false);
                 Constants.gridRtl(context, view);
@@ -89,14 +89,13 @@ public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
                 context.startActivity(intent);
             });
             holder.icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_calendar));
-            holder.farmTitle.setText(cow.getNumber(context));
+            holder.farmTitle.setText(cow.getNumber());
             if (cow.getLastVisit() == null) {
                 holder.cowCount.setText(R.string.no_visit_short);
-                holder.cowCount.setTextColor(ContextCompat.getColor(context, R.color.persian_green));
             } else {
                 holder.cowCount.setText(cow.getLastVisit().toStringWithoutYear(context));
-                holder.cowCount.setTextColor(ContextCompat.getColor(context, R.color.persian_green));
             }
+            holder.cowCount.setTextColor(ContextCompat.getColor(context, R.color.persian_green));
             Constants.setImageFront(context, holder.arrow);
             holder.arrow.setColorFilter(ContextCompat.getColor(context, R.color.persian_green), android.graphics.PorterDuff.Mode.SRC_IN);
             holder.icon.setColorFilter(ContextCompat.getColor(context, R.color.persian_green), android.graphics.PorterDuff.Mode.SRC_IN);

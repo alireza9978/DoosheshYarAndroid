@@ -131,7 +131,14 @@ public class AddReportActivity extends AppCompatActivity {
 
                     stepperIndicator = findViewById(R.id.state_indicator);
                     ImageView exit = findViewById(R.id.close_image);
+                    ImageView moreInfo = findViewById(R.id.info_image);
+
                     exit.setOnClickListener(view -> finish());
+                    moreInfo.setOnClickListener(view -> {
+                        Intent intent = new Intent(this, MoreInfoActivity.class);
+                        intent.putExtra(Constants.MORE_INFO_STATE, state);
+                        startActivity(intent);
+                    });
                 });
             });
 
@@ -162,7 +169,14 @@ public class AddReportActivity extends AppCompatActivity {
 
                     stepperIndicator = findViewById(R.id.state_indicator);
                     ImageView exit = findViewById(R.id.close_image);
+                    ImageView moreInfo = findViewById(R.id.info_image);
+
                     exit.setOnClickListener(view -> finish());
+                    moreInfo.setOnClickListener(view -> {
+                        Intent intent = new Intent(this, MoreInfoActivity.class);
+                        intent.putExtra(Constants.MORE_INFO_STATE, state);
+                        startActivity(intent);
+                    });
                     one = DateContainer.getToday(this, persian);
                     ((CowInfoFragment) adapter.getFragment(0)).setDate(one.toString(this));
 

@@ -25,6 +25,7 @@ import ir.coleo.varam.database.utils.AppExecutors;
 public class DrugSelectionActivity extends AppCompatActivity {
 
     private Context context = this;
+    private RecyclerView recyclerView;
     private int drugType = -1;
 
     @Override
@@ -70,9 +71,45 @@ public class DrugSelectionActivity extends AppCompatActivity {
         findViewById(R.id.close_image).setOnClickListener(view -> finish());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerView recyclerView = findViewById(R.id.livestroks_lists);
+        recyclerView = findViewById(R.id.livestroks_lists);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView textView = findViewById(R.id.page_title);
+        String drugName = "";
+        switch (drugType) {
+            case 0: {
+                drugName = getString(R.string.drug_title_1);
+                break;
+            }
+            case 1: {
+                drugName = getString(R.string.drug_title_2);
+                break;
+            }
+            case 2: {
+                drugName = getString(R.string.drug_title_3);
+                break;
+            }
+            case 3: {
+                drugName = getString(R.string.drug_title_4);
+                break;
+            }
+            case 4: {
+                drugName = getString(R.string.drug_title_5);
+                break;
+            }
+        }
+        String title;
+        if (Constants.getDefaultLanguage(this).equals("fa")) {
+            title = "لیست " + drugName;
+        } else {
+            title = drugName + " lists";
+        }
+        textView.setText(title);
 
         MyDao dao = DataBase.getInstance(this).dao();
         AtomicReference<RecyclerViewAdapterDrugSimple> adapter = new AtomicReference<>();
@@ -88,15 +125,12 @@ public class DrugSelectionActivity extends AppCompatActivity {
                         message = "no " + finalDrugName + " available";
                     }
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-                } else {
-                    adapter.set(new RecyclerViewAdapterDrugSimple(drugs, context));
-                    recyclerView.setAdapter(adapter.get());
                 }
+                adapter.set(new RecyclerViewAdapterDrugSimple(drugs, context, drugType));
+                recyclerView.setAdapter(adapter.get());
             });
 
         });
-
-
     }
 
     public void selectedDrug(int id) {

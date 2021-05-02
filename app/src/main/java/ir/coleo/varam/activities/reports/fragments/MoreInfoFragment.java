@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -16,6 +17,7 @@ import ir.coleo.varam.R;
 import ir.coleo.varam.activities.DateSelectionActivity;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
+import ir.coleo.varam.models.CheckBoxManager;
 
 public class MoreInfoFragment extends Fragment {
 
@@ -24,13 +26,16 @@ public class MoreInfoFragment extends Fragment {
     private TextView date_text;
     private String date;
     private String description;
+    private boolean scoreMode;
 
-    public MoreInfoFragment(String date, String description) {
+    public MoreInfoFragment(String date, String description, boolean scoreMode) {
         this.date = date;
         this.description = description;
+        this.scoreMode = scoreMode;
     }
 
-    public MoreInfoFragment() {
+    public MoreInfoFragment(boolean scoreMode) {
+        this.scoreMode = scoreMode;
     }
 
     @Override
@@ -49,7 +54,16 @@ public class MoreInfoFragment extends Fragment {
         });
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
-            ((AddReportActivity) requireActivity()).next();
+            if (CheckBoxManager.getCheckBoxManager(scoreMode).isTarkhis()) {
+                if (date != null) {
+                    ((AddReportActivity) requireActivity()).next();
+                } else {
+                    Toast.makeText(requireContext(), R.string.enter_next_visit_date, Toast.LENGTH_LONG).show();
+                }
+            } else {
+                ((AddReportActivity) requireActivity()).next();
+            }
+
         });
         view.findViewById(R.id.back_button).setOnClickListener(v -> {
             ((AddReportActivity) requireActivity()).back();
