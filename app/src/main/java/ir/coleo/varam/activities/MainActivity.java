@@ -33,7 +33,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 
 import ir.coleo.varam.R;
-import ir.coleo.varam.activities.menu.ContactActivity;
+import ir.coleo.varam.activities.menu.AboutActivity;
+import ir.coleo.varam.activities.menu.ContactUsActivity;
 import ir.coleo.varam.activities.menu.DrugsListActivity;
 import ir.coleo.varam.adapters.TabAdapterHome;
 import ir.coleo.varam.constants.Constants;
@@ -141,7 +142,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about_us: {
-                Intent intent = new Intent(this, ContactActivity.class);
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            case R.id.contact_us: {
+                Intent intent = new Intent(this, ContactUsActivity.class);
                 startActivity(intent);
                 return true;
             }

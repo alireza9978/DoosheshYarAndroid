@@ -54,7 +54,7 @@ public class MoreInfoFragment extends Fragment {
         });
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
-            if (CheckBoxManager.getCheckBoxManager(scoreMode).isTarkhis()) {
+            if (!CheckBoxManager.getCheckBoxManager(scoreMode).isTarkhis()) {
                 if (date != null) {
                     ((AddReportActivity) requireActivity()).next();
                 } else {

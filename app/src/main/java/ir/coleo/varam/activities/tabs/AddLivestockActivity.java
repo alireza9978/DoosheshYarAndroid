@@ -90,7 +90,6 @@ public class AddLivestockActivity extends AppCompatActivity {
                     Farm farm = dao.getFarm(id);
                     runOnUiThread(() -> {
                         farmTitle.setText(farm.name);
-                        farmTitle.setEnabled(false);
                         bedType.setText(farm.bedType);
                         birthCount.setText("" + farm.birthCount);
                         showerCount.setText("" + farm.showerCount);
@@ -120,6 +119,7 @@ public class AddLivestockActivity extends AppCompatActivity {
                     AppExecutors.getInstance().diskIO().execute(() -> {
                         Farm farm = dao.getFarm(id);
                         runOnUiThread(() -> {
+                            farm.name = farmTitle.getText().toString();
                             farm.bedType = bedType.getText().toString();
                             farm.birthCount = Integer.parseInt(birthCount.getText().toString());
                             farm.showerCount = Integer.parseInt(showerCount.getText().toString());

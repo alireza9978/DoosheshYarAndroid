@@ -19,6 +19,12 @@
             android:name=".activities.menu.DrugsListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activities.menu.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.menu.ContactUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activities.menu.AddDrugActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -48,7 +54,7 @@
             android:name=".activities.DateSelectionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.menu.ContactActivity"
+            android:name=".activities.menu.AboutActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MainActivity"

@@ -37,12 +37,19 @@ public class CheckBoxManager {
         score.add(new CheckBoxItem(R.string.score_zero));
         score.add(new CheckBoxItem(R.string.score_one));
         score.add(new CheckBoxItem(R.string.score_two));
-        score.get(6).add(score.get(4));
-        score.get(6).add(score.get(5));
+
         score.add(new CheckBoxItem(R.string.cartie_one));
         score.add(new CheckBoxItem(R.string.cartie_two));
         score.add(new CheckBoxItem(R.string.cartie_three));
         score.add(new CheckBoxItem(R.string.cartie_four));
+
+        score.get(6).add(score.get(4));
+        score.get(6).add(score.get(5));
+        score.get(6).add(score.get(7));
+        score.get(6).add(score.get(8));
+        score.get(6).add(score.get(9));
+        score.get(6).add(score.get(10));
+
         for (int i = 7; i < score.size(); i++) {
             for (int j = 7; j < score.size(); j++) {
                 if (i == j)

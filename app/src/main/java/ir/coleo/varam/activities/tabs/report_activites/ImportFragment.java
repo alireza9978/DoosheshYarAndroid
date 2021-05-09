@@ -223,9 +223,9 @@ public class ImportFragment extends Fragment {
                     cowNumbers.add(report.cowId);
                     if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
                         PersianDate pdate = new PersianDate();
-                        int[] dateArray = pdate.toGregorian((int) row.getCell(3).getNumericCellValue(),
-                                (int) row.getCell(2).getNumericCellValue(),
-                                (int) row.getCell(1).getNumericCellValue());
+                        int[] dateArray = pdate.toGregorian(Integer.parseInt(row.getCell(3).getStringCellValue()),
+                                Integer.parseInt(row.getCell(2).getStringCellValue()),
+                                Integer.parseInt(row.getCell(1).getStringCellValue()));
                         report.visit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
                     } else {
                         report.visit = new MyDate((int) row.getCell(1).getNumericCellValue(),

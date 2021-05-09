@@ -271,13 +271,13 @@ public class FarmProfileActivity extends AppCompatActivity {
 
                     int[] date = report.visit.convert(this);
                     cell = row.createCell(1);
-                    cell.setCellValue(date[2]);
+                    cell.setCellValue(String.format("%02d", date[2]));
 
                     cell = row.createCell(2);
-                    cell.setCellValue(date[1]);
+                    cell.setCellValue(String.format("%02d", date[1]));
 
                     cell = row.createCell(3);
-                    cell.setCellValue(date[0]);
+                    cell.setCellValue(String.format("%02d", date[0]));
 
                     for (int j = 4; j < 8; j++) {
                         cell = row.createCell(j);

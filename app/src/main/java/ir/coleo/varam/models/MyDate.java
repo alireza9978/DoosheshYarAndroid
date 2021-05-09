@@ -119,9 +119,15 @@ public class MyDate implements Serializable, Cloneable, Comparable<MyDate> {
         if (Constants.getDefaultLanguage(context).equals("fa")) {
             PersianDate pdate = new PersianDate();
             int[] temp = pdate.toJalali(year, month, day);
-            return "" + temp[0] + "/" + temp[1] + "/" + temp[2];
+            String day = String.format("%02d", temp[2]);
+            String month = String.format("%02d", temp[1]);
+            String year = String.format("%04d", temp[0]);
+            return year + "/" + month + "/" + day;
         } else {
-            return "" + year + "/" + month + "/" + day;
+            String day = String.format("%02d", this.day);
+            String month = String.format("%02d", this.month);
+            String year = String.format("%04d", this.year);
+            return year + "/" + month + "/" + day;
         }
     }
 

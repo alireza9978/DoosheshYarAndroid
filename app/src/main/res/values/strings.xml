@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Varam</string>
+    <string name="app_name">DosheshYar</string>
     <string name="logo_content">logo image</string>
 
     <string name="login">login</string>
@@ -268,5 +268,11 @@
     <string name="two_three_text">درصورت مشاهده سردلمه یا خون می توانید، با انتخاب گزینه مربوط آن را ثبت کنید.</string>
     <string name="three_text">در نهایت می توانید داروهای مورد استفاده در درمان را وارد کنید. این داروها را می توانید به صورت پیش فرض در بخش منو اپلیکیشن ثبت کرده و در این قسمت فقط آن ها را انتخاب کنید.</string>
     <string name="four_text">در این قسمت تاریخ بازدید بعدی و توضیحات بیشتر را وارد کنید.</string>
+    <string name="contact_bottom_one">در صورت تمایل به بررسی اطلاعات ورم پستان دامداری و گرفتن مشاوره لطفا خروجی اکسل برنامه را که حداقل اطلاعات سه ماه در آن ثبت است به ایمیل </string>
+    <string name="contact_bottom_two">herdhealther@gmail.com</string>
+    <string name="contact_bottom_three"> ارسال نمایید.</string>
     <string name="edit_and_add">ویرایش و افزودن</string>
+    <string name="cow_head">سر دام</string>
+    <string name="contact_top">دام‌آسا
+    گروه تحقیق و ترویج سلامت گله‌های شیری</string>
 </resources>
