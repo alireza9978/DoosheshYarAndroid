@@ -65,7 +65,7 @@ public class MyNotificationPublisher extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, default_notification_channel_id);
         builder.setContentTitle(title);
         builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setSmallIcon(R.drawable.ic_launcher);
         builder.setAutoCancel(true);
         builder.setChannelId(NOTIFICATION_CHANNEL_ID);
         return builder.build();
