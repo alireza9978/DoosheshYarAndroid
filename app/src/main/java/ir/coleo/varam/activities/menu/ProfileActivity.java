@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
-
 import mehdi.sakout.fancybuttons.FancyButton;
 
+/**
+ * صفحه پروفایل کاربر
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     @Override

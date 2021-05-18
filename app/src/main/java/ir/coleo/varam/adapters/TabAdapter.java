@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import ir.coleo.varam.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import ir.coleo.varam.R;
 
 
 /**

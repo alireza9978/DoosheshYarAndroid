@@ -9,14 +9,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.activities.reports.ReportSummery;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.main.Report;
 
-import java.util.List;
-
+/**
+ * کلاس مدیریت لیست گزارش ها در صفحه‌یپروفایل گاو
+ */
 public class GridViewAdapterCowProfile extends BaseAdapter {
 
     private List<Report> reports;

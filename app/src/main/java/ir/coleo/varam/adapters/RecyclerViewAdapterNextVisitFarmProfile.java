@@ -10,12 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.NextVisit;
 
-import java.util.List;
-
+/**
+ * کلاس مدیریت لیست بازدید‌های بعدی در صفحه‌ی پروفایل گاوداری
+ */
 public class RecyclerViewAdapterNextVisitFarmProfile extends RecyclerView.Adapter<RecyclerViewAdapterNextVisitFarmProfile.Holder> {
 
     private List<NextVisit> nextVisits;

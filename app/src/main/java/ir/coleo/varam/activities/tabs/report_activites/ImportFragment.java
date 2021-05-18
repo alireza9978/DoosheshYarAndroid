@@ -48,6 +48,9 @@ import saman.zamani.persiandate.PersianDate;
 import static ir.coleo.varam.R.string.more_info;
 import static ir.coleo.varam.R.string.next_visit;
 
+/**
+ * صفحه بارگداری یک فایل اکسل در قسمت گزارش‌ها
+ */
 public class ImportFragment extends Fragment {
 
     @Override

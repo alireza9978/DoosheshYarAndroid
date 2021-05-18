@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.LoginActivity;
 
+/**
+ * صفحه ورود به برنامه
+ */
 public class LoginFragment extends Fragment {
 
     @Override

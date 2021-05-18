@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import ir.coleo.varam.R;
-
 import java.util.List;
 
+import ir.coleo.varam.R;
+
+/**
+ * کلاس مدیریت لیست ایتم‌ها در صفحه‌ی بررسی گزارش
+ */
 public class GridViewAdapterItemInSummery extends BaseAdapter {
 
     private List<String> items;

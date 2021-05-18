@@ -9,12 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.FarmSelectionActivity;
 import ir.coleo.varam.database.models.main.Farm;
 
-import java.util.List;
-
+/**
+ * کلاس مدیریت لیست گاوداری‌ها در صفحه‌ی انتخاب گاوداری
+ */
 public class RecyclerViewAdapterFarmSimple extends RecyclerView.Adapter<RecyclerViewAdapterFarmSimple.Holder> {
 
     private List<Farm> farms;

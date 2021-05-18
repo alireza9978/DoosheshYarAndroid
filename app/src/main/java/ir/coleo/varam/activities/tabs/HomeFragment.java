@@ -14,6 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.MainActivity;
 import ir.coleo.varam.activities.tabs.home_activites.VisitActivity;
@@ -21,18 +25,16 @@ import ir.coleo.varam.adapters.GridViewAdapterHomeFarm;
 import ir.coleo.varam.adapters.RecyclerViewAdapterHomeNextVisit;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
-import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.FarmWithCowCount;
 import ir.coleo.varam.database.models.NextReport;
+import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.MyDate;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import mehdi.sakout.fancybuttons.FancyButton;
 
+/**
+ * صفحه مدیریت اجزای داخلی خانه که در ابتدای باز کردن نمایش داده می شود
+ */
 public class HomeFragment extends Fragment {
 
     private ImageView downArrow;

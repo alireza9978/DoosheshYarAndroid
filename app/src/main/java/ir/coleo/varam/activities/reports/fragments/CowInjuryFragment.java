@@ -15,10 +15,12 @@ import java.util.Objects;
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
-import ir.coleo.varam.dialog.SelectFingerDialog;
+import ir.coleo.varam.dialog.VaramInfoDialog;
 import ir.coleo.varam.models.CheckBoxManager;
 
-
+/**
+ * صفحه صبت جراحت پستان در ثبت گزارش
+ */
 public class CowInjuryFragment extends Fragment {
 
     private int selected = -1;
@@ -56,6 +58,7 @@ public class CowInjuryFragment extends Fragment {
                 } else if (selected == finalI) {
                     selected = -1;
                     mainImage.setImageResource(R.drawable.ic_area_zero);
+                    Toast.makeText(requireContext(), R.string.clear_data, Toast.LENGTH_SHORT).show();
                 } else {
                     errorOnlyOne();
                 }
@@ -76,7 +79,7 @@ public class CowInjuryFragment extends Fragment {
     }
 
     public void getFingerNumber() {
-        SelectFingerDialog dialog = new SelectFingerDialog(this, edit, scoreMode);
+        VaramInfoDialog dialog = new VaramInfoDialog(this, edit, scoreMode);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setOnDismissListener(dialogInterface -> {
             CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMode);

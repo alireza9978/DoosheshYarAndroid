@@ -8,14 +8,18 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import ir.coleo.varam.R;
-import ir.coleo.varam.activities.login_fragments.LoginFragment;
-import ir.coleo.varam.activities.login_fragments.SignUpFragment;
-import ir.coleo.varam.adapters.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
+import ir.coleo.varam.R;
+import ir.coleo.varam.activities.login_fragments.LoginFragment;
+import ir.coleo.varam.activities.login_fragments.SignUpFragment;
+import ir.coleo.varam.adapters.TabAdapter;
+
+/**
+ * کلاس اصلی برای مدیریت صفحات مربوط به ورود به برنامه مانند login و sign up
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private TabAdapter adapter;

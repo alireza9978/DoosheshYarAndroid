@@ -2,6 +2,9 @@ package ir.coleo.varam.models;
 
 import java.util.ArrayList;
 
+/**
+ * کلاس نگه دارنده اطلاعات یک اپشن ورودی در کل برنامه
+ */
 public class CheckBoxItem {
 
     private Integer name;

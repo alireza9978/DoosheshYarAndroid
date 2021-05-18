@@ -14,6 +14,9 @@ import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.DateConverter;
 
+/**
+ * کلاس اصلی و معرت پایگاه داده
+ */
 @Database(entities = {Farm.class, Cow.class, Report.class, Drug.class}, version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class})
 public abstract class DataBase extends RoomDatabase {

@@ -19,11 +19,13 @@ import ir.coleo.varam.database.models.NextReport;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.DateContainer;
 
-
+/**
+ * کلاس ایجاد کننده‌ي اعلان در زمان مشخص
+ */
 public class MyNotificationPublisher extends BroadcastReceiver {
-    public static String NOTIFICATION_ID = "notification-id";
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private final static String default_notification_channel_id = "default";
+    public static String NOTIFICATION_ID = "notification-id";
 
     public void onReceive(Context context, Intent intent) {
         MyDao dao = DataBase.getInstance(context).dao();

@@ -19,6 +19,9 @@ import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.models.CheckBoxManager;
 
+/**
+ * صفحه ثبت اطلاعات بیشتر در ثبت گزارش
+ */
 public class MoreInfoFragment extends Fragment {
 
     private EditText moreInfo;

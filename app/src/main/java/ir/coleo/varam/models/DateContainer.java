@@ -14,6 +14,9 @@ import saman.zamani.persiandate.PersianDate;
 import static ir.coleo.varam.constants.Constants.DateSelectionMode.RANG;
 import static ir.coleo.varam.constants.Constants.DateSelectionMode.SINGLE;
 
+/**
+ * کلاس نگهدارنده‌ی اطلاعات تاریخ
+ */
 public class DateContainer implements Serializable {
 
     private String mode;

@@ -37,6 +37,9 @@ import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_CREATE_EN
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_RESULT;
 import static ir.coleo.varam.constants.Constants.DRUG_SELECTION;
 
+/**
+ * صفحه مدیریت صفحان ثبت گزارش
+ */
 public class AddReportActivity extends AppCompatActivity {
 
     private State state;

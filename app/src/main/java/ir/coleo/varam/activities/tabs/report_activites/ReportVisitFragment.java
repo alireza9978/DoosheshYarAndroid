@@ -20,6 +20,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+
+import org.threeten.bp.format.TextStyle;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.MainActivity;
 import ir.coleo.varam.adapters.RecyclerViewAdapterNextVisitReport;
@@ -32,20 +41,13 @@ import ir.coleo.varam.database.models.NextReport;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.DateContainer;
 import ir.coleo.varam.models.MyDate;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-
-import org.threeten.bp.format.TextStyle;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import saman.zamani.persiandate.PersianDate;
 
 import static ir.coleo.varam.constants.Constants.DateSelectionMode.SINGLE;
 
-
+/**
+ * صفحه بررسی بازدید‌های بعدی و قبلی در گزارش‌ها
+ */
 public class ReportVisitFragment extends Fragment {
 
     private TextView month;

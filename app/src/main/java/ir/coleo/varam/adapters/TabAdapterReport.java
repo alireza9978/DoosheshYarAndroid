@@ -21,13 +21,13 @@ import ir.coleo.varam.activities.reports.fragments.MoreInfoFragment;
  */
 public class TabAdapterReport extends FragmentStateAdapter {
 
+    private final boolean edit;
     private Fragment[] fragments = new Fragment[5];
     private int cowNumber;
     private int areaNumber;
     private String date;
     private String nextDate;
     private String description;
-    private final boolean edit;
     private boolean scoreMode;
     private ArrayList<Pair<Integer, Integer>> drugs;
 

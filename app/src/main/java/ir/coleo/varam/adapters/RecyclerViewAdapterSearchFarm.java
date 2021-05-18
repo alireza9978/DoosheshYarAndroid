@@ -11,13 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.FarmProfileActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.SearchFarm;
 
-import java.util.List;
-
+/**
+ * کلاس مدیریت لیست گاو‌داری‌ها در صفحه‌ی جستجوی گاو‌داری‌ها
+ */
 public class RecyclerViewAdapterSearchFarm extends RecyclerView.Adapter<RecyclerViewAdapterSearchFarm.Holder> {
 
     private List<SearchFarm> farms;

@@ -18,11 +18,14 @@ import ir.coleo.varam.database.models.NextReport;
 import ir.coleo.varam.database.models.NextVisit;
 import ir.coleo.varam.database.models.SearchFarm;
 import ir.coleo.varam.database.models.main.Cow;
-import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Drug;
+import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.models.MyDate;
 
+/**
+ * کوئری‌های استفاده شده در صفحات برنامه
+ */
 @Dao
 public interface MyDao {
 

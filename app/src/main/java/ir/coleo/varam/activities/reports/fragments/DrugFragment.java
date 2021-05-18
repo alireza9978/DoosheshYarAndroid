@@ -23,21 +23,21 @@ import ir.coleo.varam.database.models.main.Drug;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.AppExecutors;
 
+/**
+ * صفحه ثبت دارو‌های مصرفی در ثبت گزارش
+ */
 public class DrugFragment extends Fragment {
 
+    ArrayList<Pair<Integer, Integer>> setDrugs;
+    ArrayList<TextView> drugTextList = new ArrayList<>();
+    private int[] drugsId = new int[]{R.id.drug_text_one, R.id.drug_text_two,
+            R.id.drug_text_three, R.id.drug_text_four, R.id.drug_text_five};
     public DrugFragment(ArrayList<Pair<Integer, Integer>> setDrugs) {
         this.setDrugs = setDrugs;
     }
-
     public DrugFragment() {
         setDrugs = new ArrayList<>();
     }
-
-    private int[] drugsId = new int[]{R.id.drug_text_one, R.id.drug_text_two,
-            R.id.drug_text_three, R.id.drug_text_four, R.id.drug_text_five};
-    ArrayList<Pair<Integer, Integer>> setDrugs;
-    ArrayList<TextView> drugTextList = new ArrayList<>();
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

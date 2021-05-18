@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ir.coleo.varam.R;
-import ir.coleo.varam.activities.tabs.AddLivestockActivity;
+import ir.coleo.varam.activities.tabs.AddFarmActivity;
 import ir.coleo.varam.adapters.GridViewAdapterCowInFarmProfile;
 import ir.coleo.varam.adapters.RecyclerViewAdapterNextVisitFarmProfile;
 import ir.coleo.varam.constants.Constants;
@@ -53,6 +53,14 @@ import ir.coleo.varam.models.MyDate;
 import static ir.coleo.varam.R.string.more_info;
 import static ir.coleo.varam.R.string.next_visit;
 
+
+/**
+ * صفحه پروفایل گاوداری
+ * گرفتن خروجی اکسل برای گاوداری
+ * حذف گاوداری
+ * افزدن گاو
+ * ویراشی گاوداری
+ */
 public class FarmProfileActivity extends AppCompatActivity {
 
     private TextView title;
@@ -107,7 +115,7 @@ public class FarmProfileActivity extends AppCompatActivity {
         ConstraintLayout share = findViewById(R.id.item_three);
         edit.setOnClickListener(view -> {
             hideMenu();
-            Intent intent = new Intent(this, AddLivestockActivity.class);
+            Intent intent = new Intent(this, AddFarmActivity.class);
             intent.putExtra(Constants.FARM_ID, id);
             intent.putExtra(Constants.ADD_FARM_MODE, Constants.EDIT_FARM);
             startActivity(intent);

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import ir.coleo.varam.R;
 import ir.coleo.varam.database.models.main.Report;
 
+/**
+ * مدیریت کننده اطلاعات مربوط به اپشن‌های ورودی در هنگام ثبت گزارش
+ */
 public class CheckBoxManager {
 
     private static CheckBoxManager checkBoxManager;
@@ -76,7 +79,7 @@ public class CheckBoxManager {
         checkBoxManager = new CheckBoxManager(scoreModel);
     }
 
-    public boolean isTarkhis(){
+    public boolean isTarkhis() {
         return score.get(10).isCheck();
     }
 

@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Date;
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.adapters.RecyclerViewAdapterAllNextVisit;
 import ir.coleo.varam.constants.Constants;
@@ -16,9 +19,9 @@ import ir.coleo.varam.database.models.NextReport;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.MyDate;
 
-import java.util.Date;
-import java.util.List;
-
+/**
+ * صفحه لیست بازدید های بعدی در خانه
+ */
 public class VisitActivity extends AppCompatActivity {
 
     @Override

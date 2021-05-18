@@ -23,6 +23,9 @@ import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.DateContainer;
 import ir.coleo.varam.ui_element.ExpandableHeightGridView;
 
+/**
+ * صفحه بررسی گزارش ثبت شده
+ */
 public class ReportSummery extends AppCompatActivity {
 
     private ImageView outside;

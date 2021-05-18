@@ -19,8 +19,11 @@ import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.utils.AppExecutors;
 
+/**
+ * صفحه انتخابگر از بین گاوداری های موجود
+ * استفاده شده در بخش های گزارش گیری
+ */
 public class FarmSelectionActivity extends AppCompatActivity {
-
 
     private Context context = this;
 

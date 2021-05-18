@@ -19,7 +19,10 @@ import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.utils.AppExecutors;
 
-public class AddLivestockActivity extends AppCompatActivity {
+/**
+ * صفحه ایجاد یک گاوداری جدید
+ */
+public class AddFarmActivity extends AppCompatActivity {
 
     private Boolean dryMethod = null;
     private Boolean scoreMethod = null;

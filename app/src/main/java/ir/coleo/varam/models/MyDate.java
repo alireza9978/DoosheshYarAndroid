@@ -3,17 +3,19 @@ package ir.coleo.varam.models;
 import android.content.Context;
 import android.util.Log;
 
-import ir.coleo.varam.constants.Constants;
-import ir.coleo.varam.constants.Utilities;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import ir.coleo.varam.constants.Constants;
+import ir.coleo.varam.constants.Utilities;
 import saman.zamani.persiandate.PersianDate;
 
+/**
+ * کلاس نگهدارنده‌ی اطلاعات تاریخ
+ */
 public class MyDate implements Serializable, Cloneable, Comparable<MyDate> {
 
     private int day;

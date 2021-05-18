@@ -11,13 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.CowProfileActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.CowForMarked;
 
-import java.util.List;
-
+/**
+ * کلاس مدیریت لیست گاو‌ها در صفحه‌ی جستجوی گاو
+ */
 public class RecyclerViewAdapterSearchCow extends RecyclerView.Adapter<RecyclerViewAdapterSearchCow.Holder> {
 
     private List<CowForMarked> cows;

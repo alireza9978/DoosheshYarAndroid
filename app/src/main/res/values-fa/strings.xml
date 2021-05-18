@@ -259,6 +259,7 @@
     <string name="cartie_number_two">کارتیه ۲</string>
     <string name="cartie_number_three">کارتیه ۳</string>
     <string name="cartie_number_four">کارتیه ۴</string>
+    <string name="clear_data">اطلاعات وارد شده پاک شد</string>
 
     <string name="notification">نوتیفیکیشن</string>
     <string name="range_date_error">ابتدا و انتها‌ی بازه را انتخاب کنید</string>

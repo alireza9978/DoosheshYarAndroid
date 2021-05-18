@@ -1,7 +1,6 @@
 package ir.coleo.varam.activities.menu;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +20,9 @@ import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Drug;
 import ir.coleo.varam.database.utils.AppExecutors;
 
+/**
+ * صفحه افزودن یکی از پنج مورد از دارو به لیست دارو‌ها
+ */
 public class AddDrugActivity extends AppCompatActivity {
 
     private RecyclerViewAdapterDrugList adapterDrugList;

@@ -10,18 +10,21 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.adapters.GridViewAdapterHomeFarm;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
-import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.FarmWithCowCount;
+import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.utils.AppExecutors;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MarkedLivestockFragment extends Fragment {
+/**
+ * صفحه گاوداری‌های نشان شده در صفحه نشان شده‌ها
+ */
+public class MarkedFarmFragment extends Fragment {
 
 
     private TextView notFound;

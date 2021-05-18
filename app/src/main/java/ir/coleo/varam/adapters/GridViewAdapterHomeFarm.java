@@ -11,13 +11,16 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.FarmProfileActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.FarmWithCowCount;
 
-import java.util.List;
-
+/**
+ * کلاس مدیریت لیست گاوداری‌ها در صفحه‌ی خانه
+ */
 public class GridViewAdapterHomeFarm extends BaseAdapter {
 
     private List<FarmWithCowCount> farms;

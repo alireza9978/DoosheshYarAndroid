@@ -1,8 +1,5 @@
 package ir.coleo.varam.database.models;
 
-import android.content.Context;
-
-import ir.coleo.varam.R;
 import ir.coleo.varam.models.MyDate;
 
 public class CowWithLastVisit {
@@ -19,13 +16,12 @@ public class CowWithLastVisit {
         this.id = id;
     }
 
+    public String getNumber() {
+        return String.valueOf(number);
+    }
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    public String getNumber() {
-        return String.valueOf(number);
     }
 
     public MyDate getLastVisit() {

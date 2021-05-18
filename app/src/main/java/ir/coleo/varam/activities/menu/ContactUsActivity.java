@@ -21,6 +21,10 @@ import org.jetbrains.annotations.NotNull;
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
 
+/**
+ * صفحه تماس با ما
+ * تماس و ایمیل و تلگرام و اینستاگرام
+ */
 public class ContactUsActivity extends AppCompatActivity {
 
     @Override

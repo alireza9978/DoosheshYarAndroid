@@ -17,6 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.DateSelectionActivity;
 import ir.coleo.varam.activities.FarmSelectionActivity;
@@ -30,9 +33,9 @@ import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.DateContainer;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * صفحه جستجو گاو در قسمت جستجو
+ */
 public class SearchCowFragment extends Fragment {
 
     private RecyclerView cowsList;

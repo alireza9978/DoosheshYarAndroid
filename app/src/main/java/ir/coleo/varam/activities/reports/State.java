@@ -1,5 +1,8 @@
 package ir.coleo.varam.activities.reports;
 
+/**
+ * کلاسی برای مدیریت وضعیت برنامه در مراحل ثبت گزارش
+ */
 enum State {
 
     info, injury, drugs, moreInfo;

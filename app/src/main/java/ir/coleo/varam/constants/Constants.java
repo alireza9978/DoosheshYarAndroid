@@ -17,6 +17,12 @@ import androidx.core.content.ContextCompat;
 
 import ir.coleo.varam.R;
 
+/**
+ * کلاس مربوط به اطلاعات ارتباط بین صفحات
+ * مدیریت تصاویر در حالت فارسی
+ * بستن کیبورد
+ * ذخیره زبان برنامه
+ */
 public class Constants {
 
     //intent to start activity data
@@ -51,14 +57,12 @@ public class Constants {
     public static String EDIT_REPORT = "EDIT_OLD_REPORT";
 
     public static boolean NO_Notification = false;
+    public static String NO_LANGUAGE = "en";
+    public static String NO_TOKEN = "NO TOKEN";
     private static String Notification_STORAGE = "sdcvmcdhereInDads rknessTOK";
     private static String Notification_DATA = "ssaobfmeqwfja; nDarkness12TOKTOK";
-
-    public static String NO_LANGUAGE = "en";
     private static String LANGUAGE_STORAGE = "someWhereInDarkness";
     private static String LANGUAGE_DATA = "someWhereInDarkness12";
-
-    public static String NO_TOKEN = "NO TOKEN";
     private static String TOKEN_STORAGE = "someWhereInDarknessTOK";
     private static String TOKEN_DATA = "someWhereInDarkness12TOKTOK";
 

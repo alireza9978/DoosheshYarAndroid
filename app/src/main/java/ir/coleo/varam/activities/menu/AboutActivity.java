@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
 
+/**
+ * صفحه درباره‌ی ما
+ */
 public class AboutActivity extends AppCompatActivity {
 
     @Override

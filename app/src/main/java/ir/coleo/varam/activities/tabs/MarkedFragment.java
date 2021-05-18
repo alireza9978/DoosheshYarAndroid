@@ -8,13 +8,17 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.MainActivity;
 import ir.coleo.varam.activities.tabs.marked_activities.MarkedCowsFragment;
-import ir.coleo.varam.activities.tabs.marked_activities.MarkedLivestockFragment;
+import ir.coleo.varam.activities.tabs.marked_activities.MarkedFarmFragment;
 import ir.coleo.varam.adapters.TabAdapter;
-import com.google.android.material.tabs.TabLayout;
 
+/**
+ * صفحه مدیریت قسمت نشان‌شده ها در برنامه
+ */
 public class MarkedFragment extends Fragment {
 
     private TabAdapter adapter;
@@ -33,7 +37,7 @@ public class MarkedFragment extends Fragment {
 
         adapter = new TabAdapter(requireContext(), requireActivity().getSupportFragmentManager());
         adapter.addFragment(new MarkedCowsFragment(), getResources().getString(R.string.cows));
-        adapter.addFragment(new MarkedLivestockFragment(), getResources().getString(R.string.livestrocks));
+        adapter.addFragment(new MarkedFarmFragment(), getResources().getString(R.string.livestrocks));
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

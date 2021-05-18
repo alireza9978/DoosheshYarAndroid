@@ -42,6 +42,11 @@ import static ir.coleo.varam.constants.Constants.DateSelectionMode.RANG;
 import static ir.coleo.varam.constants.Constants.DateSelectionMode.SINGLE;
 import static ir.coleo.varam.models.DateContainer.MyDate;
 
+/**
+ * صفحه انتخاب تاریخ
+ * دو حالت انتخاب تکی و بازه‌ای
+ * دو نوع فارسی و انگیلیسی
+ */
 public class DateSelectionActivity extends AppCompatActivity {
 
     private Context context = this;

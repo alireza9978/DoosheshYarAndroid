@@ -22,6 +22,9 @@ import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Drug;
 import ir.coleo.varam.database.utils.AppExecutors;
 
+/**
+ * صفحه انتخاب دارو
+ */
 public class DrugSelectionActivity extends AppCompatActivity {
 
     private Context context = this;

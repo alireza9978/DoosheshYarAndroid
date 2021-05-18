@@ -8,11 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.models.CheckBoxItem;
 
-import java.util.List;
-
+/**
+ * کلاس مدیریت لیست ایتم ها در صفحه‌‌های افزودن گزارش
+ */
 public class GridViewAdapterReasonAddReport extends BaseAdapter {
 
     private List<CheckBoxItem> items;

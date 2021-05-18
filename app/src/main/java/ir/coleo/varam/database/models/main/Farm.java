@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * کلاس نگهدارنده اطلاعات یک گاوداری
+ */
 @Entity
 public class Farm {
     @PrimaryKey

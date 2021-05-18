@@ -15,15 +15,16 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.tabs.TabLayout;
+
 import ir.coleo.varam.R;
-import ir.coleo.varam.activities.tabs.AddLivestockActivity;
+import ir.coleo.varam.activities.tabs.AddFarmActivity;
 import ir.coleo.varam.activities.tabs.BlankFragment;
 import ir.coleo.varam.activities.tabs.HomeFragment;
 import ir.coleo.varam.activities.tabs.MarkedFragment;
 import ir.coleo.varam.activities.tabs.ReportsFragment;
 import ir.coleo.varam.activities.tabs.SearchFragment;
 import ir.coleo.varam.constants.Constants;
-import com.google.android.material.tabs.TabLayout;
 
 
 /**
@@ -50,7 +51,7 @@ public class TabAdapterHome extends FragmentStateAdapter {
                 tab.setCustomView(null);
                 tab.setCustomView(getSelectedTabView(tab.getPosition()));
                 if (tab.getPosition() == 2) {
-                    Intent intent = new Intent(context, AddLivestockActivity.class);
+                    Intent intent = new Intent(context, AddFarmActivity.class);
                     intent.putExtra(Constants.ADD_FARM_MODE, Constants.FARM_CREATE);
                     context.startActivity(intent);
                 } else {

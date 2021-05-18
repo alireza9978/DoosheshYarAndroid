@@ -74,7 +74,7 @@
             android:name=".activities.CowProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.tabs.AddLivestockActivity"
+            android:name=".activities.tabs.AddFarmActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.menu.ProfileActivity"

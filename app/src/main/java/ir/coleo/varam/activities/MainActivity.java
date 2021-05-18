@@ -46,6 +46,10 @@ import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_INJURY;
 import static ir.coleo.varam.constants.Constants.FARM_SELECTION_REPORT_FACTOR;
 import static ir.coleo.varam.constants.Constants.FARM_SELECTION_REPORT_INJURY;
 
+/**
+ * صفحه اصلی برنامه برای مدیریت ۵ صفحه‌ی پایین برنامه
+ * مدیریت ناتیفیکیشن
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TabAdapterHome adapter;
@@ -188,6 +192,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
+    private void cancelSchedule() {
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE);
+        if (pendingIntent != null && alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+        }
+
+    }
+
+    private void scheduleNotification() {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 14);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Calendar cur = Calendar.getInstance();
+
+        if (cur.after(calendar)) {
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        assert alarmManager != null;
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
     public static class CustomTypefaceSpan extends TypefaceSpan {
 
         private final Typeface newType;
@@ -227,37 +262,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void updateMeasureState(@NotNull TextPaint paint) {
             applyCustomTypeFace(paint, newType);
         }
-    }
-
-    private void cancelSchedule() {
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE);
-        if (pendingIntent != null && alarmManager != null) {
-            alarmManager.cancel(pendingIntent);
-        }
-
-    }
-
-    private void scheduleNotification() {
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        Calendar cur = Calendar.getInstance();
-
-        if (cur.after(calendar)) {
-            calendar.add(Calendar.DATE, 1);
-        }
-
-        Intent notificationIntent = new Intent(this, MyNotificationPublisher.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        assert alarmManager != null;
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 }

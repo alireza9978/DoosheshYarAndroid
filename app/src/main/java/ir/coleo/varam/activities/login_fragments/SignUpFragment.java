@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import ir.coleo.varam.R;
 
+/**
+ * صفحه ثبت نام کاربر جدید
+ */
 public class SignUpFragment extends Fragment {
 
     @Override

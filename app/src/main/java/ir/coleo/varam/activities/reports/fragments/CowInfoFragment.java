@@ -19,6 +19,9 @@ import ir.coleo.varam.activities.DateSelectionActivity;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
 
+/**
+ * صفحه اطلاعات اولیه‌ی گاو در ثبت گزارش
+ */
 public class CowInfoFragment extends Fragment {
 
     private ConstraintLayout date_container;

@@ -18,12 +18,12 @@ import ir.coleo.varam.models.CheckBoxManager;
 
 
 /**
- * المان دیالوگ برای گرفتن شماره انگشت
+ * المان دیالوگ برای گرفتن اطلاعات جراحت پستان
  */
-public class SelectFingerDialog extends Dialog {
+public class VaramInfoDialog extends Dialog {
 
 
-    public SelectFingerDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, boolean scoreMode) {
+    public VaramInfoDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, boolean scoreMode) {
         super(fragment.requireContext());
         Context context = fragment.requireContext();
         setContentView(R.layout.select_finger_dialog_layout);
@@ -69,11 +69,11 @@ public class SelectFingerDialog extends Dialog {
         });
     }
 
-    public SelectFingerDialog(@NonNull Context context, int themeResId) {
+    public VaramInfoDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
     }
 
-    protected SelectFingerDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+    protected VaramInfoDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 

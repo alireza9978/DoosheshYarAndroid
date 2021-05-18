@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * کلاس نگهدارنده اطلاعات دارو
+ */
 @Entity
 public class Drug implements Comparable<Drug> {
 

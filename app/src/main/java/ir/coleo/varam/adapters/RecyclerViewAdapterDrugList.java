@@ -16,6 +16,9 @@ import ir.coleo.varam.R;
 import ir.coleo.varam.activities.menu.AddDrugActivity;
 import ir.coleo.varam.database.models.main.Drug;
 
+/**
+ * کلاس مدیریت لیست دارو‌ها در صفحه‌ی افزود دارو‌ی جدید
+ */
 public class RecyclerViewAdapterDrugList extends RecyclerView.Adapter<RecyclerViewAdapterDrugList.Holder> {
 
     private List<Drug> drugs;

@@ -11,13 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.CowProfileActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.NextReport;
 
-import java.util.List;
-
+/**
+ * کلاس مدیریت لیست بازدید‌های بعدی در صفحه‌ی بررسی بازدیدها در قسمت گزارش
+ */
 public class RecyclerViewAdapterNextVisitReport extends RecyclerView.Adapter<RecyclerViewAdapterNextVisitReport.Holder> {
 
     private List<NextReport> nextReports;

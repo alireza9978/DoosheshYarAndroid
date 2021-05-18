@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.Objects;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.MainActivity;
 import ir.coleo.varam.activities.tabs.search_activities.SearchCowFragment;
@@ -17,10 +21,10 @@ import ir.coleo.varam.activities.tabs.search_activities.SearchFarmFragment;
 import ir.coleo.varam.adapters.TabAdapter;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.models.DateContainer;
-import com.google.android.material.tabs.TabLayout;
 
-import java.util.Objects;
-
+/**
+ * صفحه مدیریت بخش جستجو در برنامه
+ */
 public class SearchFragment extends Fragment {
 
     private TabAdapter adapter;

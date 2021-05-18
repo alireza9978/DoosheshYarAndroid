@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey;
 
 import ir.coleo.varam.R;
 
+/**
+ * کلاس نگه دارنده اطلاعات یک گاو
+ */
 @Entity
 public class Cow {
     @PrimaryKey

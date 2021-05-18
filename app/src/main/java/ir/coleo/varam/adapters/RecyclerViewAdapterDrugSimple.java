@@ -18,6 +18,9 @@ import ir.coleo.varam.activities.menu.AddDrugActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.main.Drug;
 
+/**
+ * کلاس مدیریت لیست دارو‌‌ها در صفحه‌ی انتخاب دارو از بین موجود‌ها ه
+ */
 public class RecyclerViewAdapterDrugSimple extends RecyclerView.Adapter<RecyclerViewAdapterDrugSimple.Holder> {
 
     private List<Drug> drugs;
@@ -50,7 +53,7 @@ public class RecyclerViewAdapterDrugSimple extends RecyclerView.Adapter<Recycler
                 intent.putExtra(Constants.DRUG_TYPE, drugType);
                 context.startActivity(intent);
             });
-        }else {
+        } else {
             Drug drug = drugs.get(position - 1);
             holder.farmName.setText(drug.name);
             holder.itemView.setOnClickListener(view -> ((DrugSelectionActivity) context).selectedDrug(drug.id));

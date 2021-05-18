@@ -5,7 +5,7 @@
     style="@style/Theme.App.MainConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.tabs.marked_activities.MarkedLivestockFragment">
+    tools:context=".activities.tabs.marked_activities.MarkedFarmFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -20,8 +20,10 @@ import ir.coleo.varam.adapters.TabAdapterLongText;
 
 import static ir.coleo.varam.constants.Constants.CHOOSE_FILE_REQUEST_CODE;
 
+/**
+ * صفحه مدیریت قسمت گزارش‌ها در برنامه
+ */
 public class ReportsFragment extends Fragment {
-
 
     private TabAdapterLongText adapter;
     private TabLayout tabLayout;

@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.adapters.RecyclerViewAdapterSearchCow;
 import ir.coleo.varam.database.DataBase;
@@ -17,9 +20,9 @@ import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.CowForMarked;
 import ir.coleo.varam.database.utils.AppExecutors;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * صفحه گاو‌های نشان شده در نشان‌شده ‌ها
+ */
 public class MarkedCowsFragment extends Fragment {
 
     private RecyclerViewAdapterSearchCow mAdapter;

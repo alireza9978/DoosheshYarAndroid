@@ -19,6 +19,9 @@ import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.CowWithLastVisit;
 
+/**
+ * کلاس مدیریت لیست گاو‌ها در صفحه‌ی پروفایل گاوداری
+ */
 public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
 
     private List<CowWithLastVisit> cows;

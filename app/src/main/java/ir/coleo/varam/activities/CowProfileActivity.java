@@ -9,19 +9,23 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import java.util.List;
+import java.util.Objects;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.adapters.GridViewAdapterCowProfile;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
-import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.LastReport;
+import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.utils.AppExecutors;
 
-import java.util.List;
-import java.util.Objects;
-
+/**
+ * صفحه پروفایل گاو
+ * با قابلیت حذف گاو
+ */
 public class CowProfileActivity extends AppCompatActivity {
 
     private TextView title;

@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
 
+/**
+ * صفحه انتخاب نوع دارو برای افزودن
+ */
 public class DrugsListActivity extends AppCompatActivity {
 
     private int[] drugsId = new int[]{R.id.drug_text_one, R.id.drug_text_two,

@@ -6,6 +6,9 @@ import androidx.room.PrimaryKey;
 
 import ir.coleo.varam.models.MyDate;
 
+/**
+ * کلاس نگهدارنده اطلاعات گزارش
+ */
 @Entity
 public class Report {
     @PrimaryKey

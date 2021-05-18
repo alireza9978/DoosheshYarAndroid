@@ -10,6 +10,10 @@ import java.util.Objects;
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
 
+/**
+ * صفحه اطلاعات که در مراحل ثبت گزارش قابل دسترس است
+ * با توجه به ورود داده نمایش داده شده متفاوت است
+ */
 public class MoreInfoActivity extends AppCompatActivity {
 
     @Override

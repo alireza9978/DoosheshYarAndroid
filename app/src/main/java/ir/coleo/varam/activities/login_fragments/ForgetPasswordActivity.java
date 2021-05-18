@@ -6,11 +6,14 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
 
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-
+/**
+ * صفحه درخواست پسورد فراموش شده
+ */
 public class ForgetPasswordActivity extends AppCompatActivity {
 
     @Override
