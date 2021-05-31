@@ -83,7 +83,7 @@ public class CowInjuryFragment extends Fragment {
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setOnDismissListener(dialogInterface -> {
             CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMode);
-            if (!manager.isTarkhis()) {
+            if (!manager.isTarkhis() && !manager.isKor()) {
                 if (!manager.scoreSelected() || !manager.cartieSelected()) {
                     reset();
                 }

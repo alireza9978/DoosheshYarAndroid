@@ -190,7 +190,7 @@
     <string name="edit_password">تغییر رمز عبور</string>
     <string name="email">ایمیل</string>
     <string name="save">ذخیره</string>
-    <string name="more_info_text_one">در این قسمت شماره دام درگیر را وارد کنید. تاریخ به صورت پیش فرض در روزی که اطلاعات را وارد می کنید، تعریف شده است. هم چنین امکان ویرایش آن وجود دارد</string>
+    <string name="more_info_text_one">در این قسمت شماره دام درگیر را وارد کنید. تاریخ به صورت پیش فرض در روزی که اطلاعات را وارد می کنید، تعریف شده است. هم چنین امکان ویرایش آن وجود دارد.</string>
     <string name="more_info_three">در صورتی که در دام جراحت جدید مشاهده کردید، ناحیه درگیر را در این قسمت علامت بزنید.</string>
     <string name="forget_password">فراموشی رمز عبور؟</string>
     <string name="forgot_password">فراموشی رمز عبور</string>

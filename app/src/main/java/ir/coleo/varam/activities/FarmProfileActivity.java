@@ -19,10 +19,10 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -242,8 +242,8 @@ public class FarmProfileActivity extends AppCompatActivity {
         if (Constants.checkPermission(this))
             return;
 
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("Sample sheet");
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Sample sheet");
 
         Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
                 R.string.cartie_number_one, R.string.cartie_number_two, R.string.cartie_number_three,
@@ -301,9 +301,10 @@ public class FarmProfileActivity extends AppCompatActivity {
 
                     for (int j = 8; j < 12; j++) {
                         cell = row.createCell(j);
-                        if (j == 8 + report.cartieState) {
-                            cell.setCellValue("*");
-                        }
+                        if (report.cartieState != null)
+                            if (j == 8 + report.cartieState) {
+                                cell.setCellValue("*");
+                            }
                     }
 
                     cell = row.createCell(12);
@@ -395,7 +396,7 @@ public class FarmProfileActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 try {
 
-                    String storage = Environment.getExternalStorageDirectory().toString() + String.format("/%s.xls", farm.name);
+                    String storage = Environment.getExternalStorageDirectory().toString() + String.format("/%s.xlsx", farm.name);
                     File file = new File(storage);
                     if (file.exists()) {
                         if (file.delete()) {

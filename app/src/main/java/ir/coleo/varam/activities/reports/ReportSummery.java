@@ -111,8 +111,10 @@ public class ReportSummery extends AppCompatActivity {
                 cowText.append(getString(R.string.cow_title));
                 cowText.append("" + myReport.cowNumber);
 
-                cartieNumber.setText(R.string.area);
-                cartieNumber.append(" " + report.areaNumber);
+                if (report.areaNumber != null) {
+                    cartieNumber.setText(R.string.area);
+                    cartieNumber.append(" " + report.areaNumber);
+                }
                 if (report.cartieState == null) {
                     report.cartieState = -1;
                 }

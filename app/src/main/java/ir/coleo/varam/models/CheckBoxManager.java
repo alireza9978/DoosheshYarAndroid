@@ -83,6 +83,10 @@ public class CheckBoxManager {
         return score.get(10).isCheck();
     }
 
+    public boolean isKor() {
+        return score.get(6).isCheck();
+    }
+
     public boolean cartieSelected() {
         for (int i = 7; i < score.size(); i++) {
             CheckBoxItem item = score.get(i);

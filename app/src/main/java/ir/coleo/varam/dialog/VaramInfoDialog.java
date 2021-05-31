@@ -55,7 +55,7 @@ public class VaramInfoDialog extends Dialog {
 
         Button ok = findViewById(R.id.ok);
         ok.setOnClickListener(v -> {
-            if (!manager.isTarkhis()) {
+            if (!manager.isTarkhis() && !manager.isKor()) {
                 if (!manager.cartieSelected()) {
                     Toast.makeText(context, R.string.cartie_error, Toast.LENGTH_LONG).show();
                     return;
