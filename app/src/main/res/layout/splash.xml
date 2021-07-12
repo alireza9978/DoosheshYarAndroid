@@ -91,18 +91,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/splash_logo">
 
-        <com.akexorcist.roundcornerprogressbar.indeterminate.IndeterminateRoundCornerProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progress_bar"
             android:layout_width="270dp"
-            android:layout_height="15dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="20dp"
+            android:background="@color/caribbean_green_lighter"
+            android:indeterminate="true"
+            android:progressBackgroundTint="@color/caribbean_green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:rcAnimationSpeedScale="3"
-            app:rcBackgroundColor="@color/caribbean_green_lighter"
-            app:rcProgressColor="@color/caribbean_green" />
+            app:trackCornerRadius="16dp"
+            app:trackThickness="15dp" />
 
         <TextView
             android:id="@+id/loading_state_text_view"
@@ -129,8 +131,7 @@
         android:layout_height="350dp"
         android:background="@color/white"
         android:contentDescription="@string/logo_content"
-        android:padding="40dp"
-        android:src="@drawable/varam"
+        android:src="@mipmap/varam"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -58,7 +58,9 @@ public class MoreInfoFragment extends Fragment {
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
             if (!CheckBoxManager.getCheckBoxManager(scoreMode).isTarkhis()) {
-                if (date != null) {
+                if (CheckBoxManager.getCheckBoxManager(scoreMode).isKor()) {
+                    ((AddReportActivity) requireActivity()).next();
+                } else if (date != null) {
                     ((AddReportActivity) requireActivity()).next();
                 } else {
                     Toast.makeText(requireContext(), R.string.enter_next_visit_date, Toast.LENGTH_LONG).show();

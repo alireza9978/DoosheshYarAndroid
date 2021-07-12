@@ -71,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
                     goApp();
                 });
             }
-        }, 1000);
+        }, 2000);
         changeState(0);
     }
 

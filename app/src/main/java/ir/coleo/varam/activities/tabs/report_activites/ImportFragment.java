@@ -131,7 +131,7 @@ public class ImportFragment extends Fragment {
                     R.string.cartie_number_one, R.string.cartie_number_two, R.string.cartie_number_three,
                     R.string.cartie_number_four, R.string.cartie_one,
                     R.string.cartie_two, R.string.cartie_three, R.string.cartie_four,
-                    R.string.score_zero ,R.string.score_one, R.string.score_two, R.string.drug_title_1,
+                    R.string.score_zero, R.string.score_one, R.string.score_two, R.string.drug_title_1,
                     R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
                     R.string.drug_title_5, next_visit, more_info, R.string.score_type};
 
@@ -144,6 +144,9 @@ public class ImportFragment extends Fragment {
             int count = 0;
             assert dataTypeSheet != null;
             for (Cell cell : dataTypeSheet.getRow(0)) {
+                if (cell == null) {
+                    continue;
+                }
                 if (!cell.getStringCellValue().equals(getString(headers[count]))) {
                     Toast.makeText(requireContext(), "expected : " + getString(headers[count])
                             + " find : " + cell.getStringCellValue(), Toast.LENGTH_LONG).show();
@@ -159,6 +162,9 @@ public class ImportFragment extends Fragment {
                     Row row = rows.next();
                     for (int i = 11; i < 16; i++) {
                         Cell cell = row.getCell(i);
+                        if (cell == null) {
+                            continue;
+                        }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                             Drug drug = new Drug();
                             drug.type = i - 11;
@@ -236,8 +242,11 @@ public class ImportFragment extends Fragment {
                                 (int) row.getCell(2).getNumericCellValue(),
                                 (int) row.getCell(3).getNumericCellValue());
                     }
-
-                    String scoreType = row.getCell(22).getStringCellValue();
+                    Cell cell = row.getCell(22);
+                    if (cell == null) {
+                        continue;
+                    }
+                    String scoreType = cell.getStringCellValue();
                     if (scoreType.equals(getString(R.string.three_level_text))) {
                         report.scoreType = true;
                     } else if (scoreType.equals(getString(R.string.four_level_text))) {
@@ -249,7 +258,10 @@ public class ImportFragment extends Fragment {
 
                     score_loop:
                     for (int i = 4; i < 8; i++) {
-                        Cell cell = row.getCell(i);
+                        cell = row.getCell(i);
+                        if (cell == null) {
+                            continue;
+                        }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                             String temp = cell.getStringCellValue();
                             if (!temp.isEmpty()) {
@@ -279,7 +291,10 @@ public class ImportFragment extends Fragment {
                     }
 
                     for (int i = 8; i < 12; i++) {
-                        Cell cell = row.getCell(i);
+                        cell = row.getCell(i);
+                        if (cell == null) {
+                            continue;
+                        }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                             String temp = cell.getStringCellValue();
                             if (!temp.isEmpty() && temp.equals("*")) {
@@ -290,7 +305,10 @@ public class ImportFragment extends Fragment {
                     }
 
                     for (int i = 12; i < 15; i++) {
-                        Cell cell = row.getCell(i);
+                        cell = row.getCell(i);
+                        if (cell == null) {
+                            continue;
+                        }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                             String star = cell.getStringCellValue();
                             if (star != null && !star.isEmpty() && star.equals("*")) {
@@ -323,7 +341,10 @@ public class ImportFragment extends Fragment {
 
 
                     for (int i = 15; i < 20; i++) {
-                        Cell cell = row.getCell(i);
+                        cell = row.getCell(i);
+                        if (cell == null) {
+                            continue;
+                        }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                             String drugName = cell.getStringCellValue();
                             for (Drug drug : drugList) {
@@ -357,6 +378,9 @@ public class ImportFragment extends Fragment {
 
 
                     Cell nextVisitCell = row.getCell(20);
+                    if (nextVisitCell == null) {
+                        continue;
+                    }
                     if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
                         String[] date = nextVisitCell.getStringCellValue().split("/");
                         if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
@@ -372,6 +396,9 @@ public class ImportFragment extends Fragment {
                         }
                     }
                     Cell moreInfo = row.getCell(21);
+                    if (moreInfo == null) {
+                        continue;
+                    }
                     if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
                         report.description = moreInfo.getStringCellValue();
                     }
