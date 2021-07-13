@@ -9,8 +9,8 @@ android {
         applicationId "ir.coleo.varam"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 9
-        versionName "0.1.8"
+        versionCode 10
+        versionName "0.1.10"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
