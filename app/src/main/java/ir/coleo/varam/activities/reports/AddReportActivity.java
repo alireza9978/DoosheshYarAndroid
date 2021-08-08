@@ -28,6 +28,7 @@ import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.CheckBoxManager;
 import ir.coleo.varam.models.DateContainer;
@@ -45,6 +46,7 @@ public class AddReportActivity extends AppCompatActivity {
     private State state;
     private Cow cow;
     private Farm farm;
+    private ScoreMethod scoreMethod;
     private TabAdapterReport adapter;
     private StepperIndicator stepperIndicator;
     private DateContainer one;
@@ -78,6 +80,7 @@ public class AddReportActivity extends AppCompatActivity {
                 Report report = dao.getReport(reportId);
                 cow = dao.getCow(report.cowId);
                 farm = dao.getFarm(cow.getFarm());
+                scoreMethod = dao.getScoreMethod(farm.scoreMethodId);
                 DateContainer container;
                 DateContainer container_two;
                 int[] temp = report.visit.convert(this);
@@ -107,7 +110,7 @@ public class AddReportActivity extends AppCompatActivity {
                     if (two != null) {
                         nextDate = two.toString(this);
                     }
-                    CheckBoxManager.getCheckBoxManager(farm.scoreMethod).setBooleansFromReport(report);
+                    CheckBoxManager.getCheckBoxManager(scoreMethod).setBooleansFromReport(report, scoreMethod);
                     ArrayList<Pair<Integer, Integer>> list = new ArrayList<>();
                     if (report.pomadeId != null) {
                         list.add(new Pair<>(0, report.pomadeId));
@@ -126,7 +129,7 @@ public class AddReportActivity extends AppCompatActivity {
                     }
                     adapter = new TabAdapterReport(this, cow.getNumber(),
                             one.toString(this), nextDate, report.areaNumber - 1,
-                            report.description, farm.scoreMethod, list);
+                            report.description, scoreMethod, list);
 
                     viewPager.setOffscreenPageLimit(2);
                     viewPager.setUserInputEnabled(false);
@@ -160,11 +163,11 @@ public class AddReportActivity extends AppCompatActivity {
                     cow = null;
                     farm = dao.getFarm(farmId);
                 }
-
+                scoreMethod = dao.getScoreMethod(farm.scoreMethodId);
                 runOnUiThread(() -> {
 
                     state = State.info;
-                    adapter = new TabAdapterReport(this, farm.scoreMethod);
+                    adapter = new TabAdapterReport(this, scoreMethod);
 
                     viewPager.setOffscreenPageLimit(2);
                     viewPager.setUserInputEnabled(false);
@@ -203,10 +206,10 @@ public class AddReportActivity extends AppCompatActivity {
         if (two != null) {
             report.nextVisit = two.exportStart();
         }
-        report.scoreType = farm.scoreMethod;
+        report.scoreMethodId = farm.scoreMethodId;
         report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected() + 1;
         ((DrugFragment) adapter.getFragment(2)).setDrugOnReport(report);
-        CheckBoxManager.getCheckBoxManager(farm.scoreMethod).setBooleansOnReport(report);
+        CheckBoxManager.getCheckBoxManager(scoreMethod).setBooleansOnReport(report);
         report.description = ((MoreInfoFragment) adapter.getFragment(3)).getMoreInfo();
 
         if (mode.equals(Constants.REPORT_CREATE)) {
@@ -248,9 +251,9 @@ public class AddReportActivity extends AppCompatActivity {
         if (two != null) {
             report.nextVisit = two.exportStart();
         }
-        report.scoreType = farm.scoreMethod;
+        report.scoreMethodId = farm.scoreMethodId;
         report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected() + 1;
-        CheckBoxManager.getCheckBoxManager(farm.scoreMethod).setBooleansOnReport(report);
+        CheckBoxManager.getCheckBoxManager(scoreMethod).setBooleansOnReport(report);
 
         if (mode.equals(Constants.REPORT_CREATE)) {
             AppExecutors.getInstance().diskIO().execute(() -> {
@@ -264,9 +267,7 @@ public class AddReportActivity extends AppCompatActivity {
                 }
                 report.cowId = cow.getId();
                 dao.insert(report);
-                runOnUiThread(() -> {
-                    Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
-                });
+                runOnUiThread(() -> Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show());
             });
         }
     }

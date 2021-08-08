@@ -49,12 +49,17 @@ public class Constants {
     public static final int DRUG_SELECTION = 500;
 
     public static final String DATE_SELECTION_RESULT = "res_xc";
+    public static final String SCORE_METHOD_INTENT_MODE = "IMPORT_OR_CREATE";
+    public static final String SCORE_METHOD_INTENT_DATA = "IMPORTING_DATA";
     public static String ADD_FARM_MODE = "SADASDXCVV";
     public static String FARM_CREATE = "CREATE_NEW_FARM";
     public static String EDIT_FARM = "EDIT_OLD_FARM";
     public static String REPORT_MODE = "SADAS DXCCXZVV";
     public static String REPORT_CREATE = "CREATE_NEW_REPORT";
     public static String EDIT_REPORT = "EDIT_OLD_REPORT";
+
+    public static String SCORE_METHOD_INTENT = "To_move_score_method";
+    public static String SCORE_METHOD_INTENT_COUNT = "To_move_score_method_count";
 
     public static boolean NO_Notification = false;
     public static String NO_LANGUAGE = "en";

@@ -1,5 +1,7 @@
 package ir.coleo.varam.activities.tabs;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
@@ -17,6 +21,7 @@ import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Farm;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
 
 /**
@@ -24,8 +29,8 @@ import ir.coleo.varam.database.utils.AppExecutors;
  */
 public class AddFarmActivity extends AppCompatActivity {
 
-    private Boolean dryMethod = null;
-    private Boolean scoreMethod = null;
+    //    private Boolean dryMethod = null;
+    private ScoreMethod scoreMethod = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +52,16 @@ public class AddFarmActivity extends AppCompatActivity {
             farmTitle.requestFocus();
 
             Button submit = findViewById(R.id.submit);
-            makeCheckBoxList(R.id.one_check, R.id.one_text, R.id.two_check, R.id.two_text, true);
-            makeCheckBoxList(R.id.three_check, R.id.three_text, R.id.four_check, R.id.four_text, false);
+            makeCheckBoxList(R.id.three_check, R.id.three_text, 3);
+            makeCheckBoxList(R.id.four_check, R.id.four_text, 4);
+            makeCheckBoxList(R.id.five_check, R.id.five_text, 5);
             if (mode.equals(Constants.FARM_CREATE)) {
                 submit.setOnClickListener((View v) -> {
                     if (birthCount.getText().toString().isEmpty() ||
                             showerCount.getText().toString().isEmpty() ||
                             showerPitCount.getText().toString().isEmpty() ||
                             showerUnitCount.getText().toString().isEmpty() ||
-                            dryMethod == null || scoreMethod == null
+                            scoreMethod == null
                     ) {
                         Toast.makeText(this, R.string.check_fields, Toast.LENGTH_SHORT).show();
                         return;
@@ -69,8 +75,6 @@ public class AddFarmActivity extends AppCompatActivity {
                     farm.showerCount = Integer.parseInt(showerCount.getText().toString());
                     farm.showerPitCount = Integer.parseInt(showerPitCount.getText().toString());
                     farm.showerUnitCount = Integer.parseInt(showerUnitCount.getText().toString());
-                    farm.dryMethod = dryMethod;
-                    farm.scoreMethod = scoreMethod;
                     if (farm.name.isEmpty() || farm.bedType.isEmpty()) {
                         Toast.makeText(this, R.string.check_fields, Toast.LENGTH_SHORT).show();
                         return;
@@ -79,7 +83,9 @@ public class AddFarmActivity extends AppCompatActivity {
 
                     MyDao dao = DataBase.getInstance(this).dao();
                     AppExecutors.getInstance().diskIO().execute(() -> {
+                        farm.scoreMethodId = dao.insertGetId(scoreMethod);
                         dao.insert(farm);
+
                         hideKeyboard();
                         finish();
                     });
@@ -91,6 +97,7 @@ public class AddFarmActivity extends AppCompatActivity {
                 MyDao dao = DataBase.getInstance(this).dao();
                 AppExecutors.getInstance().diskIO().execute(() -> {
                     Farm farm = dao.getFarm(id);
+                    ScoreMethod tempScoreMethod = dao.getScoreMethod(farm.scoreMethodId);
                     runOnUiThread(() -> {
                         farmTitle.setText(farm.name);
                         bedType.setText(farm.bedType);
@@ -98,47 +105,49 @@ public class AddFarmActivity extends AppCompatActivity {
                         showerCount.setText("" + farm.showerCount);
                         showerPitCount.setText("" + farm.showerPitCount);
                         showerUnitCount.setText("" + farm.showerUnitCount);
-                        this.dryMethod = farm.dryMethod;
-                        this.scoreMethod = farm.scoreMethod;
-                        if (this.dryMethod != null)
-                            if (this.dryMethod) {
-                                CheckBox checkBox = findViewById(R.id.one_check);
+                        scoreMethod = tempScoreMethod;
+                        scoreMethod.id = null;
+                        switch (scoreMethod.scoresCount){
+                            case 3:{
+                                CheckBox checkBox = findViewById(R.id.three_check);
                                 checkBox.setChecked(true);
-                            } else {
-                                CheckBox checkBox = findViewById(R.id.two_check);
-                                checkBox.setChecked(true);
+                                break;
                             }
-                        if (this.scoreMethod) {
-                            CheckBox checkBox = findViewById(R.id.three_check);
-                            checkBox.setChecked(true);
-                        } else {
-                            CheckBox checkBox = findViewById(R.id.four_check);
-                            checkBox.setChecked(true);
+                            case 4:{
+                                CheckBox checkBox = findViewById(R.id.four_check);
+                                checkBox.setChecked(true);
+                                break;
+                            }
+                            case 5:{
+                                CheckBox checkBox = findViewById(R.id.five_check);
+                                checkBox.setChecked(true);
+                                break;
+                            }
+                            default:
+                                throw new IllegalStateException("Unexpected value: " + scoreMethod.scoresCount);
                         }
+
                     });
                 });
 
-                submit.setOnClickListener((View v) -> {
-                    AppExecutors.getInstance().diskIO().execute(() -> {
-                        Farm farm = dao.getFarm(id);
-                        runOnUiThread(() -> {
-                            farm.name = farmTitle.getText().toString();
-                            farm.bedType = bedType.getText().toString();
-                            farm.birthCount = Integer.parseInt(birthCount.getText().toString());
-                            farm.showerCount = Integer.parseInt(showerCount.getText().toString());
-                            farm.showerPitCount = Integer.parseInt(showerPitCount.getText().toString());
-                            farm.showerUnitCount = Integer.parseInt(showerUnitCount.getText().toString());
-                            farm.dryMethod = dryMethod;
-                            farm.scoreMethod = scoreMethod;
-                            AppExecutors.getInstance().diskIO().execute(() -> {
-                                dao.update(farm);
-                                hideKeyboard();
-                                runOnUiThread(this::finish);
-                            });
+                submit.setOnClickListener((View v) -> AppExecutors.getInstance().diskIO().execute(() -> {
+                    Farm farm = dao.getFarm(id);
+                    runOnUiThread(() -> {
+                        farm.name = farmTitle.getText().toString();
+                        farm.bedType = bedType.getText().toString();
+                        farm.birthCount = Integer.parseInt(birthCount.getText().toString());
+                        farm.showerCount = Integer.parseInt(showerCount.getText().toString());
+                        farm.showerPitCount = Integer.parseInt(showerPitCount.getText().toString());
+                        farm.showerUnitCount = Integer.parseInt(showerUnitCount.getText().toString());
+                        AppExecutors.getInstance().diskIO().execute(() -> {
+                            farm.scoreMethodId = dao.insertGetId(scoreMethod);
+                            dao.update(farm);
+                            hideKeyboard();
+                            runOnUiThread(this::finish);
                         });
-
                     });
-                });
+
+                }));
             }
 
         }
@@ -149,50 +158,43 @@ public class AddFarmActivity extends AppCompatActivity {
         Constants.hideKeyboard(this, findViewById(R.id.root).getWindowToken());
     }
 
-    private void makeCheckBoxList(Integer one, Integer oneText, Integer two, Integer twoText, boolean up) {
+    private void makeCheckBoxList(Integer one, Integer oneText, int count) {
         CheckBox checkBox_0 = findViewById(one);
         TextView textView_0 = findViewById(oneText);
-        CheckBox checkBox_1 = findViewById(two);
-        TextView textView_1 = findViewById(twoText);
 
         checkBox_0.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
-                checkBox_1.setChecked(false);
-                if (up) {
-                    dryMethod = Boolean.TRUE;
-                } else {
-                    scoreMethod = Boolean.TRUE;
-                }
+                scoreMethod = null;
             } else {
-                if (up) {
-                    dryMethod = null;
-                } else {
-                    scoreMethod = null;
-                }
+                runOnUiThread(() -> {
+
+                    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+                    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                            new ActivityResultContracts.StartActivityForResult(),
+                            result -> {
+                                if (result.getResultCode() == Activity.RESULT_OK) {
+                                    // There are no request codes
+                                    Intent data = result.getData();
+                                    assert data != null;
+                                    this.scoreMethod = (ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT);
+                                }else{
+                                    checkBox_0.setChecked(false);
+                                }
+                            });
+
+                    Intent intent = new Intent(AddFarmActivity.this, CreateScoreMethod.class);
+                    intent.putExtra(Constants.SCORE_METHOD_INTENT_MODE, "CREATE");
+                    intent.putExtra(Constants.SCORE_METHOD_INTENT_COUNT, count);
+                    someActivityResultLauncher.launch(intent);
+                });
             }
         });
-        checkBox_1.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (b) {
-                checkBox_0.setChecked(false);
-                if (up) {
-                    dryMethod = Boolean.FALSE;
-                } else {
-                    scoreMethod = Boolean.FALSE;
-                }
-            } else {
-                if (up) {
-                    dryMethod = null;
-                } else {
-                    scoreMethod = null;
-                }
-            }
-        });
-        textView_0.setOnClickListener(view -> {
-            checkBox_0.setChecked(!checkBox_0.isChecked());
-        });
-        textView_1.setOnClickListener(view -> {
-            checkBox_1.setChecked(!checkBox_1.isChecked());
-        });
+        textView_0.setOnClickListener(view -> checkBox_0.setChecked(!checkBox_0.isChecked()));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

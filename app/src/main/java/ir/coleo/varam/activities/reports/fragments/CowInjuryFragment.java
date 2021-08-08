@@ -15,6 +15,7 @@ import java.util.Objects;
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.dialog.VaramInfoDialog;
 import ir.coleo.varam.models.CheckBoxManager;
 
@@ -28,17 +29,17 @@ public class CowInjuryFragment extends Fragment {
     private int[] buttonId = new int[]{R.id.one, R.id.two, R.id.three, R.id.four};
     private int[] cartieImage = new int[]{R.drawable.ic_cartie_one, R.drawable.ic_cartie_two,
             R.drawable.ic_cartie_three, R.drawable.ic_cartie_four};
-    private boolean scoreMode;
+    private final ScoreMethod scoreMethod;
     private boolean edit = false;
 
-    public CowInjuryFragment(int selected, boolean scoreMode) {
+    public CowInjuryFragment(int selected, ScoreMethod scoreMethod) {
         this.edit = true;
         this.selected = selected;
-        this.scoreMode = scoreMode;
+        this.scoreMethod = scoreMethod;
     }
 
-    public CowInjuryFragment(boolean scoreMode) {
-        this.scoreMode = scoreMode;
+    public CowInjuryFragment(ScoreMethod scoreMethod) {
+        this.scoreMethod = scoreMethod;
     }
 
     @Override
@@ -79,10 +80,10 @@ public class CowInjuryFragment extends Fragment {
     }
 
     public void getFingerNumber() {
-        VaramInfoDialog dialog = new VaramInfoDialog(this, edit, scoreMode);
+        VaramInfoDialog dialog = new VaramInfoDialog(this, edit, scoreMethod);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setOnDismissListener(dialogInterface -> {
-            CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMode);
+            CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
             if (!manager.isTarkhis() && !manager.isKor()) {
                 if (!manager.scoreSelected() || !manager.cartieSelected()) {
                     reset();

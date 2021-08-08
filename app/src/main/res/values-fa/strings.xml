@@ -36,6 +36,7 @@
     <string name="cow_title">گاو </string>
     <string name="today">امروز</string>
     <string name="create_farm">ایجاد گاوداری</string>
+    <string name="create_score_method">ایجاد روش اسکورهی</string>
     <string name="control_system">سیستم نگهداری</string>
     <string name="enter_farm_name">نام گاوداری را وارد کنید</string>
     <string name="birth_count">تعداد مولد</string>
@@ -201,8 +202,9 @@
     <string name="clear">پاک کردن</string>
     <string name="dry_method">روش خشکی</string>
     <string name="score_method">نحوه اسکوردهی ورم‌پستان</string>
-    <string name="four_level">چهار سطحی (۱، ۲، ۳، ۴)</string>
-    <string name="three_level">سه سطحی (۱، ۲.۱، ۲.۲، ۳)</string>
+    <string name="five_level">پنج سطحی</string>
+    <string name="four_level">چهار سطحی</string>
+    <string name="three_level">سه سطحی</string>
     <string name="four_level_text">چهار سطحی</string>
     <string name="three_level_text">سه سطحی</string>
     <string name="information_about_milk">اطلاعات مربوط به شیردوشی</string>
@@ -278,5 +280,8 @@
     <string name="contact_bottom_one">در صورت تمایل به بررسی اطلاعات ورمپستان دامداری و گرفتن مشاوره لطفا خروجی اکسل برنامه را که حداقل اطلاعات سه ماه در آن ثبت است به ایمیل </string>
     <string name="contact_bottom_two">herdhealther@gmail.com</string>
     <string name="contact_bottom_three"> ارسال نمایید.</string>
+    <string name="level">"سطح "</string>
+    <string name="invalid_input">مقادیر ورودی را وارد کنید.</string>
+    <string name="invalid_input_big_number">برای هر سطح شماره مربوط را وارد کنید.</string>
 
 </resources>

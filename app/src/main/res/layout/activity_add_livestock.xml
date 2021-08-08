@@ -148,6 +148,7 @@
                 android:text="@string/dry_method"
                 android:textColor="@color/selected_tab_home"
                 android:textSize="18sp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/birth_count" />
 
@@ -155,6 +156,7 @@
                 android:id="@+id/item_one_container"
                 style="@style/Theme.App.MainConstraint"
                 android:layout_width="175dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -293,6 +295,38 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/item_five_container"
+                style="@style/Theme.App.MainConstraint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_four_container">
+
+                <CheckBox
+                    android:id="@+id/five_check"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/five_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anjoman_regular"
+                    android:text="@string/five_level"
+                    android:textColor="@color/report_gray"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/five_check"
+                    app:layout_constraintStart_toEndOf="@id/five_check"
+                    app:layout_constraintTop_toTopOf="@id/five_check" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:id="@+id/milk_info"
                 android:layout_width="wrap_content"
@@ -305,7 +339,7 @@
                 android:textColor="@color/selected_tab_home"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_four_container" />
+                app:layout_constraintTop_toBottomOf="@id/item_five_container" />
 
             <EditText
                 android:id="@+id/shower_pit_count"

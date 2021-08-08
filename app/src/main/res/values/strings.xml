@@ -34,6 +34,7 @@
     <string name="today">today</string>
     <string name="enter_farm_name">enter farm name</string>
     <string name="create_farm">create farm</string>
+    <string name="create_score_method">create score method</string>
     <string name="control_system">Housing system</string>
     <string name="birth_count">Dairy cows</string>
 
@@ -200,6 +201,7 @@
     <string name="clear">clear</string>
     <string name="dry_method">dry method</string>
     <string name="score_method">score method</string>
+    <string name="five_level">five level</string>
     <string name="four_level">four level</string>
     <string name="three_level">three level</string>
     <string name="information_about_milk">information about milk</string>
@@ -276,5 +278,8 @@
     <string name="contact_top">دام‌آسا
     گروه تحقیق و ترویج سلامت گله‌های شیری</string>
     <string name="clear_data">اطلاعات وارد شده پاک شد</string>
+    <string name="level">"سطح "</string>
+    <string name="invalid_input">مقادیر ورودی را وارد کنید.</string>
+    <string name="invalid_input_big_number">برای هر سطح شماره مربوط را وارد کنید.</string>
 
 </resources>

@@ -13,6 +13,7 @@ import ir.coleo.varam.activities.reports.fragments.CowInfoFragment;
 import ir.coleo.varam.activities.reports.fragments.CowInjuryFragment;
 import ir.coleo.varam.activities.reports.fragments.DrugFragment;
 import ir.coleo.varam.activities.reports.fragments.MoreInfoFragment;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 
 
 /**
@@ -22,23 +23,23 @@ import ir.coleo.varam.activities.reports.fragments.MoreInfoFragment;
 public class TabAdapterReport extends FragmentStateAdapter {
 
     private final boolean edit;
-    private Fragment[] fragments = new Fragment[5];
+    private final Fragment[] fragments = new Fragment[5];
     private int cowNumber;
     private int areaNumber;
     private String date;
     private String nextDate;
     private String description;
-    private boolean scoreMode;
+    private final ScoreMethod scoreMethod;
     private ArrayList<Pair<Integer, Integer>> drugs;
 
-    public TabAdapterReport(@NonNull FragmentActivity fragmentActivity, boolean scoreMode) {
+    public TabAdapterReport(@NonNull FragmentActivity fragmentActivity, ScoreMethod scoreMethod) {
         super(fragmentActivity);
         this.edit = false;
-        this.scoreMode = scoreMode;
+        this.scoreMethod = scoreMethod;
     }
 
     public TabAdapterReport(@NonNull FragmentActivity fragmentActivity, int cowNumber, String date,
-                            String nextDate, int areaNumber, String description, boolean scoreMode,
+                            String nextDate, int areaNumber, String description, ScoreMethod scoreMethod,
                             ArrayList<Pair<Integer, Integer>> drugs) {
         super(fragmentActivity);
         this.edit = true;
@@ -48,7 +49,7 @@ public class TabAdapterReport extends FragmentStateAdapter {
         this.drugs = drugs;
         this.nextDate = nextDate;
         this.areaNumber = areaNumber;
-        this.scoreMode = scoreMode;
+        this.scoreMethod = scoreMethod;
     }
 
     @NonNull
@@ -58,9 +59,9 @@ public class TabAdapterReport extends FragmentStateAdapter {
             switch (position) {
                 case 3: {
                     if (edit) {
-                        fragments[3] = new MoreInfoFragment(nextDate, description, scoreMode);
+                        fragments[3] = new MoreInfoFragment(nextDate, description, scoreMethod);
                     } else
-                        fragments[3] = new MoreInfoFragment(scoreMode);
+                        fragments[3] = new MoreInfoFragment(scoreMethod);
                     break;
                 }
                 case 2: {
@@ -73,9 +74,9 @@ public class TabAdapterReport extends FragmentStateAdapter {
                 }
                 case 1: {
                     if (edit) {
-                        fragments[1] = new CowInjuryFragment(areaNumber, scoreMode);
+                        fragments[1] = new CowInjuryFragment(areaNumber, scoreMethod);
                     } else {
-                        fragments[1] = new CowInjuryFragment(scoreMode);
+                        fragments[1] = new CowInjuryFragment(scoreMethod);
                     }
                     break;
                 }

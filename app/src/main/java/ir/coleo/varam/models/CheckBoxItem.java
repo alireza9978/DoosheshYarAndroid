@@ -1,5 +1,7 @@
 package ir.coleo.varam.models;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 /**
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 public class CheckBoxItem {
 
     private Integer name;
+    private String nameString;
     private boolean check;
     private boolean active;
     private ArrayList<CheckBoxItem> disable;
@@ -21,6 +24,13 @@ public class CheckBoxItem {
 
     public CheckBoxItem(Integer name) {
         this.name = name;
+        this.check = false;
+        this.active = true;
+        disable = new ArrayList<>();
+    }
+
+    public CheckBoxItem(String nameString) {
+        this.nameString = nameString;
         this.check = false;
         this.active = true;
         disable = new ArrayList<>();
@@ -52,8 +62,12 @@ public class CheckBoxItem {
         this.active = active;
     }
 
-    public Integer getName() {
-        return name;
+    public String getName(Context context) {
+        if (name != null){
+            return context.getString(name);
+        }else{
+            return nameString;
+        }
     }
 
     public void setName(Integer name) {

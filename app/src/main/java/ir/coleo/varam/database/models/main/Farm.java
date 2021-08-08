@@ -24,11 +24,11 @@ public class Farm {
     @ColumnInfo(name = "bed_type")
     public String bedType;
 
-    @ColumnInfo(name = "dry_method")
-    public Boolean dryMethod;
+//    @ColumnInfo(name = "dry_method")
+//    public Boolean dryMethod;
 
-    @ColumnInfo(name = "scoreMethod")
-    public Boolean scoreMethod;
+    @ColumnInfo(name = "score_method_id")
+    public Long scoreMethodId;
 
     @ColumnInfo(name = "shower_unit_count")
     public Integer showerUnitCount;

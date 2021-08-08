@@ -12,13 +12,15 @@ import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.main.Drug;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.DateConverter;
+import ir.coleo.varam.database.utils.ListConverter;
 
 /**
  * کلاس اصلی و معرت پایگاه داده
  */
-@Database(entities = {Farm.class, Cow.class, Report.class, Drug.class}, version = 1, exportSchema = false)
-@TypeConverters({DateConverter.class})
+@Database(entities = {Farm.class, Cow.class, Report.class, Drug.class, ScoreMethod.class}, version = 2, exportSchema = false)
+@TypeConverters({DateConverter.class, ListConverter.class})
 public abstract class DataBase extends RoomDatabase {
     private static final String dataBaseName = "temp";
     private static DataBase dataBase;

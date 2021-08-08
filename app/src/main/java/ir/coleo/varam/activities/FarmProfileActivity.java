@@ -47,6 +47,7 @@ import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.main.Drug;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.MyDate;
 
@@ -67,7 +68,7 @@ public class FarmProfileActivity extends AppCompatActivity {
     private TextView visitTitle;
     private TextView showerCount;
     private TextView bedType;
-    private TextView scoreMethod;
+    private TextView scoreMethodTextView;
     private TextView birthCount;
     private TextView nextVisit;
     private ImageView bookmark;
@@ -88,7 +89,7 @@ public class FarmProfileActivity extends AppCompatActivity {
         menuLayout = findViewById(R.id.menu_layout);
         outside = findViewById(R.id.outside);
         bedType = findViewById(R.id.bed_type_value);
-        scoreMethod = findViewById(R.id.score_type_value);
+        scoreMethodTextView = findViewById(R.id.score_type_value);
         title = findViewById(R.id.title_livestrok);
         visitTitle = findViewById(R.id.next_visit_title);
         birthCount = findViewById(R.id.count_value);
@@ -169,13 +170,10 @@ public class FarmProfileActivity extends AppCompatActivity {
         AppExecutors.getInstance().diskIO().execute(() -> {
             FarmWithNextVisit farmWithNextVisit = dao.getFarmWithNextVisit(id);
             Farm farm = dao.getFarm(id);
+            ScoreMethod scoreMethod = dao.getScoreMethod(farm.scoreMethodId);
             runOnUiThread(() -> {
                 bedType.setText(farm.bedType);
-                if (farm.scoreMethod) {
-                    scoreMethod.setText(getString(R.string.three_level_text));
-                } else {
-                    scoreMethod.setText(getString(R.string.four_level_text));
-                }
+                scoreMethodTextView.setText(getString(scoreMethod.getText()));
                 bookmark.setOnClickListener(view -> {
                     farm.favorite = !farm.favorite;
                     if (farm.favorite) {
@@ -259,6 +257,8 @@ public class FarmProfileActivity extends AppCompatActivity {
 
         MyDao dao = DataBase.getInstance(this).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
+            Farm farm = dao.getFarm(id);
+            ScoreMethod scoreMethod = dao.getScoreMethod(farm.scoreMethodId);
             List<MyReport> reports = dao.getAllMyReportFarm(id);
             List<Drug> drugs = dao.getAllDrug();
             runOnUiThread(() -> {
@@ -291,11 +291,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                         cell = row.createCell(j);
                         if (report.score != null)
                             if (j == 4 + (report.areaNumber - 1)) {
-                                if (report.scoreType) {
-                                    cell.setCellValue(getString(threeLevel[report.score]));
-                                } else {
-                                    cell.setCellValue(getString(fourLevel[report.score]));
-                                }
+                                cell.setCellValue(scoreMethod.scoresNameList.get(report.score));
                             }
                     }
 
@@ -381,12 +377,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                     cell = row.createCell(21);
                     cell.setCellValue(report.description);
 
-                    cell = row.createCell(22);
-                    if (report.scoreType) {
-                        cell.setCellValue(getString(R.string.three_level_text));
-                    } else {
-                        cell.setCellValue(getString(R.string.four_level_text));
-                    }
+//                   todo add cure duration
                 }
             });
         });

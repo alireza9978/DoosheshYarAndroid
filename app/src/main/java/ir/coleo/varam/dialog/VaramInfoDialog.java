@@ -14,6 +14,7 @@ import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.activities.reports.fragments.CowInjuryFragment;
 import ir.coleo.varam.adapters.GridViewAdapterReasonAddReport;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.models.CheckBoxManager;
 
 
@@ -23,7 +24,7 @@ import ir.coleo.varam.models.CheckBoxManager;
 public class VaramInfoDialog extends Dialog {
 
 
-    public VaramInfoDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, boolean scoreMode) {
+    public VaramInfoDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, ScoreMethod scoreMode) {
         super(fragment.requireContext());
         Context context = fragment.requireContext();
         setContentView(R.layout.select_finger_dialog_layout);

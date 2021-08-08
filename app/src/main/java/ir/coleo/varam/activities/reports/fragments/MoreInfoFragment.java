@@ -17,6 +17,7 @@ import ir.coleo.varam.R;
 import ir.coleo.varam.activities.DateSelectionActivity;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.models.CheckBoxManager;
 
 /**
@@ -29,16 +30,16 @@ public class MoreInfoFragment extends Fragment {
     private TextView date_text;
     private String date;
     private String description;
-    private boolean scoreMode;
+    private ScoreMethod scoreMethod;
 
-    public MoreInfoFragment(String date, String description, boolean scoreMode) {
+    public MoreInfoFragment(String date, String description, ScoreMethod scoreMethod) {
         this.date = date;
         this.description = description;
-        this.scoreMode = scoreMode;
+        this.scoreMethod = scoreMethod;
     }
 
-    public MoreInfoFragment(boolean scoreMode) {
-        this.scoreMode = scoreMode;
+    public MoreInfoFragment(ScoreMethod scoreMethod) {
+        this.scoreMethod = scoreMethod;
     }
 
     @Override
@@ -57,8 +58,8 @@ public class MoreInfoFragment extends Fragment {
         });
 
         view.findViewById(R.id.next_button).setOnClickListener(v -> {
-            if (!CheckBoxManager.getCheckBoxManager(scoreMode).isTarkhis()) {
-                if (CheckBoxManager.getCheckBoxManager(scoreMode).isKor()) {
+            if (!CheckBoxManager.getCheckBoxManager(scoreMethod).isTarkhis()) {
+                if (CheckBoxManager.getCheckBoxManager(scoreMethod).isKor()) {
                     ((AddReportActivity) requireActivity()).next();
                 } else if (date != null) {
                     ((AddReportActivity) requireActivity()).next();

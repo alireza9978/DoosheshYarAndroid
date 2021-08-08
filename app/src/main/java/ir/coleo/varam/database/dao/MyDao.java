@@ -21,6 +21,7 @@ import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.main.Drug;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.models.MyDate;
 
 /**
@@ -163,6 +164,9 @@ public interface MyDao {
     @Query("SELECT * FROM Farm WHERE Farm.id == :id")
     Farm getFarm(Integer id);
 
+    @Query("SELECT * FROM ScoreMethod WHERE ScoreMethod.id == :id")
+    ScoreMethod getScoreMethod(Long id);
+
     @Query("SELECT * FROM Drug WHERE Drug.id == :id")
     Drug getDrug(Integer id);
 
@@ -205,6 +209,9 @@ public interface MyDao {
     void update(Cow cow);
 
     @Update
+    void update(ScoreMethod scoreMethod);
+
+    @Update
     void update(Farm farm);
 
     @Update
@@ -217,6 +224,9 @@ public interface MyDao {
     void insert(Report report);
 
     @Insert
+    void insert(ScoreMethod scoreMethod);
+
+    @Insert
     void insert(Farm farm);
 
     @Insert
@@ -227,6 +237,9 @@ public interface MyDao {
 
     @Insert
     long insertGetId(Cow Cow);
+
+    @Insert
+    long insertGetId(ScoreMethod scoreMethod);
 
     @Insert
     void insertAll(Report... reports);

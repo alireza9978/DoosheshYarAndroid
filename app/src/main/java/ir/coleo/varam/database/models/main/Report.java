@@ -22,10 +22,8 @@ public class Report {
     @ColumnInfo(name = "area_number")
     public Integer areaNumber;
 
-    @ColumnInfo(name = "score_type")
-    public Boolean scoreType;
-    // true -> 3
-    // false -> 4
+    @ColumnInfo(name = "score_method_id")
+    public Long scoreMethodId ;
 
     // zero base
     @ColumnInfo(name = "score")
@@ -75,7 +73,7 @@ public class Report {
                 ", visit=" + visit +
                 ", nextVisit=" + nextVisit +
                 ", areaNumber=" + areaNumber +
-                ", scoreType=" + scoreType +
+                ", scoreType=" + scoreMethodId +
                 ", score=" + score +
                 ", sardalme=" + sardalme +
                 ", khoni=" + khoni +

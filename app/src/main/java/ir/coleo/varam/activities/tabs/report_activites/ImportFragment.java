@@ -1,5 +1,6 @@
 package ir.coleo.varam.activities.tabs.report_activites;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -34,6 +37,7 @@ import java.util.Objects;
 import java.util.TreeSet;
 
 import ir.coleo.varam.R;
+import ir.coleo.varam.activities.tabs.CreateScoreMethod;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
@@ -41,6 +45,7 @@ import ir.coleo.varam.database.models.main.Cow;
 import ir.coleo.varam.database.models.main.Drug;
 import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.MyDate;
 import saman.zamani.persiandate.PersianDate;
@@ -135,11 +140,6 @@ public class ImportFragment extends Fragment {
                     R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
                     R.string.drug_title_5, next_visit, more_info, R.string.score_type};
 
-            Integer[] threeLevel = {R.string.score_three_one, R.string.score_three_two,
-                    R.string.score_three_three, R.string.score_three_four};
-            Integer[] fourLevel = {R.string.score_four_one, R.string.score_four_two,
-                    R.string.score_four_three, R.string.score_four_four};
-
             //read headers
             int count = 0;
             assert dataTypeSheet != null;
@@ -155,11 +155,23 @@ public class ImportFragment extends Fragment {
                 count++;
             }
             TreeSet<Drug> importedDrugs = new TreeSet<>();
+            TreeSet<String> importedScoreName = new TreeSet<>();
             {
                 Iterator<Row> rows = dataTypeSheet.iterator();
                 rows.next();
                 while (rows.hasNext()) {
                     Row row = rows.next();
+                    for (int i = 4; i < 8; i++) {
+                        Cell cell = row.getCell(i);
+                        if (cell == null) {
+                            continue;
+                        }
+                        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                            String temp = cell.getStringCellValue();
+                            if (!temp.isEmpty())
+                                importedScoreName.add(temp);
+                        }
+                    }
                     for (int i = 11; i < 16; i++) {
                         Cell cell = row.getCell(i);
                         if (cell == null) {
@@ -175,261 +187,250 @@ public class ImportFragment extends Fragment {
                 }
             }
 
-            MyDao dao = DataBase.getInstance(requireContext()).dao();
+
+            // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
             Sheet finalDataTypeSheet = dataTypeSheet;
             String finalFarmName = farmName;
-            AppExecutors.getInstance().diskIO().execute(() -> {
-                Farm farm = new Farm();
-                farm.name = finalFarmName;
-                farm.favorite = false;
-                farm.birthCount = 0;
-                farm.showerCount = 0;
-                farm.bedType = "";
-                farm.dryMethod = null;
-                farm.showerUnitCount = 0;
-                farm.showerPitCount = 0;
-                {
-                    Iterator<Row> rows = finalDataTypeSheet.iterator();
-                    rows.next();
-                    String scoreType = rows.next().getCell(22).getStringCellValue();
-                    if (scoreType.equals(getString(R.string.three_level_text))) {
-                        farm.scoreMethod = true;
-                    } else if (scoreType.equals(getString(R.string.four_level_text))) {
-                        farm.scoreMethod = false;
-                    } else {
-                        Log.i("IMPORT", "importFile: " + scoreType);
-                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score type error", Toast.LENGTH_SHORT).show());
-                        return;
-                    }
-                }
-                farm.id = (int) dao.insertGetId(farm);
-
-                HashSet<Integer> cowNumbers = new HashSet<>();
-                ArrayList<Cow> cows = new ArrayList<>();
-                ArrayList<Report> reports = new ArrayList<>();
-                List<Drug> drugList = dao.getAllDrug();
-                ArrayList<Drug> newDrugs = new ArrayList<>();
-                main:
-                for (Drug newDrug : importedDrugs) {
-                    for (Drug drug : drugList) {
-                        if (drug.compareTo(newDrug) == 0) {
-                            continue main;
+            ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // There are no request codes
+                            Intent data = result.getData();
+                            assert data != null;
+                            continueImporting((ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT), finalDataTypeSheet, finalFarmName, importedDrugs);
                         }
-                    }
-                    newDrugs.add(newDrug);
-                }
-                for (Drug drug : newDrugs) {
-                    dao.insert(drug);
-                }
-                drugList = dao.getAllDrug();
+                    });
 
+            Intent createScoreMethodIntent = new Intent(requireActivity(), CreateScoreMethod.class);
+            createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_MODE, "IMPORT");
+            createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_DATA, importedScoreName);
+            someActivityResultLauncher.launch(createScoreMethodIntent);
 
-                Iterator<Row> rows = finalDataTypeSheet.iterator();
-                rows.next();
-                while (rows.hasNext()) {
-                    Row row = rows.next();
-                    Report report = new Report();
-                    report.cowId = (int) row.getCell(0).getNumericCellValue();
-                    cowNumbers.add(report.cowId);
-                    if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
-                        PersianDate pdate = new PersianDate();
-                        int[] dateArray = pdate.toGregorian(Integer.parseInt(row.getCell(3).getStringCellValue()),
-                                Integer.parseInt(row.getCell(2).getStringCellValue()),
-                                Integer.parseInt(row.getCell(1).getStringCellValue()));
-                        report.visit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
-                    } else {
-                        report.visit = new MyDate((int) row.getCell(1).getNumericCellValue(),
-                                (int) row.getCell(2).getNumericCellValue(),
-                                (int) row.getCell(3).getNumericCellValue());
-                    }
-                    Cell cell = row.getCell(22);
-                    if (cell == null) {
-                        continue;
-                    }
-                    String scoreType = cell.getStringCellValue();
-                    if (scoreType.equals(getString(R.string.three_level_text))) {
-                        report.scoreType = true;
-                    } else if (scoreType.equals(getString(R.string.four_level_text))) {
-                        report.scoreType = false;
-                    } else {
-                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score type error", Toast.LENGTH_SHORT).show());
-                        return;
-                    }
-
-                    score_loop:
-                    for (int i = 4; i < 8; i++) {
-                        cell = row.getCell(i);
-                        if (cell == null) {
-                            continue;
-                        }
-                        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                            String temp = cell.getStringCellValue();
-                            if (!temp.isEmpty()) {
-                                if (report.scoreType) {
-                                    for (int j = 0; j < threeLevel.length; j++) {
-                                        String scoreString = getString(threeLevel[j]);
-                                        if (scoreString.equals(temp)) {
-                                            report.score = j;
-                                            report.areaNumber = i - 3;
-                                            break score_loop;
-                                        }
-                                    }
-                                } else {
-                                    for (int j = 0; j < fourLevel.length; j++) {
-                                        String scoreString = getString(fourLevel[j]);
-                                        if (scoreString.equals(temp)) {
-                                            report.score = j;
-                                            report.areaNumber = i - 3;
-                                            break score_loop;
-                                        }
-                                    }
-                                }
-                                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score and area number error", Toast.LENGTH_SHORT).show());
-                                return;
-                            }
-                        }
-                    }
-
-                    for (int i = 8; i < 12; i++) {
-                        cell = row.getCell(i);
-                        if (cell == null) {
-                            continue;
-                        }
-                        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                            String temp = cell.getStringCellValue();
-                            if (!temp.isEmpty() && temp.equals("*")) {
-                                report.cartieState = i - 8;
-                                break;
-                            }
-                        }
-                    }
-
-                    for (int i = 12; i < 15; i++) {
-                        cell = row.getCell(i);
-                        if (cell == null) {
-                            continue;
-                        }
-                        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                            String star = cell.getStringCellValue();
-                            if (star != null && !star.isEmpty() && star.equals("*")) {
-                                switch (i) {
-                                    case 12:
-                                        report.sardalme = true;
-                                        break;
-                                    case 13:
-                                        report.khoni = true;
-                                        break;
-                                    case 14:
-                                        report.kor = true;
-                                        break;
-                                }
-                            }
-                        } else {
-                            switch (i) {
-                                case 12:
-                                    report.sardalme = false;
-                                    break;
-                                case 13:
-                                    report.khoni = false;
-                                    break;
-                                case 14:
-                                    report.kor = false;
-                                    break;
-                            }
-                        }
-                    }
-
-
-                    for (int i = 15; i < 20; i++) {
-                        cell = row.getCell(i);
-                        if (cell == null) {
-                            continue;
-                        }
-                        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                            String drugName = cell.getStringCellValue();
-                            for (Drug drug : drugList) {
-                                if (drug.type == i - 15 && drug.name.equals(drugName)) {
-                                    switch (drug.type) {
-                                        case 0: {
-                                            report.pomadeId = drug.id;
-                                            break;
-                                        }
-                                        case 1: {
-                                            report.antibioticId = drug.id;
-                                            break;
-                                        }
-                                        case 2: {
-                                            report.serumId = drug.id;
-                                            break;
-                                        }
-                                        case 3: {
-                                            report.cureId = drug.id;
-                                            break;
-                                        }
-                                        case 4: {
-                                            report.antiInflammatoryId = drug.id;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-
-                    Cell nextVisitCell = row.getCell(20);
-                    if (nextVisitCell == null) {
-                        continue;
-                    }
-                    if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
-                        String[] date = nextVisitCell.getStringCellValue().split("/");
-                        if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
-                            PersianDate pdate = new PersianDate();
-                            int[] dateArray = pdate.toGregorian(Integer.parseInt(date[0]),
-                                    Integer.parseInt(date[1]),
-                                    Integer.parseInt(date[2]));
-                            report.nextVisit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
-                        } else {
-                            report.nextVisit = new MyDate(Integer.parseInt(date[2]),
-                                    Integer.parseInt(date[1]),
-                                    Integer.parseInt(date[0]));
-                        }
-                    }
-                    Cell moreInfo = row.getCell(21);
-                    if (moreInfo == null) {
-                        continue;
-                    }
-                    if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
-                        report.description = moreInfo.getStringCellValue();
-                    }
-
-
-                    reports.add(report);
-                }
-                for (Integer cowNumber : cowNumbers) {
-                    cows.add(new Cow(cowNumber, false, farm.id));
-                }
-                for (Cow cow : cows) {
-                    cow.setId((int) dao.insertGetId(cow));
-                }
-                main:
-                for (Report report : reports) {
-                    for (Cow cow : cows) {
-                        if (report.cowId.equals(cow.getNumber())) {
-                            report.cowId = cow.getId();
-                            dao.insert(report);
-                            continue main;
-                        }
-                    }
-                }
-
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "imported", Toast.LENGTH_LONG).show());
-            });
 
         } catch (IOException | InvalidFormatException e) {
             Toast.makeText(requireContext(), "reading error", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+
+
+    }
+
+    public void continueImporting(ScoreMethod scoreMethod, Sheet finalDataTypeSheet, String finalFarmName, TreeSet<Drug> importedDrugs) {
+
+        MyDao dao = DataBase.getInstance(requireContext()).dao();
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            scoreMethod.id = dao.insertGetId(scoreMethod);
+            Farm farm = new Farm();
+            farm.name = finalFarmName;
+            farm.favorite = false;
+            farm.birthCount = 0;
+            farm.showerCount = 0;
+            farm.bedType = "";
+            farm.showerUnitCount = 0;
+            farm.showerPitCount = 0;
+            farm.scoreMethodId = scoreMethod.id;
+            farm.id = (int) dao.insertGetId(farm);
+
+            HashSet<Integer> cowNumbers = new HashSet<>();
+            ArrayList<Cow> cows = new ArrayList<>();
+            ArrayList<Report> reports = new ArrayList<>();
+            List<Drug> drugList = dao.getAllDrug();
+            ArrayList<Drug> newDrugs = new ArrayList<>();
+            main:
+            for (Drug newDrug : importedDrugs) {
+                for (Drug drug : drugList) {
+                    if (drug.compareTo(newDrug) == 0) {
+                        continue main;
+                    }
+                }
+                newDrugs.add(newDrug);
+            }
+            for (Drug drug : newDrugs) {
+                dao.insert(drug);
+            }
+            drugList = dao.getAllDrug();
+
+
+            Iterator<Row> rows = finalDataTypeSheet.iterator();
+            rows.next();
+            while (rows.hasNext()) {
+                Row row = rows.next();
+                Report report = new Report();
+                report.cowId = (int) row.getCell(0).getNumericCellValue();
+                report.scoreMethodId = scoreMethod.id;
+                cowNumbers.add(report.cowId);
+                if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
+                    PersianDate pdate = new PersianDate();
+                    int[] dateArray = pdate.toGregorian(Integer.parseInt(row.getCell(3).getStringCellValue()),
+                            Integer.parseInt(row.getCell(2).getStringCellValue()),
+                            Integer.parseInt(row.getCell(1).getStringCellValue()));
+                    report.visit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
+                } else {
+                    report.visit = new MyDate((int) row.getCell(1).getNumericCellValue(),
+                            (int) row.getCell(2).getNumericCellValue(),
+                            (int) row.getCell(3).getNumericCellValue());
+                }
+                Cell cell;
+
+                score_loop:
+                for (int i = 4; i < 8; i++) {
+                    cell = row.getCell(i);
+                    if (cell == null) {
+                        continue;
+                    }
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String temp = cell.getStringCellValue();
+                        if (!temp.isEmpty()) {
+                            for (int j = 0; j < scoreMethod.scoresNameList.size(); j++) {
+                                String scoreString = scoreMethod.scoresNameList.get(j);
+                                if (scoreString.equals(temp)) {
+                                    report.score = j;
+                                    report.areaNumber = i - 3;
+                                    break score_loop;
+                                }
+                            }
+                            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score and area number error", Toast.LENGTH_SHORT).show());
+                            return;
+                        }
+                    }
+                }
+
+                for (int i = 8; i < 12; i++) {
+                    cell = row.getCell(i);
+                    if (cell == null) {
+                        continue;
+                    }
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String temp = cell.getStringCellValue();
+                        if (!temp.isEmpty() && temp.equals("*")) {
+                            report.cartieState = i - 8;
+                            break;
+                        }
+                    }
+                }
+
+                for (int i = 12; i < 15; i++) {
+                    cell = row.getCell(i);
+                    if (cell == null) {
+                        continue;
+                    }
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String star = cell.getStringCellValue();
+                        if (star != null && !star.isEmpty() && star.equals("*")) {
+                            switch (i) {
+                                case 12:
+                                    report.sardalme = true;
+                                    break;
+                                case 13:
+                                    report.khoni = true;
+                                    break;
+                                case 14:
+                                    report.kor = true;
+                                    break;
+                            }
+                        }
+                    } else {
+                        switch (i) {
+                            case 12:
+                                report.sardalme = false;
+                                break;
+                            case 13:
+                                report.khoni = false;
+                                break;
+                            case 14:
+                                report.kor = false;
+                                break;
+                        }
+                    }
+                }
+
+
+                for (int i = 15; i < 20; i++) {
+                    cell = row.getCell(i);
+                    if (cell == null) {
+                        continue;
+                    }
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String drugName = cell.getStringCellValue();
+                        for (Drug drug : drugList) {
+                            if (drug.type == i - 15 && drug.name.equals(drugName)) {
+                                switch (drug.type) {
+                                    case 0: {
+                                        report.pomadeId = drug.id;
+                                        break;
+                                    }
+                                    case 1: {
+                                        report.antibioticId = drug.id;
+                                        break;
+                                    }
+                                    case 2: {
+                                        report.serumId = drug.id;
+                                        break;
+                                    }
+                                    case 3: {
+                                        report.cureId = drug.id;
+                                        break;
+                                    }
+                                    case 4: {
+                                        report.antiInflammatoryId = drug.id;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                Cell nextVisitCell = row.getCell(20);
+                if (nextVisitCell == null) {
+                    continue;
+                }
+                if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String[] date = nextVisitCell.getStringCellValue().split("/");
+                    if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
+                        PersianDate pdate = new PersianDate();
+                        int[] dateArray = pdate.toGregorian(Integer.parseInt(date[0]),
+                                Integer.parseInt(date[1]),
+                                Integer.parseInt(date[2]));
+                        report.nextVisit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
+                    } else {
+                        report.nextVisit = new MyDate(Integer.parseInt(date[2]),
+                                Integer.parseInt(date[1]),
+                                Integer.parseInt(date[0]));
+                    }
+                }
+                Cell moreInfo = row.getCell(21);
+                if (moreInfo == null) {
+                    continue;
+                }
+                if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    report.description = moreInfo.getStringCellValue();
+                }
+
+
+                reports.add(report);
+            }
+            for (Integer cowNumber : cowNumbers) {
+                cows.add(new Cow(cowNumber, false, farm.id));
+            }
+            for (Cow cow : cows) {
+                cow.setId((int) dao.insertGetId(cow));
+            }
+            main:
+            for (Report report : reports) {
+                for (Cow cow : cows) {
+                    if (report.cowId.equals(cow.getNumber())) {
+                        report.cowId = cow.getId();
+                        dao.insert(report);
+                        continue main;
+                    }
+                }
+            }
+
+            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "imported", Toast.LENGTH_LONG).show());
+        });
 
 
     }

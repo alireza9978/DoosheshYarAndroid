@@ -59,7 +59,7 @@ public class GridViewAdapterReasonAddReport extends BaseAdapter {
         } else {
             holder = (Holder) view.getTag();
         }
-        holder.name.setText(item.getName());
+        holder.name.setText(item.getName(context));
         if (item.isActive()) {
             holder.item.setChecked(item.isCheck());
             if (item.isCheck()) {
