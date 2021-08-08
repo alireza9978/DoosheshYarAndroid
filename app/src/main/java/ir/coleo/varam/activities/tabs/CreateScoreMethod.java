@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ir.coleo.varam.R;
+import ir.coleo.varam.activities.reports.MoreInfoActivity;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.models.main.ScoreMethod;
 
@@ -26,8 +27,13 @@ public class CreateScoreMethod extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_score_method);
 
+        findViewById(R.id.close_image).setOnClickListener(v -> finish());
         LinearLayout scoresList = findViewById(R.id.scores_list_id);
         ArrayList<EditText> editTexts = new ArrayList<>();
+        findViewById(R.id.info_image).setOnClickListener(v -> {
+            Intent intent = new Intent(this, MoreInfoActivity.class);
+            startActivity(intent);
+        });
 
         Intent data = getIntent();
         assert data != null;
@@ -41,10 +47,10 @@ public class CreateScoreMethod extends AppCompatActivity {
             }
 
             for (int i = 0; i < scoreCount; i++) {
-                View child = getLayoutInflater().inflate(R.layout.score_list_item_layout, scoresList);
+                View child = getLayoutInflater().inflate(R.layout.score_list_item_layout, null);
                 EditText tempEditText = child.findViewById(R.id.item_name);
                 TextView tempTextView = child.findViewById(R.id.item_text);
-                tempTextView.setText(getString(R.string.level) + i);
+                tempTextView.setText(getString(R.string.level) + (i + 1) );
                 editTexts.add(tempEditText);
                 scoresList.addView(child);
             }
@@ -64,7 +70,7 @@ public class CreateScoreMethod extends AppCompatActivity {
                 scoreMethod.scoresNameList = scoresNameList;
                 Intent intent = new Intent();
                 intent.putExtra(Constants.SCORE_METHOD_INTENT, scoreMethod);
-                setResult(Activity.RESULT_OK);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             });
         }else if (mode.equals("IMPORT")){
@@ -108,7 +114,7 @@ public class CreateScoreMethod extends AppCompatActivity {
                 scoreMethod.scoresNameList = new ArrayList<>(Arrays.asList(scoresNameList));
                 Intent intent = new Intent();
                 intent.putExtra(Constants.SCORE_METHOD_INTENT, scoreMethod);
-                setResult(Activity.RESULT_OK);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             });
 

@@ -14,6 +14,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import ir.coleo.varam.R;
@@ -31,6 +33,7 @@ public class AddFarmActivity extends AppCompatActivity {
 
     //    private Boolean dryMethod = null;
     private ScoreMethod scoreMethod = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +55,13 @@ public class AddFarmActivity extends AppCompatActivity {
             farmTitle.requestFocus();
 
             Button submit = findViewById(R.id.submit);
-            makeCheckBoxList(R.id.three_check, R.id.three_text, 3);
-            makeCheckBoxList(R.id.four_check, R.id.four_text, 4);
-            makeCheckBoxList(R.id.five_check, R.id.five_text, 5);
+            ActivityResultLauncher<Intent> three = makeCheckBoxList(R.id.three_check, R.id.three_text, new ArrayList<>(Arrays.asList(R.id.four_check,R.id.five_check)));
+            ActivityResultLauncher<Intent> four = makeCheckBoxList(R.id.four_check, R.id.four_text, new ArrayList<>(Arrays.asList(R.id.three_check,R.id.five_check)));
+            ActivityResultLauncher<Intent> five = makeCheckBoxList(R.id.five_check, R.id.five_text, new ArrayList<>(Arrays.asList(R.id.four_check,R.id.three_check)));
             if (mode.equals(Constants.FARM_CREATE)) {
+                makeCheckboxActive(R.id.three_check, R.id.three_text, 3, three);
+                makeCheckboxActive(R.id.four_check, R.id.four_text, 4, four);
+                makeCheckboxActive(R.id.five_check, R.id.five_text, 5, five);
                 submit.setOnClickListener((View v) -> {
                     if (birthCount.getText().toString().isEmpty() ||
                             showerCount.getText().toString().isEmpty() ||
@@ -107,18 +113,18 @@ public class AddFarmActivity extends AppCompatActivity {
                         showerUnitCount.setText("" + farm.showerUnitCount);
                         scoreMethod = tempScoreMethod;
                         scoreMethod.id = null;
-                        switch (scoreMethod.scoresCount){
-                            case 3:{
+                        switch (scoreMethod.scoresCount) {
+                            case 3: {
                                 CheckBox checkBox = findViewById(R.id.three_check);
                                 checkBox.setChecked(true);
                                 break;
                             }
-                            case 4:{
+                            case 4: {
                                 CheckBox checkBox = findViewById(R.id.four_check);
                                 checkBox.setChecked(true);
                                 break;
                             }
-                            case 5:{
+                            case 5: {
                                 CheckBox checkBox = findViewById(R.id.five_check);
                                 checkBox.setChecked(true);
                                 break;
@@ -126,6 +132,9 @@ public class AddFarmActivity extends AppCompatActivity {
                             default:
                                 throw new IllegalStateException("Unexpected value: " + scoreMethod.scoresCount);
                         }
+                        makeCheckboxActive(R.id.three_check, R.id.three_text, 3, three);
+                        makeCheckboxActive(R.id.four_check, R.id.four_text, 4, four);
+                        makeCheckboxActive(R.id.five_check, R.id.five_text, 5, five);
 
                     });
                 });
@@ -158,43 +167,46 @@ public class AddFarmActivity extends AppCompatActivity {
         Constants.hideKeyboard(this, findViewById(R.id.root).getWindowToken());
     }
 
-    private void makeCheckBoxList(Integer one, Integer oneText, int count) {
+    private ActivityResultLauncher<Intent> makeCheckBoxList(Integer one, Integer oneText, ArrayList<Integer> others) {
+        CheckBox checkBox_0 = findViewById(one);
+        TextView textView_0 = findViewById(oneText);
+
+        // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+        return registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        assert data != null;
+                        this.scoreMethod = (ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT);
+                        for (Integer integer: others){
+                            ((CheckBox) findViewById(integer)).setChecked(false);
+                        }
+                    } else {
+                        checkBox_0.setChecked(false);
+                    }
+                });
+
+    }
+
+    public void makeCheckboxActive(Integer one, Integer oneText, int count, ActivityResultLauncher<Intent> someActivityResultLauncher) {
         CheckBox checkBox_0 = findViewById(one);
         TextView textView_0 = findViewById(oneText);
 
         checkBox_0.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
-                scoreMethod = null;
-            } else {
                 runOnUiThread(() -> {
-
-                    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
-                    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-                            new ActivityResultContracts.StartActivityForResult(),
-                            result -> {
-                                if (result.getResultCode() == Activity.RESULT_OK) {
-                                    // There are no request codes
-                                    Intent data = result.getData();
-                                    assert data != null;
-                                    this.scoreMethod = (ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT);
-                                }else{
-                                    checkBox_0.setChecked(false);
-                                }
-                            });
-
                     Intent intent = new Intent(AddFarmActivity.this, CreateScoreMethod.class);
                     intent.putExtra(Constants.SCORE_METHOD_INTENT_MODE, "CREATE");
                     intent.putExtra(Constants.SCORE_METHOD_INTENT_COUNT, count);
                     someActivityResultLauncher.launch(intent);
                 });
+            } else {
+                scoreMethod = null;
             }
         });
         textView_0.setOnClickListener(view -> checkBox_0.setChecked(!checkBox_0.isChecked()));
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }
 }

@@ -19,10 +19,10 @@ import ir.coleo.varam.models.CheckBoxItem;
 public class GridViewAdapterReasonAddReport extends BaseAdapter {
 
     private List<CheckBoxItem> items;
-    private Context context;
+    private final Context context;
 
-    public GridViewAdapterReasonAddReport(Context context, List<CheckBoxItem> farms) {
-        this.items = farms;
+    public GridViewAdapterReasonAddReport(Context context, List<CheckBoxItem> checkBoxItems) {
+        this.items = checkBoxItems;
         this.context = context;
     }
 

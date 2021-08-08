@@ -40,6 +40,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/info_image"
+            style="@style/Theme.App.ImageView.Edit"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="15dp"
+            android:padding="16dp"
+            android:src="@drawable/ic_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

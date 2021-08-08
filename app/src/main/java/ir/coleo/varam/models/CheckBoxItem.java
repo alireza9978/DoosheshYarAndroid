@@ -17,6 +17,7 @@ public class CheckBoxItem {
 
     public CheckBoxItem(Integer name, boolean check) {
         this.name = name;
+        this.nameString = null;
         this.check = check;
         this.active = true;
         disable = new ArrayList<>();
@@ -24,6 +25,7 @@ public class CheckBoxItem {
 
     public CheckBoxItem(Integer name) {
         this.name = name;
+        this.nameString = null;
         this.check = false;
         this.active = true;
         disable = new ArrayList<>();
@@ -31,6 +33,7 @@ public class CheckBoxItem {
 
     public CheckBoxItem(String nameString) {
         this.nameString = nameString;
+        this.name = null;
         this.check = false;
         this.active = true;
         disable = new ArrayList<>();
@@ -68,6 +71,10 @@ public class CheckBoxItem {
         }else{
             return nameString;
         }
+    }
+
+    public Integer getName() {
+        return name;
     }
 
     public void setName(Integer name) {

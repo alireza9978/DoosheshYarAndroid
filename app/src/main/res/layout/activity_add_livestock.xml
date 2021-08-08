@@ -189,6 +189,7 @@
                 android:id="@+id/item_two_container"
                 style="@style/Theme.App.MainConstraint"
                 android:layout_width="175dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 app:layout_constraintStart_toStartOf="parent"

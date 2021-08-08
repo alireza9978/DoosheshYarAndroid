@@ -30,9 +30,12 @@ public class VaramInfoDialog extends Dialog {
         setContentView(R.layout.select_finger_dialog_layout);
 
         GridView gridView = findViewById(R.id.grid);
+        GridView gridViewTwo = findViewById(R.id.grid_two);
         CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMode);
-        GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(context, manager.getScore());
+        GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(context, manager.getScoreTop());
+        GridViewAdapterReasonAddReport adapterTwo = new GridViewAdapterReasonAddReport(context, manager.getScoreBottom());
         gridView.setAdapter(adapter);
+        gridViewTwo.setAdapter(adapterTwo);
 
         Button newInput = findViewById(R.id.new_input);
         if (editMode) {

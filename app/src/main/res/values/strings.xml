@@ -225,13 +225,14 @@
     <string name="score_four_two">۲</string>
     <string name="score_four_three">۳</string>
     <string name="score_four_four">۴</string>
-    <string name="cartie_two">جدید</string>
-    <string name="cartie_one">استراحت</string>
-    <string name="cartie_three">ادامه درمان</string>
-    <string name="cartie_four">ترخیص</string>
-    <string name="score_zero">سردلمه</string>
-    <string name="score_one">خونی</string>
-    <string name="score_two">کور</string>
+    <string name="option_two">جدید</string>
+    <string name="option_one">استراحت</string>
+    <string name="option_three">ادامه درمان</string>
+    <string name="option_four">ترخیص</string>
+    <string name="option_eight">تغییر درمان</string>
+    <string name="option_five">سردلمه</string>
+    <string name="option_six">خونی</string>
+    <string name="option_seven">کور</string>
     <string name="drug_to_use">drugs to use</string>
     <string name="cartie_number">کارتیه درگیر</string>
     <string name="cartie_state">وضعیت کارتیه</string>
@@ -281,5 +282,6 @@
     <string name="level">"سطح "</string>
     <string name="invalid_input">مقادیر ورودی را وارد کنید.</string>
     <string name="invalid_input_big_number">برای هر سطح شماره مربوط را وارد کنید.</string>
+    <string name="createMethod_one_text">نام هر یک از سطوح ورم پستان را در این بخش تعریف کنید برای مثال اگر از اسکور 4 سطحی استفاده می کنید می توانید نام هر یک از سطوح را با اعداد 1، 2، 3 و 4 مشخص کنید</string>
 
 </resources>

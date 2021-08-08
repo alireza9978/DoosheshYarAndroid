@@ -134,9 +134,9 @@ public class ImportFragment extends Fragment {
 
             Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
                     R.string.cartie_number_one, R.string.cartie_number_two, R.string.cartie_number_three,
-                    R.string.cartie_number_four, R.string.cartie_one,
-                    R.string.cartie_two, R.string.cartie_three, R.string.cartie_four,
-                    R.string.score_zero, R.string.score_one, R.string.score_two, R.string.drug_title_1,
+                    R.string.cartie_number_four, R.string.option_one,
+                    R.string.option_two, R.string.option_three, R.string.option_four,
+                    R.string.option_five, R.string.option_six, R.string.option_seven, R.string.drug_title_1,
                     R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
                     R.string.drug_title_5, next_visit, more_info, R.string.score_type};
 

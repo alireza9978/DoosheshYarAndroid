@@ -120,19 +120,19 @@ public class ReportSummery extends AppCompatActivity {
                 }
                 switch (report.cartieState) {
                     case 0: {
-                        cartieState.setText(R.string.cartie_one);
+                        cartieState.setText(R.string.option_one);
                         break;
                     }
                     case 1: {
-                        cartieState.setText(R.string.cartie_two);
+                        cartieState.setText(R.string.option_two);
                         break;
                     }
                     case 2: {
-                        cartieState.setText(R.string.cartie_three);
+                        cartieState.setText(R.string.option_three);
                         break;
                     }
                     case 3: {
-                        cartieState.setText(R.string.cartie_four);
+                        cartieState.setText(R.string.option_four);
                         break;
                     }
                     default:

@@ -5,8 +5,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Objects;
-
 import ir.coleo.varam.R;
 import ir.coleo.varam.constants.Constants;
 
@@ -22,23 +20,27 @@ public class MoreInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_more_info);
         findViewById(R.id.close_image).setOnClickListener(view -> finish());
         Constants.setImageBack(this, findViewById(R.id.close_image));
-        State state = (State) Objects.requireNonNull(getIntent().getExtras()).get(Constants.MORE_INFO_STATE);
-        assert state != null;
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            State state = (State) bundle.get(Constants.MORE_INFO_STATE);
 
-        switch (state) {
-            case info:
-                findViewById(R.id.one).setVisibility(View.VISIBLE);
-                break;
-            case injury:
-                findViewById(R.id.two).setVisibility(View.VISIBLE);
-                break;
-            case drugs:
-                findViewById(R.id.three).setVisibility(View.VISIBLE);
-                break;
-            case moreInfo:
-                findViewById(R.id.four).setVisibility(View.VISIBLE);
-                break;
+            if (state != null)
+                switch (state) {
+                    case info:
+                        findViewById(R.id.one).setVisibility(View.VISIBLE);
+                        break;
+                    case injury:
+                        findViewById(R.id.two).setVisibility(View.VISIBLE);
+                        break;
+                    case drugs:
+                        findViewById(R.id.three).setVisibility(View.VISIBLE);
+                        break;
+                    case moreInfo:
+                        findViewById(R.id.four).setVisibility(View.VISIBLE);
+                        break;
+                }
+        } else {
+            findViewById(R.id.createMethod).setVisibility(View.VISIBLE);
         }
-
     }
 }
