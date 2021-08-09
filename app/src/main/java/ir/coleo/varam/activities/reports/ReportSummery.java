@@ -39,6 +39,7 @@ public class ReportSummery extends AppCompatActivity {
     private TextView cartieState;
     private GridViewAdapterItemInSummery drugAdapter;
     private Integer reportId;
+    private final Integer[] scoresName = {R.string.option_two, R.string.option_three, R.string.option_eight, R.string.option_four, R.string.option_one};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,29 +117,10 @@ public class ReportSummery extends AppCompatActivity {
                     cartieNumber.append(" " + report.areaNumber);
                 }
                 if (report.cartieState == null) {
-                    report.cartieState = -1;
+                    cartieState.setText(R.string.unknown);
+                }else{
+                    cartieState.setText(scoresName[report.cartieState]);
                 }
-                switch (report.cartieState) {
-                    case 0: {
-                        cartieState.setText(R.string.option_one);
-                        break;
-                    }
-                    case 1: {
-                        cartieState.setText(R.string.option_two);
-                        break;
-                    }
-                    case 2: {
-                        cartieState.setText(R.string.option_three);
-                        break;
-                    }
-                    case 3: {
-                        cartieState.setText(R.string.option_four);
-                        break;
-                    }
-                    default:
-                        cartieState.setText(R.string.unknown);
-                }
-
                 DateContainer container;
                 if (Constants.getDefaultLanguage(this).equals("fa")) {
                     int[] temp = report.visit.convert(this);

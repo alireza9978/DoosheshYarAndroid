@@ -67,7 +67,6 @@
         android:fontFamily="@font/anjoman_semi_bold"
         android:text="@string/add_new_injury"
         android:textSize="16sp"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

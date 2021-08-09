@@ -89,12 +89,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/next_button"
+            android:layout_marginStart="35dp"
             android:layout_width="125dp"
             android:layout_height="50dp"
             android:layout_margin="35dp"
             android:background="@drawable/login_button_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drug_text_five">
+            app:layout_constraintTop_toBottomOf="@id/more_info_edit">
 
             <TextView
                 android:id="@+id/next_text"
@@ -102,31 +103,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/anjoman_medium"
-                android:paddingStart="20dp"
-                android:text="@string/next"
+                android:text="@string/create"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/next_icon"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/next_icon"
-                style="@style/Theme.App.ImageView.Edit"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_front"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@id/next_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/more_info_edit"
+            style="@style/Theme.App.EditText.Login.Input"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="start|top"
+            android:hint="@string/more_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/drug_text_five" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/back_button"
@@ -135,12 +135,11 @@
             android:layout_margin="35dp"
             android:background="@drawable/back_button_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drug_text_five">
+            app:layout_constraintTop_toBottomOf="@id/more_info_edit">
 
             <TextView
                 android:id="@+id/back_text"
                 style="@style/Theme.App.TransBack"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/anjoman_medium"

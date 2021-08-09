@@ -66,7 +66,7 @@ public class TabAdapterReport extends FragmentStateAdapter {
                 }
                 case 2: {
                     if (edit) {
-                        fragments[2] = new DrugFragment(drugs);
+                        fragments[2] = new DrugFragment(drugs, description);
                     } else {
                         fragments[2] = new DrugFragment();
                     }

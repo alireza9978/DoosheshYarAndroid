@@ -6,6 +6,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -30,10 +31,15 @@ public class DrugFragment extends Fragment {
 
     ArrayList<Pair<Integer, Integer>> setDrugs;
     ArrayList<TextView> drugTextList = new ArrayList<>();
-    private int[] drugsId = new int[]{R.id.drug_text_one, R.id.drug_text_two,
+    private final int[] drugsId = new int[]{R.id.drug_text_one, R.id.drug_text_two,
             R.id.drug_text_three, R.id.drug_text_four, R.id.drug_text_five};
-    public DrugFragment(ArrayList<Pair<Integer, Integer>> setDrugs) {
+    private String description;
+    private EditText moreInfo;
+
+
+    public DrugFragment(ArrayList<Pair<Integer, Integer>> setDrugs, String description) {
         this.setDrugs = setDrugs;
+        this.description = description;
     }
     public DrugFragment() {
         setDrugs = new ArrayList<>();
@@ -43,8 +49,8 @@ public class DrugFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_drug_add_report, container, false);
-        Constants.setImageFront(requireContext(), view.findViewById(R.id.next_icon));
         Constants.setImageBack(requireContext(), view.findViewById(R.id.back_icon));
+        moreInfo = view.findViewById(R.id.more_info_edit);
 
         for (int i = 0; i < drugsId.length; i++) {
             int finalI = i;
@@ -66,8 +72,17 @@ public class DrugFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        this.description = moreInfo.getText().toString();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        if (description != null) {
+            moreInfo.setText(description);
+        }
     }
 
     private void updateText(Pair<Integer, Integer> pair) {

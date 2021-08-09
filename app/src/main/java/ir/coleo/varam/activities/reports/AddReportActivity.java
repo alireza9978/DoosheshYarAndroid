@@ -2,7 +2,6 @@ package ir.coleo.varam.activities.reports;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.badoualy.stepperindicator.StepperIndicator;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ir.coleo.varam.R;
@@ -56,6 +56,8 @@ public class AddReportActivity extends AppCompatActivity {
     private Integer reportId;
     private ViewPager2 viewPager;
 
+    private ArrayList<Report> fastReports;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,8 @@ public class AddReportActivity extends AppCompatActivity {
         mode = bundle.getString(Constants.REPORT_MODE);
         assert mode != null;
 
+
+        fastReports = new ArrayList<>();
         boolean persian = Constants.getDefaultLanguage(this).equals("fa");
         stepperIndicator = findViewById(R.id.state_indicator);
         if (persian) {
@@ -200,7 +204,7 @@ public class AddReportActivity extends AppCompatActivity {
 
     private void addCowAndReport() {
         MyDao dao = DataBase.getInstance(this).dao();
-
+        CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
         Report report = new Report();
         report.visit = one.exportStart();
         if (two != null) {
@@ -208,14 +212,39 @@ public class AddReportActivity extends AppCompatActivity {
         }
         report.scoreMethodId = farm.scoreMethodId;
         report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected() + 1;
-        ((DrugFragment) adapter.getFragment(2)).setDrugOnReport(report);
-        CheckBoxManager.getCheckBoxManager(scoreMethod).setBooleansOnReport(report);
+        manager.setBooleansOnReport(report);
         report.description = ((MoreInfoFragment) adapter.getFragment(3)).getMoreInfo();
+        fastReports.add(report);
 
-        if (mode.equals(Constants.REPORT_CREATE)) {
-            AppExecutors.getInstance().diskIO().execute(() -> {
-                Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            if (manager.isContinueCure()) {
+                if (cow != null) {
+                    List<Report> reports = dao.getReportOfCowWithDrug(cow.getId());
+                    if (reports != null && reports.size() > 0) {
+                        Report temp = reports.get(0);
+                        for (Report innerReport : fastReports) {
+                            innerReport.pomadeId = temp.pomadeId;
+                            innerReport.serumId = temp.serumId;
+                            innerReport.antibioticId = temp.antibioticId;
+                            innerReport.antiInflammatoryId = temp.antiInflammatoryId;
+                            innerReport.cureId = temp.cureId;
+                        }
+                    }
+                }else{
+                    runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
+                    ((CowInjuryFragment) adapter.getFragment(1)).reset();
+                    return;
+                }
+
+            } else {
+                for (Report tempReport : fastReports) {
+                    ((DrugFragment) adapter.getFragment(2)).setDrugOnReport(tempReport);
+                }
+            }
+
+            if (mode.equals(Constants.REPORT_CREATE)) {
                 if (cow == null) {
+                    Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
                     cow = dao.getCow(cowNumber, farmId);
                     if (cow == null) {
                         cow = new Cow(cowNumber, false, farmId);
@@ -223,15 +252,14 @@ public class AddReportActivity extends AppCompatActivity {
                     }
                 }
                 report.cowId = cow.getId();
-                dao.insert(report);
+                for (Report tempReport : fastReports) {
+                    dao.insert(tempReport);
+                }
                 runOnUiThread(() -> {
                     Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
                     finish();
                 });
-            });
-        } else {
-            Log.i("TAG", "addCowAndReport: " + report.toString());
-            AppExecutors.getInstance().diskIO().execute(() -> {
+            } else {
                 report.cowId = cow.getId();
                 report.id = reportId;
                 dao.update(report);
@@ -239,8 +267,9 @@ public class AddReportActivity extends AppCompatActivity {
                     Toast.makeText(this, getString(R.string.report_updated), Toast.LENGTH_SHORT).show();
                     finish();
                 });
-            });
-        }
+            }
+        });
+
     }
 
     public void addCowAndReportFast() {
@@ -257,8 +286,8 @@ public class AddReportActivity extends AppCompatActivity {
 
         if (mode.equals(Constants.REPORT_CREATE)) {
             AppExecutors.getInstance().diskIO().execute(() -> {
-                Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
                 if (cow == null) {
+                    Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
                     cow = dao.getCow(cowNumber, farmId);
                     if (cow == null) {
                         cow = new Cow(cowNumber, false, farmId);
@@ -266,8 +295,10 @@ public class AddReportActivity extends AppCompatActivity {
                     }
                 }
                 report.cowId = cow.getId();
-                dao.insert(report);
-                runOnUiThread(() -> Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    fastReports.add(report);
+                    Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
+                });
             });
         }
     }
@@ -278,17 +309,24 @@ public class AddReportActivity extends AppCompatActivity {
                 state = State.injury;
                 break;
             case injury:
-                state = State.drugs;
+                if (goingDrugPage()) {
+                    state = State.drugs;
+                } else {
+                    addCowAndReport();
+                    return;
+                }
                 break;
             case drugs:
-                state = State.moreInfo;
-                break;
-            case moreInfo:
                 addCowAndReport();
                 return;
         }
         viewPager.setCurrentItem(State.getNumber(state));
         stepperIndicator.setCurrentStep(State.getNumber(state));
+    }
+
+    private boolean goingDrugPage() {
+        CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
+        return !manager.isTarkhis() && !manager.isRest() && !manager.isContinueCure();
     }
 
     public void back() {

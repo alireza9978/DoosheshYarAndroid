@@ -4,6 +4,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import ir.coleo.varam.R;
@@ -57,7 +59,7 @@ public class CheckBoxManager {
             Integer mainName = item.getName();
             if (mainName != null && mainName.equals(main)) {
                 for (CheckBoxItem otherItem : score) {
-                    Integer otherName = item.getName();
+                    Integer otherName = otherItem.getName();
                     if (otherName != null)
                         for (Integer otherInteger : other) {
                             if (otherName.equals(otherInteger)) {
@@ -97,12 +99,32 @@ public class CheckBoxManager {
         checkBoxManager = new CheckBoxManager(scoreMethod);
     }
 
+    public boolean isNew() {
+        return Objects.requireNonNull(getByName(R.string.option_two)).isCheck();
+    }
+
+    public boolean isKhoni() {
+        return Objects.requireNonNull(getByName(R.string.option_six)).isCheck();
+    }
+
+    public boolean isSardalme() {
+        return Objects.requireNonNull(getByName(R.string.option_five)).isCheck();
+    }
+
     public boolean isTarkhis() {
         return Objects.requireNonNull(getByName(R.string.option_four)).isCheck();
     }
 
     public boolean isKor() {
         return Objects.requireNonNull(getByName(R.string.option_seven)).isCheck();
+    }
+
+    public boolean isRest() {
+        return Objects.requireNonNull(getByName(R.string.option_one)).isCheck();
+    }
+
+    public boolean isContinueCure() {
+        return Objects.requireNonNull(getByName(R.string.option_three)).isCheck();
     }
 
     public boolean cartieSelected() {
@@ -160,6 +182,16 @@ public class CheckBoxManager {
                 break;
             }
         }
+
+        if (!isTarkhis()){
+            Date dt = new Date();
+            Calendar c = Calendar.getInstance();
+            c.setTime(dt);
+            c.add(Calendar.DATE, 1);
+            dt = c.getTime();
+            report.nextVisit = new MyDate(dt);
+        }
+
         reset(this.scoreMethod);
     }
 
@@ -182,5 +214,6 @@ public class CheckBoxManager {
         }
         return checkBoxManagers;
     }
+
 
 }

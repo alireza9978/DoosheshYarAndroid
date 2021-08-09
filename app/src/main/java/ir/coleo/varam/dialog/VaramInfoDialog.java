@@ -23,10 +23,11 @@ import ir.coleo.varam.models.CheckBoxManager;
  */
 public class VaramInfoDialog extends Dialog {
 
+    Context context;
 
     public VaramInfoDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, ScoreMethod scoreMode) {
         super(fragment.requireContext());
-        Context context = fragment.requireContext();
+        context = fragment.requireContext();
         setContentView(R.layout.select_finger_dialog_layout);
 
         GridView gridView = findViewById(R.id.grid);
@@ -42,15 +43,8 @@ public class VaramInfoDialog extends Dialog {
             newInput.setVisibility(View.GONE);
         } else {
             newInput.setOnClickListener(view -> {
-                if (!manager.isTarkhis()) {
-                    if (!manager.cartieSelected()) {
-                        Toast.makeText(context, R.string.cartie_error, Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    if (!manager.scoreSelected()) {
-                        Toast.makeText(context, R.string.score_error, Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                if (!isOk(manager)){
+                    return;
                 }
                 ((AddReportActivity) fragment.requireActivity()).addCowAndReportFast();
                 dismiss();
@@ -59,18 +53,31 @@ public class VaramInfoDialog extends Dialog {
 
         Button ok = findViewById(R.id.ok);
         ok.setOnClickListener(v -> {
-            if (!manager.isTarkhis() && !manager.isKor()) {
-                if (!manager.cartieSelected()) {
-                    Toast.makeText(context, R.string.cartie_error, Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (!manager.scoreSelected()) {
-                    Toast.makeText(context, R.string.score_error, Toast.LENGTH_LONG).show();
-                    return;
-                }
+            if (!isOk(manager)){
+                return;
             }
             dismiss();
         });
+    }
+
+    public boolean isOk(CheckBoxManager manager){
+        if (!manager.isTarkhis() && !manager.isKor()) {
+            if (manager.isNew()){
+                if (!manager.scoreSelected() && !manager.isSardalme() && !manager.isKhoni()){
+                    Toast.makeText(context, R.string.new_selection_error, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }
+            if (!manager.cartieSelected()) {
+                Toast.makeText(context, R.string.cartie_error, Toast.LENGTH_LONG).show();
+                return false;
+            }
+            if (!manager.scoreSelected()) {
+                Toast.makeText(context, R.string.score_error, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+        return true;
     }
 
     public VaramInfoDialog(@NonNull Context context, int themeResId) {
