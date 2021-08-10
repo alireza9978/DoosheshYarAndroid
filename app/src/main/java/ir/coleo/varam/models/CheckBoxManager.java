@@ -54,6 +54,16 @@ public class CheckBoxManager {
 
     }
 
+    public CheckBoxItem getCheckBoxItem(int name) {
+        for (CheckBoxItem item : score) {
+            Integer mainName = item.getName();
+            if (mainName != null && mainName.equals(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     private void disableOthers(Integer main, ArrayList<Integer> other) {
         for (CheckBoxItem item : score) {
             Integer mainName = item.getName();
@@ -183,8 +193,8 @@ public class CheckBoxManager {
             }
         }
 
-        if (!isTarkhis()){
-            Date dt = new Date();
+        if (!isTarkhis()) {
+            Date dt = report.visit.getDate();
             Calendar c = Calendar.getInstance();
             c.setTime(dt);
             c.add(Calendar.DATE, 1);

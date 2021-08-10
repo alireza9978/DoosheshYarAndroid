@@ -287,5 +287,8 @@
     <string name="createMethod_one_text">نام هر یک از سطوح ورم پستان را در این بخش تعریف کنید برای مثال اگر از اسکور 4 سطحی استفاده می کنید می توانید نام هر یک از سطوح را با اعداد 1، 2، 3 و 4 مشخص کنید</string>
     <string name="new_selection_error">باید یکی از سطوح یا گزینه سردلمه یا گزینه خونی را انتخاب کنید.</string>
     <string name="new_cow_cure_error">ادامه درمان برای گاو جدید امکان پذیر نیست.</string>
+    <string name="cure_duration">مدت درمان</string>
+    <string name="recure_warning">این کارتیه عود مجدد دارد.</string>
+    <string name="near_cure_warning">این کارتیه کمتر از 14 روز پیش درمان داشته است.</string>
 
 </resources>

@@ -245,15 +245,12 @@ public class FarmProfileActivity extends AppCompatActivity {
 
         Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
                 R.string.cartie_number_one, R.string.cartie_number_two, R.string.cartie_number_three,
-                R.string.cartie_number_four, R.string.option_one,
-                R.string.option_two, R.string.option_three, R.string.option_four,
-                R.string.option_five, R.string.option_six, R.string.option_seven, R.string.drug_title_1,
+                R.string.cartie_number_four, R.string.option_five, R.string.option_six, R.string.option_two,
+                R.string.option_three, R.string.option_eight, R.string.option_four,
+                R.string.option_one, R.string.option_seven, R.string.drug_title_1,
                 R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
-                R.string.drug_title_5, next_visit, more_info, R.string.score_type};
-        Integer[] threeLevel = {R.string.score_three_one, R.string.score_three_two,
-                R.string.score_three_three, R.string.score_three_four};
-        Integer[] fourLevel = {R.string.score_four_one, R.string.score_four_two,
-                R.string.score_four_three, R.string.score_four_four};
+                R.string.drug_title_5, next_visit, more_info, R.string.cure_duration};
+
 
         MyDao dao = DataBase.getInstance(this).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
@@ -295,27 +292,28 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                     }
 
-                    for (int j = 8; j < 12; j++) {
+                    cell = row.createCell(8);
+                    if (report.sardalme)
+                        cell.setCellValue("*");
+
+                    cell = row.createCell(9);
+                    if (report.khoni)
+                        cell.setCellValue("*");
+
+                    for (int j = 10; j < 15; j++) {
                         cell = row.createCell(j);
                         if (report.cartieState != null)
-                            if (j == 8 + report.cartieState) {
+                            if (j == 10 + report.cartieState) {
                                 cell.setCellValue("*");
                             }
                     }
 
-                    cell = row.createCell(12);
-                    if (report.sardalme)
-                        cell.setCellValue("*");
 
-                    cell = row.createCell(13);
-                    if (report.khoni)
-                        cell.setCellValue("*");
-
-                    cell = row.createCell(14);
+                    cell = row.createCell(15);
                     if (report.kor)
                         cell.setCellValue("*");
 
-                    cell = row.createCell(15);
+                    cell = row.createCell(16);
                     if (report.pomadeId != null)
                         if (report.pomadeId >= 0) {
                             for (Drug drug : drugs) {
@@ -326,7 +324,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(16);
+                    cell = row.createCell(17);
                     if (report.antibioticId != null)
                         if (report.antibioticId >= 0) {
                             for (Drug drug : drugs) {
@@ -337,7 +335,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(17);
+                    cell = row.createCell(18);
                     if (report.serumId != null)
                         if (report.serumId >= 0) {
                             for (Drug drug : drugs) {
@@ -348,7 +346,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(18);
+                    cell = row.createCell(19);
                     if (report.cureId != null)
                         if (report.cureId >= 0) {
                             for (Drug drug : drugs) {
@@ -359,7 +357,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(19);
+                    cell = row.createCell(20);
                     if (report.antiInflammatoryId != null)
                         if (report.antiInflammatoryId >= 0) {
                             for (Drug drug : drugs) {
@@ -370,14 +368,16 @@ public class FarmProfileActivity extends AppCompatActivity {
                             }
                         }
 
-                    cell = row.createCell(20);
+                    cell = row.createCell(21);
                     if (report.nextVisit != null)
                         cell.setCellValue(report.nextVisit.toString(this));
 
-                    cell = row.createCell(21);
+                    cell = row.createCell(22);
                     cell.setCellValue(report.description);
 
-//                   todo add cure duration
+                    cell = row.createCell(23);
+                    cell.setCellValue(report.cureDuration);
+
                 }
             });
         });

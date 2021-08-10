@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.badoualy.stepperindicator.StepperIndicator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +33,7 @@ import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.CheckBoxManager;
 import ir.coleo.varam.models.DateContainer;
+import ir.coleo.varam.models.MyDate;
 
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_CREATE;
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_REPORT_CREATE_END;
@@ -133,7 +135,7 @@ public class AddReportActivity extends AppCompatActivity {
                     }
                     adapter = new TabAdapterReport(this, cow.getNumber(),
                             one.toString(this), nextDate, report.areaNumber - 1,
-                            report.description, scoreMethod, list);
+                            report.description, scoreMethod, list, cow.getId());
 
                     viewPager.setOffscreenPageLimit(2);
                     viewPager.setUserInputEnabled(false);
@@ -171,7 +173,11 @@ public class AddReportActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
 
                     state = State.info;
-                    adapter = new TabAdapterReport(this, scoreMethod);
+                    if (cow == null) {
+                        adapter = new TabAdapterReport(this, scoreMethod, -1);
+                    } else {
+                        adapter = new TabAdapterReport(this, scoreMethod, cow.getId());
+                    }
 
                     viewPager.setOffscreenPageLimit(2);
                     viewPager.setUserInputEnabled(false);
@@ -230,12 +236,11 @@ public class AddReportActivity extends AppCompatActivity {
                             innerReport.cureId = temp.cureId;
                         }
                     }
-                }else{
+                } else {
                     runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
                     ((CowInjuryFragment) adapter.getFragment(1)).reset();
                     return;
                 }
-
             } else {
                 for (Report tempReport : fastReports) {
                     ((DrugFragment) adapter.getFragment(2)).setDrugOnReport(tempReport);
@@ -251,6 +256,9 @@ public class AddReportActivity extends AppCompatActivity {
                         cow.setId((int) dao.insertGetId(cow));
                     }
                 }
+
+                setCureDuration(report, dao);
+
                 report.cowId = cow.getId();
                 for (Report tempReport : fastReports) {
                     dao.insert(tempReport);
@@ -260,6 +268,9 @@ public class AddReportActivity extends AppCompatActivity {
                     finish();
                 });
             } else {
+
+                setCureDuration(report, dao);
+
                 report.cowId = cow.getId();
                 report.id = reportId;
                 dao.update(report);
@@ -270,6 +281,62 @@ public class AddReportActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setCureDuration(Report report, MyDao dao) {
+        if (report.kor) {
+            report.cartieState = -1;
+        }
+        if (report.cartieState != 0) {
+            MyDate start = null;
+            ArrayList<Pair<MyDate, MyDate>> pairList = new ArrayList<>();
+            List<Report> allReports = dao.getAllReportOfCowOrdered(cow.getId(), report.visit);
+            if (allReports.size() > 0 && allReports.get(0).cartieState == 4) {
+                report.cureDuration = allReports.get(0).cureDuration;
+            } else {
+                MyDate temp = report.visit;
+                for (int i = allReports.size() - 1; i >= 0; i--) {
+                    Report tempReport = allReports.get(i);
+                    if (tempReport.cartieState == 0) {
+                        start = tempReport.visit;
+                        break;
+                    }
+                    if (tempReport.cartieState == 3) {
+                        break;
+                    }
+                    if (tempReport.cartieState == 4) {
+                        MyDate innerTemp = tempReport.visit;
+                        for (int j = i - 1; j >= 0; j--) {
+                            Report innerReport = allReports.get(j);
+                            if (innerReport.cartieState != 4) {
+                                pairList.add(new Pair<>(innerTemp, temp));
+                                i = j + 1;
+                                break;
+                            }
+                            innerTemp = innerReport.visit;
+                        }
+                    }
+                    temp = tempReport.visit;
+                }
+                if (start != null) {
+                    Date startDate = start.getDate();
+                    Date endDate = report.visit.getDate();
+                    long differenceInTime = endDate.getTime() - startDate.getTime();
+                    long differenceInDays = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
+                    for (Pair<MyDate, MyDate> pair : pairList) {
+                        long tempDifference = pair.second.getDate().getTime() - pair.first.getDate().getTime();
+                        tempDifference = (tempDifference / (1000 * 60 * 60 * 24)) % 365;
+                        differenceInDays -= tempDifference;
+                    }
+                    report.cureDuration = differenceInDays;
+                }
+            }
+        } else {
+            report.cureDuration = 0;
+        }
+        if (report.kor) {
+            report.cartieState = null;
+        }
     }
 
     public void addCowAndReportFast() {
@@ -295,6 +362,9 @@ public class AddReportActivity extends AppCompatActivity {
                     }
                 }
                 report.cowId = cow.getId();
+
+                setCureDuration(report, dao);
+
                 runOnUiThread(() -> {
                     fastReports.add(report);
                     Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
@@ -307,6 +377,7 @@ public class AddReportActivity extends AppCompatActivity {
         switch (state) {
             case info:
                 state = State.injury;
+                ((CowInjuryFragment) adapter.getFragment(1)).setTargetDate(one.exportStart());
                 break;
             case injury:
                 if (goingDrugPage()) {

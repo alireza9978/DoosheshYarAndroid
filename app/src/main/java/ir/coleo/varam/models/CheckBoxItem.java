@@ -14,6 +14,8 @@ public class CheckBoxItem {
     private boolean check;
     private boolean active;
     private ArrayList<CheckBoxItem> disable;
+    private CheckBoxItemListener listener = null;
+    private long value = -1;
 
     public CheckBoxItem(Integer name, boolean check) {
         this.name = name;
@@ -66,9 +68,9 @@ public class CheckBoxItem {
     }
 
     public String getName(Context context) {
-        if (name != null){
+        if (name != null) {
             return context.getString(name);
-        }else{
+        } else {
             return nameString;
         }
     }
@@ -87,6 +89,9 @@ public class CheckBoxItem {
 
     public void setCheck(boolean check) {
         this.check = check;
+        if (check && listener != null) {
+            listener.run(value);
+        }
     }
 
     public ArrayList<CheckBoxItem> getDisable() {
@@ -95,5 +100,13 @@ public class CheckBoxItem {
 
     public void setDisable(ArrayList<CheckBoxItem> disable) {
         this.disable = disable;
+    }
+
+    public void setListener(CheckBoxItemListener listener) {
+        this.listener = listener;
+    }
+
+    public void setValue(long value) {
+        this.value = value;
     }
 }

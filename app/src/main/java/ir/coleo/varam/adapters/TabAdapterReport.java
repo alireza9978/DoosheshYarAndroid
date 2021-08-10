@@ -30,17 +30,19 @@ public class TabAdapterReport extends FragmentStateAdapter {
     private String nextDate;
     private String description;
     private final ScoreMethod scoreMethod;
+    private final int cowId;
     private ArrayList<Pair<Integer, Integer>> drugs;
 
-    public TabAdapterReport(@NonNull FragmentActivity fragmentActivity, ScoreMethod scoreMethod) {
+    public TabAdapterReport(@NonNull FragmentActivity fragmentActivity, ScoreMethod scoreMethod, int cowId) {
         super(fragmentActivity);
         this.edit = false;
         this.scoreMethod = scoreMethod;
+        this.cowId = cowId;
     }
 
     public TabAdapterReport(@NonNull FragmentActivity fragmentActivity, int cowNumber, String date,
                             String nextDate, int areaNumber, String description, ScoreMethod scoreMethod,
-                            ArrayList<Pair<Integer, Integer>> drugs) {
+                            ArrayList<Pair<Integer, Integer>> drugs, int cowId) {
         super(fragmentActivity);
         this.edit = true;
         this.description = description;
@@ -50,6 +52,7 @@ public class TabAdapterReport extends FragmentStateAdapter {
         this.nextDate = nextDate;
         this.areaNumber = areaNumber;
         this.scoreMethod = scoreMethod;
+        this.cowId = cowId;
     }
 
     @NonNull
@@ -74,9 +77,9 @@ public class TabAdapterReport extends FragmentStateAdapter {
                 }
                 case 1: {
                     if (edit) {
-                        fragments[1] = new CowInjuryFragment(areaNumber, scoreMethod);
+                        fragments[1] = new CowInjuryFragment(areaNumber, scoreMethod, cowId);
                     } else {
-                        fragments[1] = new CowInjuryFragment(scoreMethod);
+                        fragments[1] = new CowInjuryFragment(scoreMethod, cowId);
                     }
                     break;
                 }

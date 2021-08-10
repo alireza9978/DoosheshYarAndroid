@@ -15,6 +15,8 @@ import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.activities.reports.fragments.CowInjuryFragment;
 import ir.coleo.varam.adapters.GridViewAdapterReasonAddReport;
 import ir.coleo.varam.database.models.main.ScoreMethod;
+import ir.coleo.varam.models.CheckBoxItem;
+import ir.coleo.varam.models.CheckBoxItemListener;
 import ir.coleo.varam.models.CheckBoxManager;
 
 
@@ -25,7 +27,7 @@ public class VaramInfoDialog extends Dialog {
 
     Context context;
 
-    public VaramInfoDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, ScoreMethod scoreMode) {
+    public VaramInfoDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, ScoreMethod scoreMode, long lastCure) {
         super(fragment.requireContext());
         context = fragment.requireContext();
         setContentView(R.layout.select_finger_dialog_layout);
@@ -33,6 +35,20 @@ public class VaramInfoDialog extends Dialog {
         GridView gridView = findViewById(R.id.grid);
         GridView gridViewTwo = findViewById(R.id.grid_two);
         CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMode);
+        CheckBoxItem checkBoxItem = manager.getCheckBoxItem(R.string.option_two);
+        checkBoxItem.setValue(lastCure);
+        checkBoxItem.setListener(new CheckBoxItemListener() {
+            @Override
+            public void run(long value) {
+                if (value == -1)
+                    return;
+                if (value >= 14) {
+                    Toast.makeText(context, R.string.recure_warning, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, R.string.near_cure_warning, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         GridViewAdapterReasonAddReport adapter = new GridViewAdapterReasonAddReport(context, manager.getScoreTop());
         GridViewAdapterReasonAddReport adapterTwo = new GridViewAdapterReasonAddReport(context, manager.getScoreBottom());
         gridView.setAdapter(adapter);
@@ -43,7 +59,7 @@ public class VaramInfoDialog extends Dialog {
             newInput.setVisibility(View.GONE);
         } else {
             newInput.setOnClickListener(view -> {
-                if (!isOk(manager)){
+                if (!isOk(manager)) {
                     return;
                 }
                 ((AddReportActivity) fragment.requireActivity()).addCowAndReportFast();
@@ -53,17 +69,17 @@ public class VaramInfoDialog extends Dialog {
 
         Button ok = findViewById(R.id.ok);
         ok.setOnClickListener(v -> {
-            if (!isOk(manager)){
+            if (!isOk(manager)) {
                 return;
             }
             dismiss();
         });
     }
 
-    public boolean isOk(CheckBoxManager manager){
+    public boolean isOk(CheckBoxManager manager) {
         if (!manager.isTarkhis() && !manager.isKor()) {
-            if (manager.isNew()){
-                if (!manager.scoreSelected() && !manager.isSardalme() && !manager.isKhoni()){
+            if (manager.isNew()) {
+                if (!manager.scoreSelected() && !manager.isSardalme() && !manager.isKhoni()) {
                     Toast.makeText(context, R.string.new_selection_error, Toast.LENGTH_LONG).show();
                     return false;
                 }

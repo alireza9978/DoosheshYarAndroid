@@ -54,6 +54,8 @@ public class Report {
     public String description;
     @ColumnInfo(name = "cow_id")
     public Integer cowId;
+    @ColumnInfo(name = "cure_duration")
+    public long cureDuration;
 
 //    @Override
 //    public String toString() {

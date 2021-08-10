@@ -155,6 +155,12 @@ public interface MyDao {
     @Query("SELECT * FROM Report WHERE Report.cow_id == :id")
     List<Report> getAllReportOfCow(Integer id);
 
+    @Query("SELECT * FROM Report WHERE Report.cow_id == :id AND Report.visit_date <= :tempVisit ORDER BY Report.visit_date, Report.id")
+    List<Report> getAllReportOfCowOrdered(Integer id, MyDate tempVisit);
+
+    @Query("SELECT * FROM Report WHERE Report.cow_id == :id ORDER BY Report.visit_date, Report.id")
+    List<Report> getReportOfCowOrdered(Integer id);
+
     @Query("SELECT * FROM Report WHERE " +
             "Report.cow_id == :id AND (" +
             "Report.pomade_id IS NOT NULL OR " +

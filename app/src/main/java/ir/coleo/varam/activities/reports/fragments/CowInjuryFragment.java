@@ -10,14 +10,21 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
 import ir.coleo.varam.constants.Constants;
+import ir.coleo.varam.database.DataBase;
+import ir.coleo.varam.database.dao.MyDao;
+import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.models.main.ScoreMethod;
+import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.dialog.VaramInfoDialog;
 import ir.coleo.varam.models.CheckBoxManager;
+import ir.coleo.varam.models.MyDate;
 
 /**
  * صفحه صبت جراحت پستان در ثبت گزارش
@@ -31,15 +38,20 @@ public class CowInjuryFragment extends Fragment {
             R.drawable.ic_cartie_three, R.drawable.ic_cartie_four};
     private final ScoreMethod scoreMethod;
     private boolean edit = false;
+    private int cowId = -1;
+    private MyDate targetDate = null;
+    private long lastCure = -1;
 
-    public CowInjuryFragment(int selected, ScoreMethod scoreMethod) {
+    public CowInjuryFragment(int selected, ScoreMethod scoreMethod, int cowId) {
         this.edit = true;
         this.selected = selected;
         this.scoreMethod = scoreMethod;
+        this.cowId = cowId;
     }
 
-    public CowInjuryFragment(ScoreMethod scoreMethod) {
+    public CowInjuryFragment(ScoreMethod scoreMethod, int cowId) {
         this.scoreMethod = scoreMethod;
+        this.cowId = cowId;
     }
 
     @Override
@@ -80,7 +92,7 @@ public class CowInjuryFragment extends Fragment {
     }
 
     public void getFingerNumber() {
-        VaramInfoDialog dialog = new VaramInfoDialog(this, edit, scoreMethod);
+        VaramInfoDialog dialog = new VaramInfoDialog(this, edit, scoreMethod, lastCure);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setOnDismissListener(dialogInterface -> {
             CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
@@ -115,5 +127,31 @@ public class CowInjuryFragment extends Fragment {
         } else {
             mainImage.setImageResource(cartieImage[selected]);
         }
+
+        MyDao dao = DataBase.getInstance(requireContext()).dao();
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            if (cowId != -1) {
+                ArrayList<Report> reports = (ArrayList<Report>) dao.getReportOfCowOrdered(cowId);
+                if (reports.size() == 0) {
+                    lastCure = -1;
+                } else {
+                    for (int i = reports.size() - 1; i >= 0; i--) {
+                        if (reports.get(i).cartieState == 1) {
+                            Date startDate = reports.get(i).visit.getDate();
+                            long differenceInTime = targetDate.getDate().getTime() - startDate.getTime();
+                            lastCure = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                lastCure = -1;
+            }
+        });
+
+    }
+
+    public void setTargetDate(MyDate targetDate) {
+        this.targetDate = targetDate;
     }
 }
