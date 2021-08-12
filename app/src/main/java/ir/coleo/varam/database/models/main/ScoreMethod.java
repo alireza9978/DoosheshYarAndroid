@@ -45,6 +45,6 @@ public class ScoreMethod implements Serializable {
                 return R.string.five_level;
             }
         }
-        return 0;
+        return R.string.no_level;
     }
 }

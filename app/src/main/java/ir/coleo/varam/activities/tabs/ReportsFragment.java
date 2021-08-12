@@ -77,8 +77,8 @@ public class ReportsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CHOOSE_FILE_REQUEST_CODE) {
-            assert data != null;
-            ((ImportFragment) adapter.getItem(0)).importFile(data);
+            if (data != null)
+                ((ImportFragment) adapter.getItem(0)).importFile(data);
         }
     }
 
