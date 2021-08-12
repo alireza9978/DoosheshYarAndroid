@@ -58,6 +58,12 @@ import static ir.coleo.varam.R.string.next_visit;
  */
 public class ImportFragment extends Fragment {
 
+    private ActivityResultLauncher<Intent> someActivityResultLauncher;
+    private ActivityResultLauncher<Intent> fileActivityResultLauncher;
+    private TreeSet<Drug> importedDrugs;
+    private String finalFarmName;
+    private Sheet finalDataTypeSheet;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,6 +71,28 @@ public class ImportFragment extends Fragment {
 
         ConstraintLayout button = view.findViewById(R.id.import_button);
         button.setOnClickListener(view1 -> showFileChooser());
+
+        someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        assert data != null;
+                        continueImporting((ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT), finalDataTypeSheet, finalFarmName, importedDrugs);
+                    }
+                });
+
+        fileActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        assert data != null;
+                        importFile(data);
+                    }
+                });
 
         return view;
     }
@@ -134,11 +162,11 @@ public class ImportFragment extends Fragment {
 
             Integer[] headers = {R.string.cow_number, R.string.day, R.string.month, R.string.year,
                     R.string.cartie_number_one, R.string.cartie_number_two, R.string.cartie_number_three,
-                    R.string.cartie_number_four, R.string.option_one,
-                    R.string.option_two, R.string.option_three, R.string.option_four,
-                    R.string.option_five, R.string.option_six, R.string.option_seven, R.string.drug_title_1,
+                    R.string.cartie_number_four, R.string.option_five, R.string.option_six, R.string.option_two,
+                    R.string.option_three, R.string.option_eight, R.string.option_four,
+                    R.string.option_one, R.string.option_seven, R.string.drug_title_1,
                     R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
-                    R.string.drug_title_5, next_visit, more_info, R.string.score_type};
+                    R.string.drug_title_5, next_visit, more_info, R.string.cure_duration};
 
             //read headers
             int count = 0;
@@ -154,7 +182,7 @@ public class ImportFragment extends Fragment {
                 }
                 count++;
             }
-            TreeSet<Drug> importedDrugs = new TreeSet<>();
+            importedDrugs = new TreeSet<>();
             TreeSet<String> importedScoreName = new TreeSet<>();
             {
                 Iterator<Row> rows = dataTypeSheet.iterator();
@@ -172,14 +200,14 @@ public class ImportFragment extends Fragment {
                                 importedScoreName.add(temp);
                         }
                     }
-                    for (int i = 11; i < 16; i++) {
+                    for (int i = 16; i < 21; i++) {
                         Cell cell = row.getCell(i);
                         if (cell == null) {
                             continue;
                         }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                             Drug drug = new Drug();
-                            drug.type = i - 11;
+                            drug.type = i - 16;
                             drug.name = cell.getStringCellValue();
                             importedDrugs.add(drug);
                         }
@@ -189,22 +217,12 @@ public class ImportFragment extends Fragment {
 
 
             // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
-            Sheet finalDataTypeSheet = dataTypeSheet;
-            String finalFarmName = farmName;
-            ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-                    new ActivityResultContracts.StartActivityForResult(),
-                    result -> {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            // There are no request codes
-                            Intent data = result.getData();
-                            assert data != null;
-                            continueImporting((ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT), finalDataTypeSheet, finalFarmName, importedDrugs);
-                        }
-                    });
+            finalDataTypeSheet = dataTypeSheet;
+            finalFarmName = farmName;
 
             Intent createScoreMethodIntent = new Intent(requireActivity(), CreateScoreMethod.class);
             createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_MODE, "IMPORT");
-            createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_DATA, importedScoreName);
+            createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_DATA, new ArrayList<>(importedScoreName));
             someActivityResultLauncher.launch(createScoreMethodIntent);
 
 
@@ -257,21 +275,87 @@ public class ImportFragment extends Fragment {
             while (rows.hasNext()) {
                 Row row = rows.next();
                 Report report = new Report();
-                report.cowId = (int) row.getCell(0).getNumericCellValue();
+
+                Cell cell = row.getCell(0);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    report.cowId = Integer.parseInt(cell.getStringCellValue());
+                } else {
+                    report.cowId = (int) cell.getNumericCellValue();
+                }
+
                 report.scoreMethodId = scoreMethod.id;
                 cowNumbers.add(report.cowId);
+
+                int day, month, year;
+                cell = row.getCell(3);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String temp = cell.getStringCellValue();
+                    if (temp != null && !temp.isEmpty()) {
+                        year = Integer.parseInt(temp);
+                    } else {
+                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                        return;
+                    }
+                } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                    year = (int) cell.getNumericCellValue();
+                } else {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                    return;
+                }
+
+                cell = row.getCell(2);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String temp = cell.getStringCellValue();
+                    if (temp != null && !temp.isEmpty()) {
+                        month = Integer.parseInt(temp);
+                    } else {
+                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                        return;
+                    }
+                } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                    month = (int) cell.getNumericCellValue();
+                } else {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                    return;
+                }
+
+                cell = row.getCell(1);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String temp = cell.getStringCellValue();
+                    if (temp != null && !temp.isEmpty()) {
+                        day = Integer.parseInt(temp);
+                    } else {
+                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                        return;
+                    }
+
+                } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                    day = (int) cell.getNumericCellValue();
+                } else {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                    return;
+                }
+
+
                 if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
                     PersianDate pdate = new PersianDate();
-                    int[] dateArray = pdate.toGregorian(Integer.parseInt(row.getCell(3).getStringCellValue()),
-                            Integer.parseInt(row.getCell(2).getStringCellValue()),
-                            Integer.parseInt(row.getCell(1).getStringCellValue()));
+                    int[] dateArray = pdate.toGregorian(year, month, day);
                     report.visit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
                 } else {
-                    report.visit = new MyDate((int) row.getCell(1).getNumericCellValue(),
-                            (int) row.getCell(2).getNumericCellValue(),
-                            (int) row.getCell(3).getNumericCellValue());
+                    report.visit = new MyDate(day, month, year);
                 }
-                Cell cell;
 
                 score_loop:
                 for (int i = 4; i < 8; i++) {
@@ -281,7 +365,7 @@ public class ImportFragment extends Fragment {
                     }
                     if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                         String temp = cell.getStringCellValue();
-                        if (!temp.isEmpty()) {
+                        if (temp != null && !temp.isEmpty()) {
                             for (int j = 0; j < scoreMethod.scoresNameList.size(); j++) {
                                 String scoreString = scoreMethod.scoresNameList.get(j);
                                 if (scoreString.equals(temp)) {
@@ -296,65 +380,72 @@ public class ImportFragment extends Fragment {
                     }
                 }
 
-                for (int i = 8; i < 12; i++) {
+                for (int i = 10; i < 15; i++) {
                     cell = row.getCell(i);
                     if (cell == null) {
                         continue;
                     }
                     if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                         String temp = cell.getStringCellValue();
-                        if (!temp.isEmpty() && temp.equals("*")) {
-                            report.cartieState = i - 8;
+                        if (temp != null && !temp.isEmpty() && temp.equals("*")) {
+                            report.cartieState = i - 10;
                             break;
                         }
                     }
                 }
 
-                for (int i = 12; i < 15; i++) {
-                    cell = row.getCell(i);
-                    if (cell == null) {
-                        continue;
+                cell = row.getCell(8);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String star = cell.getStringCellValue();
+                    if (star != null && !star.isEmpty() && star.equals("*")) {
+                        report.sardalme = true;
                     }
-                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                        String star = cell.getStringCellValue();
-                        if (star != null && !star.isEmpty() && star.equals("*")) {
-                            switch (i) {
-                                case 12:
-                                    report.sardalme = true;
-                                    break;
-                                case 13:
-                                    report.khoni = true;
-                                    break;
-                                case 14:
-                                    report.kor = true;
-                                    break;
-                            }
-                        }
-                    } else {
-                        switch (i) {
-                            case 12:
-                                report.sardalme = false;
-                                break;
-                            case 13:
-                                report.khoni = false;
-                                break;
-                            case 14:
-                                report.kor = false;
-                                break;
-                        }
+                } else {
+                    report.sardalme = false;
+                }
+
+                cell = row.getCell(9);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String star = cell.getStringCellValue();
+                    if (star != null && !star.isEmpty() && star.equals("*")) {
+                        report.khoni = true;
                     }
+                } else {
+                    report.khoni = false;
+                }
+
+                cell = row.getCell(15);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String star = cell.getStringCellValue();
+                    if (star != null && !star.isEmpty() && star.equals("*")) {
+                        report.kor = true;
+                    }
+                } else {
+                    report.kor = false;
                 }
 
 
-                for (int i = 15; i < 20; i++) {
+                for (int i = 16; i < 21; i++) {
                     cell = row.getCell(i);
                     if (cell == null) {
                         continue;
                     }
                     if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                         String drugName = cell.getStringCellValue();
+                        if (drugName == null || drugName.isEmpty()) {
+                            continue;
+                        }
                         for (Drug drug : drugList) {
-                            if (drug.type == i - 15 && drug.name.equals(drugName)) {
+                            if (drug.type == i - 16 && drug.name.equals(drugName)) {
                                 switch (drug.type) {
                                     case 0: {
                                         report.pomadeId = drug.id;
@@ -383,32 +474,47 @@ public class ImportFragment extends Fragment {
                 }
 
 
-                Cell nextVisitCell = row.getCell(20);
+                Cell nextVisitCell = row.getCell(21);
                 if (nextVisitCell == null) {
                     continue;
                 }
                 if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    String[] date = nextVisitCell.getStringCellValue().split("/");
-                    if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
-                        PersianDate pdate = new PersianDate();
-                        int[] dateArray = pdate.toGregorian(Integer.parseInt(date[0]),
-                                Integer.parseInt(date[1]),
-                                Integer.parseInt(date[2]));
-                        report.nextVisit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
-                    } else {
-                        report.nextVisit = new MyDate(Integer.parseInt(date[2]),
-                                Integer.parseInt(date[1]),
-                                Integer.parseInt(date[0]));
+                    String temp = nextVisitCell.getStringCellValue();
+                    if (temp != null && !temp.isEmpty()) {
+                        String[] date = temp.split("/");
+                        if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
+                            PersianDate pdate = new PersianDate();
+                            int[] dateArray = pdate.toGregorian(Integer.parseInt(date[0]),
+                                    Integer.parseInt(date[1]),
+                                    Integer.parseInt(date[2]));
+                            report.nextVisit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
+                        } else {
+                            report.nextVisit = new MyDate(Integer.parseInt(date[2]),
+                                    Integer.parseInt(date[1]),
+                                    Integer.parseInt(date[0]));
+                        }
                     }
                 }
-                Cell moreInfo = row.getCell(21);
-                if (moreInfo == null) {
-                    continue;
-                }
-                if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    report.description = moreInfo.getStringCellValue();
+
+                Cell moreInfo = row.getCell(22);
+                if (moreInfo != null) {
+                    if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String temp = moreInfo.getStringCellValue();
+                        if (temp != null && !temp.isEmpty())
+                            report.description = temp;
+                    }
                 }
 
+                Cell cureDuration = row.getCell(23);
+                if (cureDuration != null) {
+                    if (cureDuration.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String temp = cureDuration.getStringCellValue();
+                        if (temp != null && !temp.isEmpty())
+                            report.cureDuration = Long.parseLong(temp);
+                    } else if (cureDuration.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                        report.cureDuration = (long) cureDuration.getNumericCellValue();
+                    }
+                }
 
                 reports.add(report);
             }

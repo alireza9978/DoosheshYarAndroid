@@ -38,7 +38,7 @@ public class CreateScoreMethod extends AppCompatActivity {
         Intent data = getIntent();
         assert data != null;
         String mode = data.getStringExtra(Constants.SCORE_METHOD_INTENT_MODE);
-        if(mode.equals("CREATE")) {
+        if (mode.equals("CREATE")) {
 
             int scoreCount = data.getIntExtra(Constants.SCORE_METHOD_INTENT_COUNT, 0);
             if (scoreCount == 0) {
@@ -50,7 +50,7 @@ public class CreateScoreMethod extends AppCompatActivity {
                 View child = getLayoutInflater().inflate(R.layout.score_list_item_layout, null);
                 EditText tempEditText = child.findViewById(R.id.item_name);
                 TextView tempTextView = child.findViewById(R.id.item_text);
-                tempTextView.setText(getString(R.string.level) + (i + 1) );
+                tempTextView.setText(getString(R.string.level) + (i + 1));
                 editTexts.add(tempEditText);
                 scoresList.addView(child);
             }
@@ -73,7 +73,7 @@ public class CreateScoreMethod extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             });
-        }else if (mode.equals("IMPORT")){
+        } else if (mode.equals("IMPORT")) {
             ArrayList<String> scoresName = data.getStringArrayListExtra(Constants.SCORE_METHOD_INTENT_DATA);
             if (scoresName == null || scoresName.size() == 0) {
                 setResult(Activity.RESULT_CANCELED);
@@ -83,7 +83,7 @@ public class CreateScoreMethod extends AppCompatActivity {
             int scoreCount = scoresName.size();
 
             for (int i = 0; i < scoreCount; i++) {
-                View child = getLayoutInflater().inflate(R.layout.score_list_item_layout, scoresList);
+                View child = getLayoutInflater().inflate(R.layout.score_list_item_layout, null);
                 EditText tempEditText = child.findViewById(R.id.item_name);
                 TextView tempTextView = child.findViewById(R.id.item_text);
                 tempTextView.setText(scoresName.get(i));
@@ -101,8 +101,12 @@ public class CreateScoreMethod extends AppCompatActivity {
                         return;
                     }
                     int position = Integer.parseInt(temp);
-                    if (position < scoreCount) {
-                        scoresNameList[position] = scoresName.get(i);
+                    if (position <= 0) {
+                        Toast.makeText(CreateScoreMethod.this, getString(R.string.invalid_input_small_number), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if (position <= scoreCount) {
+                        scoresNameList[position - 1] = scoresName.get(i);
                     } else {
                         Toast.makeText(CreateScoreMethod.this, getString(R.string.invalid_input_big_number), Toast.LENGTH_LONG).show();
                         return;

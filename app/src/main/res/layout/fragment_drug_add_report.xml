@@ -7,170 +7,178 @@
     android:layout_height="match_parent"
     tools:context=".activities.reports.fragments.CowInfoFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="20dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/info_title"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:fontFamily="@font/anjoman_bold"
-            android:text="@string/used_drug"
-            android:textColor="@color/selected_tab_home"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/drug_text_one"
-            style="@style/Theme.App.TextView.Drug"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/login_input_height"
-            android:text="@string/drug_title_1"
-            app:layout_constraintEnd_toStartOf="@id/drug_text_two"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/info_title" />
-
-        <TextView
-            android:id="@+id/drug_text_two"
-            style="@style/Theme.App.TextView.Drug.End"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/login_input_height"
-            android:text="@string/drug_title_2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/drug_text_one"
-            app:layout_constraintTop_toBottomOf="@id/info_title" />
-
-        <TextView
-            android:id="@+id/drug_text_three"
-            style="@style/Theme.App.TextView.Drug"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/login_input_height"
-            android:text="@string/drug_title_3"
-            app:layout_constraintEnd_toStartOf="@id/drug_text_four"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drug_text_two" />
-
-        <TextView
-            android:id="@+id/drug_text_four"
-            style="@style/Theme.App.TextView.Drug.End"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/login_input_height"
-            android:text="@string/drug_title_4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/drug_text_three"
-            app:layout_constraintTop_toBottomOf="@id/drug_text_one" />
-
-        <TextView
-            android:id="@+id/drug_text_five"
-            style="@style/Theme.App.TextView.Drug"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/login_input_height"
-            android:text="@string/drug_title_5"
-            app:layout_constraintEnd_toStartOf="@id/drug_text_six"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drug_text_three" />
-
-        <TextView
-            android:id="@+id/drug_text_six"
-            style="@style/Theme.App.TextView.Drug.End"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/login_input_height"
-            android:text="@string/drug_title_5"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/drug_text_five"
-            app:layout_constraintTop_toBottomOf="@id/drug_text_three" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/next_button"
-            android:layout_marginStart="35dp"
-            android:layout_width="125dp"
-            android:layout_height="50dp"
-            android:layout_margin="35dp"
-            android:background="@drawable/login_button_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/more_info_edit">
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            >
 
             <TextView
-                android:id="@+id/next_text"
-                style="@style/Theme.App.TransBack"
+                android:id="@+id/info_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/anjoman_medium"
-                android:text="@string/create"
-                android:textColor="@color/white"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/anjoman_bold"
+                android:text="@string/used_drug"
+                android:textColor="@color/selected_tab_home"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <EditText
-            android:id="@+id/more_info_edit"
-            style="@style/Theme.App.EditText.Login.Input"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="start|top"
-            android:hint="@string/more_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drug_text_five" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/back_button"
-            android:layout_width="125dp"
-            android:layout_height="50dp"
-            android:layout_margin="35dp"
-            android:background="@drawable/back_button_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/more_info_edit">
+            <TextView
+                android:id="@+id/drug_text_one"
+                style="@style/Theme.App.TextView.Drug"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:text="@string/drug_title_1"
+                app:layout_constraintEnd_toStartOf="@id/drug_text_two"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_title" />
 
             <TextView
-                android:id="@+id/back_text"
-                style="@style/Theme.App.TransBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/anjoman_medium"
-                android:paddingEnd="20dp"
-                android:text="@string/prevois"
-                android:textColor="@color/hit_gray"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/drug_text_two"
+                style="@style/Theme.App.TextView.Drug.End"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:text="@string/drug_title_2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@id/back_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/drug_text_one"
+                app:layout_constraintTop_toBottomOf="@id/info_title" />
 
-            <ImageView
-                android:id="@+id/back_icon"
-                style="@style/Theme.App.ImageView.Edit"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/back_text"
-                app:layout_constraintHorizontal_chainStyle="packed"
+            <TextView
+                android:id="@+id/drug_text_three"
+                style="@style/Theme.App.TextView.Drug"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:text="@string/drug_title_3"
+                app:layout_constraintEnd_toStartOf="@id/drug_text_four"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/hit_gray" />
+                app:layout_constraintTop_toBottomOf="@id/drug_text_two" />
+
+            <TextView
+                android:id="@+id/drug_text_four"
+                style="@style/Theme.App.TextView.Drug.End"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:text="@string/drug_title_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/drug_text_three"
+                app:layout_constraintTop_toBottomOf="@id/drug_text_one" />
+
+            <TextView
+                android:id="@+id/drug_text_five"
+                style="@style/Theme.App.TextView.Drug"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:text="@string/drug_title_5"
+                app:layout_constraintEnd_toStartOf="@id/drug_text_six"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/drug_text_three" />
+
+            <TextView
+                android:id="@+id/drug_text_six"
+                style="@style/Theme.App.TextView.Drug.End"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/login_input_height"
+                android:text="@string/drug_title_5"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/drug_text_five"
+                app:layout_constraintTop_toBottomOf="@id/drug_text_three" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/next_button"
+                android:layout_marginStart="35dp"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:layout_margin="35dp"
+                android:background="@drawable/login_button_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/more_info_edit">
+
+                <TextView
+                    android:id="@+id/next_text"
+                    style="@style/Theme.App.TransBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anjoman_medium"
+                    android:text="@string/create"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/more_info_edit"
+                style="@style/Theme.App.EditText.Login.Input"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="start|top"
+                android:hint="@string/more_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/drug_text_five" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/back_button"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:layout_margin="35dp"
+                android:background="@drawable/back_button_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/more_info_edit">
+
+                <TextView
+                    android:id="@+id/back_text"
+                    style="@style/Theme.App.TransBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anjoman_medium"
+                    android:paddingEnd="20dp"
+                    android:text="@string/prevois"
+                    android:textColor="@color/hit_gray"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/back_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/back_icon"
+                    style="@style/Theme.App.ImageView.Edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/back_text"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/hit_gray" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </ScrollView>
 
 </FrameLayout>

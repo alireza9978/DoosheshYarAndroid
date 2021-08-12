@@ -12,6 +12,7 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TypefaceSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -125,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case FARM_SELECTION_REPORT_FACTOR: {
                 adapter.getFragment(3).onActivityResult(requestCode, resultCode, data);
                 break;
+            }
+            case CHOOSE_FILE_REQUEST_CODE:{
+                Log.i("MAIN", "onActivityResult: " + CHOOSE_FILE_REQUEST_CODE);
             }
             default: {
                 adapter.getFragment(3).onActivityResult(CHOOSE_FILE_REQUEST_CODE, resultCode, data);
