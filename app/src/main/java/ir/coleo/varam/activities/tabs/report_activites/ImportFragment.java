@@ -164,7 +164,7 @@ public class ImportFragment extends Fragment {
                     R.string.cartie_number_one, R.string.cartie_number_two, R.string.cartie_number_three,
                     R.string.cartie_number_four, R.string.option_five, R.string.option_six, R.string.option_two,
                     R.string.option_three, R.string.option_eight, R.string.option_four,
-                    R.string.option_one, R.string.option_seven, R.string.drug_title_1,
+                    R.string.option_one, R.string.option_seven_xlsx, R.string.drug_title_1,
                     R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
                     R.string.drug_title_5, next_visit, more_info, R.string.cure_duration};
 

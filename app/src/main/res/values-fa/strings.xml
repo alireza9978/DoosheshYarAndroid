@@ -234,7 +234,8 @@
     <string name="option_four">ترخیص</string>
     <string name="option_five">سردلمه</string>
     <string name="option_six">خونی</string>
-    <string name="option_seven">کور</string>
+    <string name="option_seven">کور شود</string>
+    <string name="option_seven_xlsx">کور</string>
     <string name="option_eight">تغییر درمان</string>
     <string name="drug_to_use">دارو‌های مورد استفاده</string>
     <string name="cartie_number">کارتیه درگیر</string>
