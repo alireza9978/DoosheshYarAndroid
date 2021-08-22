@@ -249,8 +249,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                 R.string.option_three, R.string.option_eight, R.string.option_four,
                 R.string.option_one, R.string.option_seven_xlsx, R.string.drug_title_1,
                 R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
-                R.string.drug_title_5, next_visit, more_info, R.string.cure_duration};
-
+                R.string.drug_title_5, next_visit, more_info, R.string.cure_duration, R.string.chronic, R.string.recurrence};
 
         MyDao dao = DataBase.getInstance(this).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
@@ -378,6 +377,13 @@ public class FarmProfileActivity extends AppCompatActivity {
                     cell = row.createCell(23);
                     cell.setCellValue(report.cureDuration);
 
+                    cell = row.createCell(24);
+                    if (report.chronic)
+                        cell.setCellValue("*");
+
+                    cell = row.createCell(25);
+                    if (report.recurrence)
+                        cell.setCellValue("*");
                 }
             });
         });

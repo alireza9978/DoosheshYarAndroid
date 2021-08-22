@@ -38,9 +38,12 @@ public class CowInjuryFragment extends Fragment {
             R.drawable.ic_cartie_three, R.drawable.ic_cartie_four};
     private final ScoreMethod scoreMethod;
     private boolean edit = false;
+
     private int cowId = -1;
     private MyDate targetDate = null;
     private long lastCure = -1;
+    private boolean chronic = false;
+    private boolean recurrence = false;
 
     public CowInjuryFragment(int selected, ScoreMethod scoreMethod, int cowId) {
         this.edit = true;
@@ -83,6 +86,20 @@ public class CowInjuryFragment extends Fragment {
                 Toast.makeText(requireContext(), R.string.empty_error, Toast.LENGTH_SHORT).show();
                 return;
             }
+            CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
+            if (manager.isNew()){
+                if (lastCure != -1)
+                    if (lastCure >= 14) {
+                        recurrence = true;
+                        chronic = false;
+                    } else {
+                        recurrence = false;
+                        chronic = true;
+                    }
+            }else{
+                recurrence = false;
+                chronic = false;
+            }
             ((AddReportActivity) requireActivity()).next();
         });
         view.findViewById(R.id.back_button).setOnClickListener(v -> {
@@ -96,10 +113,8 @@ public class CowInjuryFragment extends Fragment {
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setOnDismissListener(dialogInterface -> {
             CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
-            if (!manager.isTarkhis() && !manager.isKor()) {
-                if (!manager.scoreSelected() || !manager.cartieSelected()) {
-                    reset();
-                }
+            if (!manager.isSelectionOk()) {
+                reset();
             }
             ((AddReportActivity) requireActivity()).hideKeyboard();
         });
@@ -136,12 +151,13 @@ public class CowInjuryFragment extends Fragment {
                     lastCure = -1;
                 } else {
                     for (int i = reports.size() - 1; i >= 0; i--) {
-                        if (reports.get(i).cartieState == 1) {
-                            Date startDate = reports.get(i).visit.getDate();
-                            long differenceInTime = targetDate.getDate().getTime() - startDate.getTime();
-                            lastCure = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
-                            break;
-                        }
+                        if (reports.get(i).cartieState != null)
+                            if (reports.get(i).cartieState == 1) {
+                                Date startDate = reports.get(i).visit.getDate();
+                                long differenceInTime = targetDate.getDate().getTime() - startDate.getTime();
+                                lastCure = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
+                                break;
+                            }
                     }
                 }
             } else {
@@ -153,5 +169,13 @@ public class CowInjuryFragment extends Fragment {
 
     public void setTargetDate(MyDate targetDate) {
         this.targetDate = targetDate;
+    }
+
+    public Boolean isChronic() {
+        return chronic;
+    }
+
+    public boolean isRecurrence() {
+        return recurrence;
     }
 }

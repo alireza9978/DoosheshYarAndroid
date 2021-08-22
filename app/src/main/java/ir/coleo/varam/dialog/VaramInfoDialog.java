@@ -77,22 +77,22 @@ public class VaramInfoDialog extends Dialog {
     }
 
     public boolean isOk(CheckBoxManager manager) {
-        if (!manager.isTarkhis() && !manager.isKor()) {
-            if (manager.isNew()) {
-                if (!manager.scoreSelected() && !manager.isSardalme() && !manager.isKhoni()) {
-                    Toast.makeText(context, R.string.new_selection_error, Toast.LENGTH_LONG).show();
-                    return false;
-                }
-            }
-            if (!manager.cartieSelected()) {
-                Toast.makeText(context, R.string.cartie_error, Toast.LENGTH_LONG).show();
-                return false;
-            }
-            if (!manager.scoreSelected()) {
-                Toast.makeText(context, R.string.score_error, Toast.LENGTH_LONG).show();
+        if (manager.isNew()) {
+            if (!manager.scoreSelected() && !manager.isSardalme() && !manager.isKhoni()) {
+                Toast.makeText(context, R.string.new_selection_error, Toast.LENGTH_LONG).show();
                 return false;
             }
         }
+//        if (!manager.isTarkhis() && !manager.isKor()) {
+//            if (!manager.cartieSelected()) {
+//                Toast.makeText(context, R.string.cartie_error, Toast.LENGTH_LONG).show();
+//                return false;
+//            }
+//            if (!manager.scoreSelected()) {
+//                Toast.makeText(context, R.string.score_error, Toast.LENGTH_LONG).show();
+//                return false;
+//            }
+//        }
         return true;
     }
 

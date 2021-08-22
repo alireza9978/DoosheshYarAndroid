@@ -291,5 +291,7 @@
     <string name="near_cure_warning">این کارتیه کمتر از 14 روز پیش درمان داشته است.</string>
     <string name="invalid_input_small_number">اعداد باید بزرگ‌تر صفر باشند</string>
     <string name="no_level">نا معتبر</string>
+    <string name="chronic">مزمن</string>
+    <string name="recurrence">عود مجدد</string>
 
 </resources>

@@ -166,7 +166,7 @@ public class ImportFragment extends Fragment {
                     R.string.option_three, R.string.option_eight, R.string.option_four,
                     R.string.option_one, R.string.option_seven_xlsx, R.string.drug_title_1,
                     R.string.drug_title_2, R.string.drug_title_3, R.string.drug_title_4,
-                    R.string.drug_title_5, next_visit, more_info, R.string.cure_duration};
+                    R.string.drug_title_5, next_visit, more_info, R.string.cure_duration, R.string.chronic, R.string.recurrence};
 
             //read headers
             int count = 0;
@@ -514,6 +514,32 @@ public class ImportFragment extends Fragment {
                     } else if (cureDuration.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                         report.cureDuration = (long) cureDuration.getNumericCellValue();
                     }
+                }
+
+                cell = row.getCell(24);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String star = cell.getStringCellValue();
+                    if (star != null && !star.isEmpty() && star.equals("*")) {
+                        report.chronic = true;
+                    }
+                } else {
+                    report.chronic = false;
+                }
+
+                cell = row.getCell(25);
+                if (cell == null) {
+                    continue;
+                }
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    String star = cell.getStringCellValue();
+                    if (star != null && !star.isEmpty() && star.equals("*")) {
+                        report.recurrence = true;
+                    }
+                } else {
+                    report.recurrence = false;
                 }
 
                 reports.add(report);

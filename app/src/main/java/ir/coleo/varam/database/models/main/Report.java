@@ -56,6 +56,10 @@ public class Report {
     public Integer cowId;
     @ColumnInfo(name = "cure_duration")
     public long cureDuration;
+    @ColumnInfo(name = "chronic")
+    public Boolean chronic;
+    @ColumnInfo(name = "recurrence")
+    public Boolean recurrence;
 
 //    @Override
 //    public String toString() {

@@ -109,6 +109,10 @@ public class CheckBoxManager {
         checkBoxManager = new CheckBoxManager(scoreMethod);
     }
 
+    private boolean isCureChange() {
+        return Objects.requireNonNull(getByName(R.string.option_eight)).isCheck();
+    }
+
     public boolean isNew() {
         return Objects.requireNonNull(getByName(R.string.option_two)).isCheck();
     }
@@ -225,5 +229,15 @@ public class CheckBoxManager {
         return checkBoxManagers;
     }
 
+
+    public boolean isSelectionOk() {
+        if (isContinueCure() || isRest() || isKor() || isTarkhis() || isCureChange()){
+            return true;
+        }
+        if (isNew()){
+            return scoreSelected() || isKhoni() || isSardalme();
+        }
+        return false;
+    }
 
 }

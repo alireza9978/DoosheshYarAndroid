@@ -218,6 +218,8 @@ public class AddReportActivity extends AppCompatActivity {
         }
         report.scoreMethodId = farm.scoreMethodId;
         report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected() + 1;
+        report.chronic = ((CowInjuryFragment) adapter.getFragment(1)).isChronic();
+        report.recurrence = ((CowInjuryFragment) adapter.getFragment(1)).isRecurrence();
         manager.setBooleansOnReport(report);
         report.description = ((MoreInfoFragment) adapter.getFragment(3)).getMoreInfo();
         fastReports.add(report);
@@ -268,9 +270,7 @@ public class AddReportActivity extends AppCompatActivity {
                     finish();
                 });
             } else {
-
                 setCureDuration(report, dao);
-
                 report.cowId = cow.getId();
                 report.id = reportId;
                 dao.update(report);
@@ -284,8 +284,10 @@ public class AddReportActivity extends AppCompatActivity {
     }
 
     private void setCureDuration(Report report, MyDao dao) {
-        if (report.kor) {
+        boolean changed = false;
+        if (report.cartieState == null){
             report.cartieState = -1;
+            changed = true;
         }
         if (report.cartieState != 0) {
             MyDate start = null;
@@ -334,7 +336,7 @@ public class AddReportActivity extends AppCompatActivity {
         } else {
             report.cureDuration = 0;
         }
-        if (report.kor) {
+        if (changed) {
             report.cartieState = null;
         }
     }
@@ -349,6 +351,8 @@ public class AddReportActivity extends AppCompatActivity {
         }
         report.scoreMethodId = farm.scoreMethodId;
         report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected() + 1;
+        report.chronic = ((CowInjuryFragment) adapter.getFragment(1)).isChronic();
+        report.recurrence = ((CowInjuryFragment) adapter.getFragment(1)).isRecurrence();
         CheckBoxManager.getCheckBoxManager(scoreMethod).setBooleansOnReport(report);
 
         if (mode.equals(Constants.REPORT_CREATE)) {
