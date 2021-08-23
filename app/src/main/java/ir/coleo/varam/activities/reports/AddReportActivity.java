@@ -227,7 +227,7 @@ public class AddReportActivity extends AppCompatActivity {
         AppExecutors.getInstance().diskIO().execute(() -> {
             if (manager.isContinueCure()) {
                 if (cow != null) {
-                    List<Report> reports = dao.getReportOfCowWithDrug(cow.getId());
+                    List<Report> reports = dao.getReportOfCowWithDrug(cow.getId(), new MyDate(new Date()));
                     if (reports != null && reports.size() > 0) {
                         Report temp = reports.get(0);
                         for (Report innerReport : fastReports) {
@@ -262,9 +262,12 @@ public class AddReportActivity extends AppCompatActivity {
                 setCureDuration(report, dao);
 
                 report.cowId = cow.getId();
-                for (Report tempReport : fastReports) {
-                    dao.insert(tempReport);
+                for (int i = 0; i < fastReports.size() - 1; i++) {
+                    Report tempReport = fastReports.get(i);
+                    dao.update(tempReport);
                 }
+                dao.insert(fastReports.get(fastReports.size() - 1));
+
                 runOnUiThread(() -> {
                     Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
                     finish();
@@ -371,6 +374,7 @@ public class AddReportActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     fastReports.add(report);
+                    dao.insert(report);
                     Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
                 });
             });

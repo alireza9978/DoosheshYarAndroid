@@ -162,14 +162,15 @@ public interface MyDao {
     List<Report> getReportOfCowOrdered(Integer id);
 
     @Query("SELECT * FROM Report WHERE " +
-            "Report.cow_id == :id AND (" +
+            "Report.cow_id == :id AND " +
+            "Report.visit_date != :today AND (" +
             "Report.pomade_id IS NOT NULL OR " +
             "Report.serum_id IS NOT NULL OR " +
             "Report.antibiotic_id IS NOT NULL OR " +
             "Report.anti_inflammatory_id IS NOT NULL OR " +
             "Report.cure_id IS NOT NULL)" +
             "ORDER BY Report.visit_date")
-    List<Report> getReportOfCowWithDrug(Integer id);
+    List<Report> getReportOfCowWithDrug(Integer id, MyDate today);
 
     @Query("SELECT *, Cow.number AS cowNumber FROM Cow,Report WHERE Report.cow_id == Cow.id AND Cow.farm_id == :id")
     List<MyReport> getAllMyReportFarm(Integer id);

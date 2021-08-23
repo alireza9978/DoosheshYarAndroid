@@ -29,11 +29,16 @@ public class CreateScoreMethod extends AppCompatActivity {
     private final Stack<EditText> editTexts = new Stack<>();
     private LinearLayout scoresList;
 
-    private void addViewToList(String name, int i, boolean lastOne) {
+    private void addViewToList(String name, int i, boolean lastOne, boolean combine) {
         View child = getLayoutInflater().inflate(R.layout.score_list_item_layout, null);
         EditText tempEditText = child.findViewById(R.id.item_name);
         TextView tempTextView = child.findViewById(R.id.item_text);
-        tempTextView.setText(name + (i + 1));
+        if(combine){
+            tempTextView.setText(name + (i + 1));
+        }else{
+            tempTextView.setText(name);
+        }
+
         editTexts.add(tempEditText);
         views.push(child);
         scoresList.addView(child);
@@ -74,7 +79,7 @@ public class CreateScoreMethod extends AppCompatActivity {
                     scoreCount++;
                     EditText beforeLast = editTexts.peek();
                     beforeLast.setImeOptions(EditorInfo.IME_ACTION_NEXT);
-                    addViewToList(getString(R.string.level), scoreCount - 1, true);
+                    addViewToList(getString(R.string.level), scoreCount - 1, true,true);
                     if (!views.isEmpty()) {
                         EditText last = editTexts.peek();
                         beforeLast.setNextFocusDownId(last.getId());
@@ -102,7 +107,7 @@ public class CreateScoreMethod extends AppCompatActivity {
 
 
             for (int i = 0; i < scoreCount; i++) {
-                addViewToList(getString(R.string.level), i, i == scoreCount - 1);
+                addViewToList(getString(R.string.level), i, i == scoreCount - 1,true);
             }
 
             findViewById(R.id.submit).setOnClickListener(v -> {
@@ -137,7 +142,7 @@ public class CreateScoreMethod extends AppCompatActivity {
             this.scoreCount = scoresName.size();
 
             for (int i = 0; i < scoreCount; i++) {
-                addViewToList(scoresName.get(i), i, i == scoreCount - 1);
+                addViewToList(scoresName.get(i), i, i == scoreCount - 1,false);
             }
 
             findViewById(R.id.submit).setOnClickListener(v -> {
