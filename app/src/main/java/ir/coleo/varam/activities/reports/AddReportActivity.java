@@ -371,10 +371,10 @@ public class AddReportActivity extends AppCompatActivity {
                 report.cowId = cow.getId();
 
                 setCureDuration(report, dao);
+                dao.insert(report);
 
                 runOnUiThread(() -> {
                     fastReports.add(report);
-                    dao.insert(report);
                     Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
                 });
             });
