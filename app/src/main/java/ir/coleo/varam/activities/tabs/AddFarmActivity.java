@@ -14,8 +14,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import ir.coleo.varam.R;
@@ -51,17 +49,46 @@ public class AddFarmActivity extends AppCompatActivity {
             EditText bedType = findViewById(R.id.bed_count);
             EditText showerUnitCount = findViewById(R.id.shower_unit_count);
             EditText showerPitCount = findViewById(R.id.shower_pit_count);
+            Button scoresLevelText = findViewById(R.id.scores_level_text);
 
             farmTitle.requestFocus();
-
             Button submit = findViewById(R.id.submit);
-            ActivityResultLauncher<Intent> three = makeCheckBoxList(R.id.three_check, R.id.three_text, new ArrayList<>(Arrays.asList(R.id.four_check,R.id.five_check)));
-            ActivityResultLauncher<Intent> four = makeCheckBoxList(R.id.four_check, R.id.four_text, new ArrayList<>(Arrays.asList(R.id.three_check,R.id.five_check)));
-            ActivityResultLauncher<Intent> five = makeCheckBoxList(R.id.five_check, R.id.five_text, new ArrayList<>(Arrays.asList(R.id.four_check,R.id.three_check)));
+
+            ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // There are no request codes
+                            Intent data = result.getData();
+                            assert data != null;
+                            this.scoreMethod = (ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT);
+                            switch (scoreMethod.scoresCount) {
+                                case 3: {
+                                    scoresLevelText.setText(R.string.define_levels_three);
+                                    break;
+                                }
+                                case 4: {
+                                    scoresLevelText.setText(R.string.define_levels_four);
+                                    break;
+                                }
+                                case 5: {
+                                    scoresLevelText.setText(R.string.define_levels_five);
+                                    break;
+                                }
+                                default:
+                                    throw new IllegalStateException("Unexpected value: " + scoreMethod.scoresCount);
+                            }
+                        } else {
+                            scoresLevelText.setText(R.string.define_levels);
+                        }
+                    });
+
+            scoresLevelText.setOnClickListener(v -> {
+                Intent intent = new Intent(AddFarmActivity.this, CreateScoreMethod.class);
+                intent.putExtra(Constants.SCORE_METHOD_INTENT_MODE, "CREATE");
+                someActivityResultLauncher.launch(intent);
+            });
             if (mode.equals(Constants.FARM_CREATE)) {
-                makeCheckboxActive(R.id.three_check, R.id.three_text, 3, three);
-                makeCheckboxActive(R.id.four_check, R.id.four_text, 4, four);
-                makeCheckboxActive(R.id.five_check, R.id.five_text, 5, five);
                 submit.setOnClickListener((View v) -> {
                     if (birthCount.getText().toString().isEmpty() ||
                             showerCount.getText().toString().isEmpty() ||
@@ -115,27 +142,20 @@ public class AddFarmActivity extends AppCompatActivity {
                         scoreMethod.id = null;
                         switch (scoreMethod.scoresCount) {
                             case 3: {
-                                CheckBox checkBox = findViewById(R.id.three_check);
-                                checkBox.setChecked(true);
+                                scoresLevelText.setText(R.string.define_levels_three);
                                 break;
                             }
                             case 4: {
-                                CheckBox checkBox = findViewById(R.id.four_check);
-                                checkBox.setChecked(true);
+                                scoresLevelText.setText(R.string.define_levels_four);
                                 break;
                             }
                             case 5: {
-                                CheckBox checkBox = findViewById(R.id.five_check);
-                                checkBox.setChecked(true);
+                                scoresLevelText.setText(R.string.define_levels_five);
                                 break;
                             }
                             default:
                                 throw new IllegalStateException("Unexpected value: " + scoreMethod.scoresCount);
                         }
-                        makeCheckboxActive(R.id.three_check, R.id.three_text, 3, three);
-                        makeCheckboxActive(R.id.four_check, R.id.four_text, 4, four);
-                        makeCheckboxActive(R.id.five_check, R.id.five_text, 5, five);
-
                     });
                 });
 
@@ -166,47 +186,6 @@ public class AddFarmActivity extends AppCompatActivity {
     public void hideKeyboard() {
         Constants.hideKeyboard(this, findViewById(R.id.root).getWindowToken());
     }
-
-    private ActivityResultLauncher<Intent> makeCheckBoxList(Integer one, Integer oneText, ArrayList<Integer> others) {
-        CheckBox checkBox_0 = findViewById(one);
-        TextView textView_0 = findViewById(oneText);
-
-        // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
-        return registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-                        assert data != null;
-                        this.scoreMethod = (ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT);
-                        for (Integer integer: others){
-                            ((CheckBox) findViewById(integer)).setChecked(false);
-                        }
-                    } else {
-                        checkBox_0.setChecked(false);
-                    }
-                });
-
-    }
-
-    public void makeCheckboxActive(Integer one, Integer oneText, int count, ActivityResultLauncher<Intent> someActivityResultLauncher) {
-        CheckBox checkBox_0 = findViewById(one);
-        TextView textView_0 = findViewById(oneText);
-
-        checkBox_0.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (b) {
-                runOnUiThread(() -> {
-                    Intent intent = new Intent(AddFarmActivity.this, CreateScoreMethod.class);
-                    intent.putExtra(Constants.SCORE_METHOD_INTENT_MODE, "CREATE");
-                    intent.putExtra(Constants.SCORE_METHOD_INTENT_COUNT, count);
-                    someActivityResultLauncher.launch(intent);
-                });
-            } else {
-                scoreMethod = null;
-            }
-        });
-        textView_0.setOnClickListener(view -> checkBox_0.setChecked(!checkBox_0.isChecked()));
-    }
+    
 
 }

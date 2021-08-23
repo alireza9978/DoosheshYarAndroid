@@ -233,7 +233,7 @@
                 app:layout_constraintTop_toBottomOf="@id/item_two_container" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/item_three_container"
+                android:id="@+id/scores_level_container"
                 style="@style/Theme.App.MainConstraint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -245,18 +245,22 @@
                     android:id="@+id/three_check"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/three_text"
+                <Button
+                    android:id="@+id/scores_level_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/anjoman_regular"
-                    android:text="@string/three_level"
-                    android:textColor="@color/report_gray"
+                    android:backgroundTint="@color/persian_green"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/anjoman_bold"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
+                    app:cornerRadius="15dp"
+                    android:text="@string/define_levels"
                     app:layout_constraintBottom_toBottomOf="@id/three_check"
                     app:layout_constraintStart_toEndOf="@id/three_check"
                     app:layout_constraintTop_toTopOf="@id/three_check" />
@@ -270,8 +274,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_three_container">
+                app:layout_constraintTop_toBottomOf="@id/scores_level_container">
 
                 <CheckBox
                     android:id="@+id/four_check"
@@ -301,6 +306,7 @@
                 style="@style/Theme.App.MainConstraint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginStart="30dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/item_four_container">

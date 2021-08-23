@@ -293,5 +293,13 @@
     <string name="no_level">نا معتبر</string>
     <string name="chronic">مزمن</string>
     <string name="recurrence">عود مجدد</string>
+    <string name="define_levels">تعیین سطوح</string>
+    <string name="define_levels_three">تعیین سطوح (سه سطح تعیین شده است)</string>
+    <string name="define_levels_four">تعیین سطوح (چهار سطح تعیین شده است)</string>
+    <string name="define_levels_five">تعیین سطوح (پنچ سطح تعیین شده است)</string>
+    <string name="add_score_level">+</string>
+    <string name="sub_score_level">-</string>
+    <string name="max_level_reaches">بیشترین تعداد سطوح قابل تعریف پنج است.</string>
+    <string name="min_level_reaches">کمترین تعداد سطوح قابل تعریف سه است.</string>
 
 </resources>
