@@ -1,6 +1,7 @@
 package ir.coleo.varam.activities.reports.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,8 @@ public class CowInjuryFragment extends Fragment {
 
     private int selected = -1;
     private ImageView mainImage;
-    private int[] buttonId = new int[]{R.id.one, R.id.two, R.id.three, R.id.four};
-    private int[] cartieImage = new int[]{R.drawable.ic_cartie_one, R.drawable.ic_cartie_two,
+    private final int[] buttonId = new int[]{R.id.one, R.id.two, R.id.three, R.id.four};
+    private final int[] cartieImage = new int[]{R.drawable.ic_cartie_one, R.drawable.ic_cartie_two,
             R.drawable.ic_cartie_three, R.drawable.ic_cartie_four};
     private final ScoreMethod scoreMethod;
     private boolean edit = false;
@@ -87,7 +88,7 @@ public class CowInjuryFragment extends Fragment {
                 return;
             }
             CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
-            if (manager.isNew()){
+            if (manager.isNew()) {
                 if (lastCure != -1)
                     if (lastCure >= 14) {
                         recurrence = true;
@@ -96,7 +97,7 @@ public class CowInjuryFragment extends Fragment {
                         recurrence = false;
                         chronic = true;
                     }
-            }else{
+            } else {
                 recurrence = false;
                 chronic = false;
             }
@@ -109,16 +110,41 @@ public class CowInjuryFragment extends Fragment {
     }
 
     public void getFingerNumber() {
-        VaramInfoDialog dialog = new VaramInfoDialog(this, edit, scoreMethod, lastCure);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setOnDismissListener(dialogInterface -> {
-            CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
-            if (!manager.isSelectionOk()) {
-                reset();
+        MyDao dao = DataBase.getInstance(requireContext()).dao();
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            lastCure = -1;
+            if (cowId != -1) {
+                ArrayList<Report> reports = (ArrayList<Report>) dao.getReportOfCowOrdered(cowId);
+                if (reports.size() == 0) {
+                    lastCure = -1;
+                } else {
+                    for (int i = reports.size() - 1; i >= 0; i--) {
+                        if (reports.get(i).cartieState != null)
+                            if (reports.get(i).cartieState == 1 && reports.get(i).areaNumber == selected + 1) {
+                                Date startDate = reports.get(i).visit.getDate();
+                                long differenceInTime = targetDate.getDate().getTime() - startDate.getTime();
+                                lastCure = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
+                                break;
+                            }
+                    }
+                }
             }
-            ((AddReportActivity) requireActivity()).hideKeyboard();
+            requireActivity().runOnUiThread(() -> {
+                Log.i("TAG", "getFingerNumber: " + lastCure);
+                VaramInfoDialog dialog = new VaramInfoDialog(this, edit, scoreMethod, lastCure);
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.setOnDismissListener(dialogInterface -> {
+                    CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
+                    if (!manager.isSelectionOk()) {
+                        reset();
+                    }
+                    ((AddReportActivity) requireActivity()).hideKeyboard();
+                });
+                dialog.show();
+            });
         });
-        dialog.show();
+
+
     }
 
     public void reset() {
@@ -142,29 +168,6 @@ public class CowInjuryFragment extends Fragment {
         } else {
             mainImage.setImageResource(cartieImage[selected]);
         }
-
-        MyDao dao = DataBase.getInstance(requireContext()).dao();
-        AppExecutors.getInstance().diskIO().execute(() -> {
-            if (cowId != -1) {
-                ArrayList<Report> reports = (ArrayList<Report>) dao.getReportOfCowOrdered(cowId);
-                if (reports.size() == 0) {
-                    lastCure = -1;
-                } else {
-                    for (int i = reports.size() - 1; i >= 0; i--) {
-                        if (reports.get(i).cartieState != null)
-                            if (reports.get(i).cartieState == 1) {
-                                Date startDate = reports.get(i).visit.getDate();
-                                long differenceInTime = targetDate.getDate().getTime() - startDate.getTime();
-                                lastCure = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
-                                break;
-                            }
-                    }
-                }
-            } else {
-                lastCure = -1;
-            }
-        });
-
     }
 
     public void setTargetDate(MyDate targetDate) {
