@@ -137,7 +137,6 @@ public class MyDate implements Serializable, Cloneable, Comparable<MyDate> {
     public String toStringWithoutYear(Context context) {
         if (Constants.getDefaultLanguage(context).equals("fa")) {
             PersianDate pdate = new PersianDate();
-            Log.i("TAG", "toStringWithoutYear: " + year + " " + month + " " + day);
             int[] temp = pdate.toJalali(year, month, day);
             return Utilities.getMonthName(context, temp[1]) + " " + temp[2];
         } else {

@@ -181,4 +181,8 @@ public class CowInjuryFragment extends Fragment {
     public boolean isRecurrence() {
         return recurrence;
     }
+
+    public void setCowId(int cowId) {
+        this.cowId = cowId;
+    }
 }

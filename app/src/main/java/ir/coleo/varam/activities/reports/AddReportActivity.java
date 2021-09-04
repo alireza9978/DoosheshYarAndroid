@@ -2,6 +2,7 @@ package ir.coleo.varam.activities.reports;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -288,7 +289,7 @@ public class AddReportActivity extends AppCompatActivity {
 
     private void setCureDuration(Report report, MyDao dao) {
         boolean changed = false;
-        if (report.cartieState == null){
+        if (report.cartieState == null) {
             report.cartieState = -1;
             changed = true;
         }
@@ -296,45 +297,49 @@ public class AddReportActivity extends AppCompatActivity {
             MyDate start = null;
             ArrayList<Pair<MyDate, MyDate>> pairList = new ArrayList<>();
             List<Report> allReports = dao.getAllReportOfCowOrdered(cow.getId(), report.visit);
-            if (allReports.size() > 0 && allReports.get(0).cartieState == 4) {
-                report.cureDuration = allReports.get(0).cureDuration;
-            } else {
-                MyDate temp = report.visit;
-                for (int i = allReports.size() - 1; i >= 0; i--) {
-                    Report tempReport = allReports.get(i);
-                    if (tempReport.cartieState == 0) {
-                        start = tempReport.visit;
-                        break;
-                    }
-                    if (tempReport.cartieState == 3) {
-                        break;
-                    }
-                    if (tempReport.cartieState == 4) {
-                        MyDate innerTemp = tempReport.visit;
-                        for (int j = i - 1; j >= 0; j--) {
-                            Report innerReport = allReports.get(j);
-                            if (innerReport.cartieState != 4) {
-                                pairList.add(new Pair<>(innerTemp, temp));
-                                i = j + 1;
-                                break;
-                            }
-                            innerTemp = innerReport.visit;
+            if (allReports != null) {
+                if (allReports.size() > 0 && allReports.get(0).cartieState == 4) {
+                    report.cureDuration = allReports.get(0).cureDuration;
+                } else {
+                    MyDate temp = report.visit;
+                    for (int i = allReports.size() - 1; i >= 0; i--) {
+                        Report tempReport = allReports.get(i);
+                        if (tempReport.cartieState == 0) {
+                            start = tempReport.visit;
+                            break;
                         }
+                        if (tempReport.cartieState == 3) {
+                            break;
+                        }
+                        if (tempReport.cartieState == 4) {
+                            MyDate innerTemp = tempReport.visit;
+                            for (int j = i - 1; j >= 0; j--) {
+                                Report innerReport = allReports.get(j);
+                                if (innerReport.cartieState != 4) {
+                                    pairList.add(new Pair<>(innerTemp, temp));
+                                    i = j + 1;
+                                    break;
+                                }
+                                innerTemp = innerReport.visit;
+                            }
+                        }
+                        temp = tempReport.visit;
                     }
-                    temp = tempReport.visit;
-                }
-                if (start != null) {
-                    Date startDate = start.getDate();
-                    Date endDate = report.visit.getDate();
-                    long differenceInTime = endDate.getTime() - startDate.getTime();
-                    long differenceInDays = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
-                    for (Pair<MyDate, MyDate> pair : pairList) {
-                        long tempDifference = pair.second.getDate().getTime() - pair.first.getDate().getTime();
-                        tempDifference = (tempDifference / (1000 * 60 * 60 * 24)) % 365;
-                        differenceInDays -= tempDifference;
+                    if (start != null) {
+                        Date startDate = start.getDate();
+                        Date endDate = report.visit.getDate();
+                        long differenceInTime = endDate.getTime() - startDate.getTime();
+                        long differenceInDays = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
+                        for (Pair<MyDate, MyDate> pair : pairList) {
+                            long tempDifference = pair.second.getDate().getTime() - pair.first.getDate().getTime();
+                            tempDifference = (tempDifference / (1000 * 60 * 60 * 24)) % 365;
+                            differenceInDays -= tempDifference;
+                        }
+                        report.cureDuration = differenceInDays;
                     }
-                    report.cureDuration = differenceInDays;
                 }
+            }else {
+                report.cureDuration = 0;
             }
         } else {
             report.cureDuration = 0;
@@ -375,6 +380,7 @@ public class AddReportActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     fastReports.add(report);
+                    ((CowInjuryFragment) adapter.getFragment(1)).setCowId(report.cowId);
                     Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
                 });
             });
@@ -437,6 +443,7 @@ public class AddReportActivity extends AppCompatActivity {
                     DateContainer container = (DateContainer) Objects.requireNonNull(data.getExtras()).get(DATE_SELECTION_RESULT);
                     assert container != null;
                     one = container;
+                    Log.i("TAG", "onActivityResult: here");
                     ((CowInfoFragment) adapter.getFragment(0)).setDate(container.toString(this));
                 }
                 break;
