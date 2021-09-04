@@ -361,10 +361,19 @@ public class AddReportActivity extends AppCompatActivity {
         report.areaNumber = ((CowInjuryFragment) adapter.getFragment(1)).getSelected() + 1;
         report.chronic = ((CowInjuryFragment) adapter.getFragment(1)).isChronic();
         report.recurrence = ((CowInjuryFragment) adapter.getFragment(1)).isRecurrence();
-        CheckBoxManager.getCheckBoxManager(scoreMethod).setBooleansOnReport(report);
+        CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
+        manager.setBooleansOnReport(report);
 
         if (mode.equals(Constants.REPORT_CREATE)) {
             AppExecutors.getInstance().diskIO().execute(() -> {
+                if (manager.isContinueCure()) {
+                    if (cow != null) {
+                        runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
+                        ((CowInjuryFragment) adapter.getFragment(1)).reset();
+                        return;
+                    }
+                }
+
                 if (cow == null) {
                     Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
                     cow = dao.getCow(cowNumber, farmId);
