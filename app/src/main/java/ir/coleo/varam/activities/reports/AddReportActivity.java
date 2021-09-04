@@ -226,6 +226,11 @@ public class AddReportActivity extends AppCompatActivity {
         fastReports.add(report);
 
         AppExecutors.getInstance().diskIO().execute(() -> {
+            Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
+            if (cow == null) {
+                cow = dao.getCow(cowNumber, farmId);
+            }
+
             if (manager.isContinueCure()) {
                 if (cow != null) {
                     List<Report> reports = dao.getReportOfCowWithDrug(cow.getId(), new MyDate(new Date()));
@@ -252,12 +257,8 @@ public class AddReportActivity extends AppCompatActivity {
 
             if (mode.equals(Constants.REPORT_CREATE)) {
                 if (cow == null) {
-                    Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
-                    cow = dao.getCow(cowNumber, farmId);
-                    if (cow == null) {
-                        cow = new Cow(cowNumber, false, farmId);
-                        cow.setId((int) dao.insertGetId(cow));
-                    }
+                    cow = new Cow(cowNumber, false, farmId);
+                    cow.setId((int) dao.insertGetId(cow));
                 }
 
                 setCureDuration(report, dao);
@@ -338,7 +339,7 @@ public class AddReportActivity extends AppCompatActivity {
                         report.cureDuration = differenceInDays;
                     }
                 }
-            }else {
+            } else {
                 report.cureDuration = 0;
             }
         } else {
@@ -366,8 +367,13 @@ public class AddReportActivity extends AppCompatActivity {
 
         if (mode.equals(Constants.REPORT_CREATE)) {
             AppExecutors.getInstance().diskIO().execute(() -> {
+                Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
+                if (cow == null) {
+                    cow = dao.getCow(cowNumber, farmId);
+                }
+
                 if (manager.isContinueCure()) {
-                    if (cow != null) {
+                    if (cow == null) {
                         runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
                         ((CowInjuryFragment) adapter.getFragment(1)).reset();
                         return;
@@ -375,13 +381,10 @@ public class AddReportActivity extends AppCompatActivity {
                 }
 
                 if (cow == null) {
-                    Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
-                    cow = dao.getCow(cowNumber, farmId);
-                    if (cow == null) {
-                        cow = new Cow(cowNumber, false, farmId);
-                        cow.setId((int) dao.insertGetId(cow));
-                    }
+                    cow = new Cow(cowNumber, false, farmId);
+                    cow.setId((int) dao.insertGetId(cow));
                 }
+
                 report.cowId = cow.getId();
 
                 setCureDuration(report, dao);
