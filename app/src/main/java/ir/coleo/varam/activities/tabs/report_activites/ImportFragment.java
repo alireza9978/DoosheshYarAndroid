@@ -134,7 +134,6 @@ public class ImportFragment extends Fragment {
                     }, null, null, null)) {
                         if (cursor != null && cursor.moveToFirst()) {
                             fileName = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DISPLAY_NAME));
-                            Log.d("IMPORTS", "name is " + fileName);
                         }
                     }
                 }
@@ -196,7 +195,7 @@ public class ImportFragment extends Fragment {
                         }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                             String temp = cell.getStringCellValue();
-                            if (!temp.isEmpty())
+                            if (!temp.isEmpty() && !temp.equals("*"))
                                 importedScoreName.add(temp);
                         }
                     }
@@ -366,6 +365,10 @@ public class ImportFragment extends Fragment {
                     if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
                         String temp = cell.getStringCellValue();
                         if (temp != null && !temp.isEmpty()) {
+                            if (temp.equals("*")) {
+                                report.areaNumber = i - 3;
+                                break;
+                            }
                             for (int j = 0; j < scoreMethod.scoresNameList.size(); j++) {
                                 String scoreString = scoreMethod.scoresNameList.get(j);
                                 if (scoreString.equals(temp)) {
@@ -395,44 +398,46 @@ public class ImportFragment extends Fragment {
                 }
 
                 cell = row.getCell(8);
-                if (cell == null) {
-                    continue;
-                }
-                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    String star = cell.getStringCellValue();
-                    if (star != null && !star.isEmpty() && star.equals("*")) {
-                        report.sardalme = true;
+                if (cell != null)
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String star = cell.getStringCellValue();
+                        if (star != null && !star.isEmpty() && star.equals("*")) {
+                            report.sardalme = true;
+                        }
+                    } else {
+                        report.sardalme = false;
                     }
-                } else {
+                else{
                     report.sardalme = false;
                 }
 
                 cell = row.getCell(9);
-                if (cell == null) {
-                    continue;
-                }
-                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    String star = cell.getStringCellValue();
-                    if (star != null && !star.isEmpty() && star.equals("*")) {
-                        report.khoni = true;
+                if (cell != null)
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String star = cell.getStringCellValue();
+                        if (star != null && !star.isEmpty() && star.equals("*")) {
+                            report.khoni = true;
+                        }
+                    } else {
+                        report.khoni = false;
                     }
-                } else {
+                else {
                     report.khoni = false;
                 }
 
                 cell = row.getCell(15);
-                if (cell == null) {
-                    continue;
-                }
-                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    String star = cell.getStringCellValue();
-                    if (star != null && !star.isEmpty() && star.equals("*")) {
-                        report.kor = true;
+                if (cell != null)
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String star = cell.getStringCellValue();
+                        if (star != null && !star.isEmpty() && star.equals("*")) {
+                            report.kor = true;
+                        }
+                    } else {
+                        report.kor = false;
                     }
-                } else {
+                else {
                     report.kor = false;
                 }
-
 
                 for (int i = 16; i < 21; i++) {
                     cell = row.getCell(i);
@@ -475,26 +480,24 @@ public class ImportFragment extends Fragment {
 
 
                 Cell nextVisitCell = row.getCell(21);
-                if (nextVisitCell == null) {
-                    continue;
-                }
-                if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    String temp = nextVisitCell.getStringCellValue();
-                    if (temp != null && !temp.isEmpty()) {
-                        String[] date = temp.split("/");
-                        if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
-                            PersianDate pdate = new PersianDate();
-                            int[] dateArray = pdate.toGregorian(Integer.parseInt(date[0]),
-                                    Integer.parseInt(date[1]),
-                                    Integer.parseInt(date[2]));
-                            report.nextVisit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
-                        } else {
-                            report.nextVisit = new MyDate(Integer.parseInt(date[2]),
-                                    Integer.parseInt(date[1]),
-                                    Integer.parseInt(date[0]));
+                if (nextVisitCell != null)
+                    if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String temp = nextVisitCell.getStringCellValue();
+                        if (temp != null && !temp.isEmpty()) {
+                            String[] date = temp.split("/");
+                            if (Constants.getDefaultLanguage(requireContext()).equals("fa")) {
+                                PersianDate pdate = new PersianDate();
+                                int[] dateArray = pdate.toGregorian(Integer.parseInt(date[0]),
+                                        Integer.parseInt(date[1]),
+                                        Integer.parseInt(date[2]));
+                                report.nextVisit = new MyDate(dateArray[2], dateArray[1], dateArray[0]);
+                            } else {
+                                report.nextVisit = new MyDate(Integer.parseInt(date[2]),
+                                        Integer.parseInt(date[1]),
+                                        Integer.parseInt(date[0]));
+                            }
                         }
                     }
-                }
 
                 Cell moreInfo = row.getCell(22);
                 if (moreInfo != null) {
@@ -517,28 +520,30 @@ public class ImportFragment extends Fragment {
                 }
 
                 cell = row.getCell(24);
-                if (cell == null) {
-                    continue;
-                }
-                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    String star = cell.getStringCellValue();
-                    if (star != null && !star.isEmpty() && star.equals("*")) {
-                        report.chronic = true;
+                if (cell != null)
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String star = cell.getStringCellValue();
+                        if (star != null && !star.isEmpty() && star.equals("*")) {
+                            report.chronic = true;
+                        }
+                    } else {
+                        report.chronic = false;
                     }
-                } else {
+                else {
                     report.chronic = false;
                 }
 
                 cell = row.getCell(25);
-                if (cell == null) {
-                    continue;
-                }
-                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    String star = cell.getStringCellValue();
-                    if (star != null && !star.isEmpty() && star.equals("*")) {
-                        report.recurrence = true;
+                if (cell != null)
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        String star = cell.getStringCellValue();
+                        if (star != null && !star.isEmpty() && star.equals("*")) {
+                            report.recurrence = true;
+                        }
+                    } else {
+                        report.recurrence = false;
                     }
-                } else {
+                else {
                     report.recurrence = false;
                 }
 

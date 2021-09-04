@@ -285,10 +285,15 @@ public class FarmProfileActivity extends AppCompatActivity {
 
                     for (int j = 4; j < 8; j++) {
                         cell = row.createCell(j);
-                        if (report.score != null)
+                        if (report.score != null) {
                             if (j == 4 + (report.areaNumber - 1)) {
                                 cell.setCellValue(scoreMethod.scoresNameList.get(report.score));
                             }
+                        }else{
+                            if (j == 4 + (report.areaNumber - 1)) {
+                                cell.setCellValue("*");
+                            }
+                        }
                     }
 
                     cell = row.createCell(8);

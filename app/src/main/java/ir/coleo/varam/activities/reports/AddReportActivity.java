@@ -404,6 +404,16 @@ public class AddReportActivity extends AppCompatActivity {
             case info:
                 state = State.injury;
                 ((CowInjuryFragment) adapter.getFragment(1)).setTargetDate(one.exportStart());
+                MyDao dao = DataBase.getInstance(this).dao();
+                AppExecutors.getInstance().diskIO().execute(() -> {
+                    Integer cowNumber = ((CowInfoFragment) adapter.getFragment(0)).getNumber();
+                    if (cow == null) {
+                        cow = dao.getCow(cowNumber, farmId);
+                    }
+                    if (cow != null) {
+                        runOnUiThread(() -> ((CowInjuryFragment) adapter.getFragment(1)).setCowId(cow.getId()));
+                    }
+                });
                 break;
             case injury:
                 if (goingDrugPage()) {
