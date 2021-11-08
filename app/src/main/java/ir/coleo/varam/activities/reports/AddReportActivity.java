@@ -244,10 +244,10 @@ public class AddReportActivity extends AppCompatActivity {
                             innerReport.cureId = temp.cureId;
                         }
                     }
-                } else {
-                    runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
-                    ((CowInjuryFragment) adapter.getFragment(1)).reset();
-                    return;
+//                } else {
+//                    runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
+//                    ((CowInjuryFragment) adapter.getFragment(1)).reset();
+//                    return;
                 }
             } else {
                 for (Report tempReport : fastReports) {
