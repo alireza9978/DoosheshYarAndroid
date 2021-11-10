@@ -244,6 +244,7 @@ public class AddReportActivity extends AppCompatActivity {
                             innerReport.cureId = temp.cureId;
                         }
                     }
+//                Allowing user to create report for new cow, also the report is continue cure
 //                } else {
 //                    runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
 //                    ((CowInjuryFragment) adapter.getFragment(1)).reset();
