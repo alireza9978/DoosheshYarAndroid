@@ -233,7 +233,7 @@ public class AddReportActivity extends AppCompatActivity {
 
             if (manager.isContinueCure()) {
                 if (cow != null) {
-                    List<Report> reports = dao.getReportOfCowWithDrug(cow.getId(), new MyDate(new Date()));
+                    List<Report> reports = dao.getReportOfCowWithDrug(cow.getId(), report.visit);
                     if (reports != null && reports.size() > 0) {
                         Report temp = reports.get(0);
                         for (Report innerReport : fastReports) {
