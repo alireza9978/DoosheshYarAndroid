@@ -303,5 +303,9 @@
     <string name="min_level_reaches">کمترین تعداد سطوح قابل تعریف سه است.</string>
     <string name="select_cartie">شماره کارتیه را انتخاب کنید.</string>
     <string name="cartie_selection_text">انتخاب کارتیه</string>
+    <string name="cartie_selection_text_one">انتخاب کارتیه (شماره یک انتخاب شده است)</string>
+    <string name="cartie_selection_text_two">انتخاب کارتیه (شماره دو انتخاب شده است)</string>
+    <string name="cartie_selection_text_three">انتخاب کارتیه (شماره سه انتخاب شده است)</string>
+    <string name="cartie_selection_text_four">انتخاب کارتیه (شماره چهار انتخاب شده است)</string>
 
 </resources>

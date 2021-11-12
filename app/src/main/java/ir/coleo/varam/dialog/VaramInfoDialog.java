@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicLong;
 
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.AddReportActivity;
@@ -20,6 +21,7 @@ import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.models.main.ScoreMethod;
+import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.CheckBoxManager;
 import ir.coleo.varam.models.MyDate;
 
@@ -39,8 +41,9 @@ public class VaramInfoDialog extends Dialog {
     private MyDate targetDate = null;
     private boolean chronic = false;
     private boolean recurrence = false;
-    private CheckBoxManager manager;
+    private ScoreMethod scoreMethod;
 
+    private boolean fastDone = false;
 
     public VaramInfoDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, ScoreMethod scoreMode, int selected, MyDate targetDate, int cowId) {
         super(fragment.requireContext());
@@ -49,7 +52,7 @@ public class VaramInfoDialog extends Dialog {
         this.selected = selected;
         this.targetDate = targetDate;
         this.cowId = cowId;
-        manager = CheckBoxManager.getCheckBoxManager(scoreMode);
+        this.scoreMethod = scoreMode;
 
         mainImage = findViewById(R.id.main_som);
         int[] buttonId = new int[]{R.id.one, R.id.two, R.id.three, R.id.four};
@@ -81,7 +84,11 @@ public class VaramInfoDialog extends Dialog {
             newInput.setVisibility(View.GONE);
         } else {
             newInput.setOnClickListener(view -> {
-                if (isOk(manager)) {
+                if (isOk()) {
+                    fragment.setSelected(this.selected);
+                    fragment.setChronic(chronic);
+                    fragment.setRecurrence(recurrence);
+                    fastDone = true;
                     ((AddReportActivity) fragment.requireActivity()).addCowAndReportFast();
                     dismiss();
                 }
@@ -89,12 +96,15 @@ public class VaramInfoDialog extends Dialog {
         }
 
         Button ok = findViewById(R.id.ok);
-        ok.setOnClickListener(v -> {
-            dismiss();
-        });
+        ok.setOnClickListener(v -> dismiss());
     }
 
-    private boolean isOk(CheckBoxManager manager) {
+    public boolean isFastDone() {
+        return fastDone;
+    }
+
+    private boolean isOk() {
+        CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(this.scoreMethod);
         if (selected == -1) {
             Toast.makeText(context, R.string.select_cartie, Toast.LENGTH_SHORT).show();
             return false;
@@ -105,36 +115,44 @@ public class VaramInfoDialog extends Dialog {
                 return false;
             }
         }
+        if (!manager.isSelectionOk()) {
+            Toast.makeText(context, R.string.empty_error, Toast.LENGTH_LONG).show();
+            return false;
+        }
         return true;
     }
 
     private void lastCureError() {
+        CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(this.scoreMethod);
         if (manager.isNew()) {
             MyDao dao = DataBase.getInstance(context).dao();
-            long lastCure = -1;
+            AtomicLong lastCure = new AtomicLong(-1L);
             if (cowId != -1) {
-                ArrayList<Report> reports = (ArrayList<Report>) dao.getReportOfCowOrdered(cowId);
-                if (reports.size() > 0) {
-                    for (int i = reports.size() - 1; i >= 0; i--) {
-                        if (reports.get(i).cartieState != null)
-                            if (reports.get(i).cartieState == 1 && reports.get(i).areaNumber == selected + 1) {
-                                Date startDate = reports.get(i).visit.getDate();
-                                long differenceInTime = targetDate.getDate().getTime() - startDate.getTime();
-                                lastCure = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
-                                break;
-                            }
+                AppExecutors.getInstance().diskIO().execute(() -> {
+                    ArrayList<Report> reports = (ArrayList<Report>) dao.getReportOfCowOrdered(cowId);
+                    if (reports.size() > 0) {
+                        for (int i = reports.size() - 1; i >= 0; i--) {
+                            if (reports.get(i).cartieState != null)
+                                if (reports.get(i).cartieState == 1 && reports.get(i).areaNumber == selected + 1) {
+                                    Date startDate = reports.get(i).visit.getDate();
+                                    long differenceInTime = targetDate.getDate().getTime() - startDate.getTime();
+                                    lastCure.set((differenceInTime / (1000 * 60 * 60 * 24)) % 365);
+                                    break;
+                                }
+                        }
                     }
-                }
-            }
-            if (lastCure != -1)
-                if (lastCure >= 14) {
-                    recurrence = true;
-                    chronic = false;
-                } else {
-                    recurrence = false;
-                    chronic = true;
-                }
+                    if (lastCure.get() != -1)
+                        if (lastCure.get() >= 14) {
+                            recurrence = true;
+                            chronic = false;
+                        } else {
+                            recurrence = false;
+                            chronic = true;
+                        }
 
+                });
+
+            }
         } else {
             recurrence = false;
             chronic = false;

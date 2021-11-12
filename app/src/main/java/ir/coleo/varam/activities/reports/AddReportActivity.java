@@ -299,13 +299,16 @@ public class AddReportActivity extends AppCompatActivity {
             MyDate start = null;
             ArrayList<Pair<MyDate, MyDate>> pairList = new ArrayList<>();
             List<Report> allReports = dao.getAllReportOfCowOrdered(cow.getId(), report.visit);
-            if (allReports != null) {
-                if (allReports.size() > 0 && allReports.get(0).cartieState == 4) {
+            if (allReports != null && allReports.size() > 0) {
+                if (allReports.get(0).cartieState != null && allReports.get(0).cartieState == 4) {
                     report.cureDuration = allReports.get(0).cureDuration;
                 } else {
                     MyDate temp = report.visit;
                     for (int i = allReports.size() - 1; i >= 0; i--) {
                         Report tempReport = allReports.get(i);
+                        if (tempReport.cartieState == null) {
+                            continue;
+                        }
                         if (tempReport.cartieState == 0) {
                             start = tempReport.visit;
                             break;
@@ -317,6 +320,9 @@ public class AddReportActivity extends AppCompatActivity {
                             MyDate innerTemp = tempReport.visit;
                             for (int j = i - 1; j >= 0; j--) {
                                 Report innerReport = allReports.get(j);
+                                if (innerReport.cartieState == null) {
+                                    continue;
+                                }
                                 if (innerReport.cartieState != 4) {
                                     pairList.add(new Pair<>(innerTemp, temp));
                                     i = j + 1;
@@ -373,13 +379,13 @@ public class AddReportActivity extends AppCompatActivity {
                     cow = dao.getCow(cowNumber, farmId);
                 }
 
-                if (manager.isContinueCure()) {
-                    if (cow == null) {
-                        runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
-                        ((CowInjuryFragment) adapter.getFragment(1)).reset();
-                        return;
-                    }
-                }
+//                if (manager.isContinueCure()) {
+//                    if (cow == null) {
+//                        runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
+//                        ((CowInjuryFragment) adapter.getFragment(1)).reset();
+//                        return;
+//                    }
+//                }
 
                 if (cow == null) {
                     cow = new Cow(cowNumber, false, farmId);
@@ -395,6 +401,7 @@ public class AddReportActivity extends AppCompatActivity {
                     fastReports.add(report);
                     ((CowInjuryFragment) adapter.getFragment(1)).setCowId(report.cowId);
                     Toast.makeText(this, getString(R.string.report_added), Toast.LENGTH_SHORT).show();
+                    ((CowInjuryFragment) adapter.getFragment(1)).reset();
                 });
             });
         }
