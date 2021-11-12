@@ -26,39 +26,33 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.menu.DrugsListActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.menu.AboutActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.menu.ContactUsActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.menu.AddDrugActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.login_fragments.ForgetPasswordActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.reports.ReportSummery"
-
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="ir.coleo.varam.provider"
-
+            android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
@@ -67,58 +61,47 @@
 
         <activity
             android:name=".activities.reports.MoreInfoActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FarmSelectionActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.DateSelectionActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MainActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.reports.AddReportActivity"
-
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.FarmProfileActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CowProfileActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.tabs.AddFarmActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.menu.ProfileActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.tabs.home_activites.VisitActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.LoginActivity"
-
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -137,7 +120,8 @@
 
         <receiver
             android:name=".service.MyNotificationPublisher"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

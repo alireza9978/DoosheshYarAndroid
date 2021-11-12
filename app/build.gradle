@@ -4,14 +4,14 @@ plugins {
 
 android {
 
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "ir.coleo.varam"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 20
-        versionName "0.2.9"
+        targetSdkVersion 31
+        versionCode 21
+        versionName "0.2.10"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
