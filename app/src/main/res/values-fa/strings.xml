@@ -255,7 +255,7 @@
     <string name="score">امتیاز</string>
     <string name="added">افزوده شد</string>
     <string name="finger_number">۱~۸</string>
-    <string name="add_new_injury">ثبت جراحت جدید برای این دام</string>
+    <string name="add_new_injury">ثبت کارتیه ی جدید برای این دام</string>
     <string name="empty_error">ورودی خالی است</string>
     <string name="cartie_error">وضعیت کارتیه را انتخاب کنید</string>
     <string name="score_error">امتیاز را انتخاب کنید</string>
@@ -309,6 +309,9 @@
     <string name="cartie_selection_text_two">انتخاب کارتیه (شماره دو انتخاب شده است)</string>
     <string name="cartie_selection_text_three">انتخاب کارتیه (شماره سه انتخاب شده است)</string>
     <string name="cartie_selection_text_four">انتخاب کارتیه (شماره چهار انتخاب شده است)</string>
+    <string name="score_selection_title">تعیین اسکور ورم پستان</string>
+    <string name="cartie">کارتیه</string>
+    <string name="score_title">اسکور ورم پستان</string>
 
 
 </resources>

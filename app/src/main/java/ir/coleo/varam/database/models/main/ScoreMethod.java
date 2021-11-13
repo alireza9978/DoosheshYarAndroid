@@ -33,6 +33,13 @@ public class ScoreMethod implements Serializable {
                 '}';
     }
 
+    public String getScoreName(Integer index){
+        if (scoresNameList.size() > index){
+            return scoresNameList.get(index);
+        }
+        return "unknown";
+    }
+
     public int getText() {
         switch (scoresCount){
             case 3:{

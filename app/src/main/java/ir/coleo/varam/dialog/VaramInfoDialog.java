@@ -1,5 +1,7 @@
 package ir.coleo.varam.dialog;
 
+import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -79,20 +81,26 @@ public class VaramInfoDialog extends Dialog {
             mainImage.setImageResource(cartieImage[selected]);
         }
 
+        CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(this.scoreMethod);
         Button newInput = findViewById(R.id.new_input);
         if (editMode) {
             newInput.setVisibility(View.GONE);
         } else {
-            newInput.setOnClickListener(view -> {
-                if (isOk()) {
-                    fragment.setSelected(this.selected);
-                    fragment.setChronic(chronic);
-                    fragment.setRecurrence(recurrence);
-                    fastDone = true;
-                    ((AddReportActivity) fragment.requireActivity()).addCowAndReportFast();
-                    dismiss();
-                }
-            });
+            if (manager.isNew() || manager.isCureChange()) {
+                newInput.setVisibility(View.GONE);
+            } else {
+                newInput.setVisibility(View.VISIBLE);
+                newInput.setOnClickListener(view -> {
+                    if (isOk()) {
+                        fragment.setSelected(this.selected);
+                        fragment.setChronic(chronic);
+                        fragment.setRecurrence(recurrence);
+                        fastDone = true;
+                        ((AddReportActivity) fragment.requireActivity()).addCowAndReportFast();
+                        dismiss();
+                    }
+                });
+            }
         }
 
         Button ok = findViewById(R.id.ok);
@@ -141,6 +149,15 @@ public class VaramInfoDialog extends Dialog {
                                 }
                         }
                     }
+                    runOnUiThread(() -> {
+                        if (lastCure.get() == -1)
+                            return;
+                        if (lastCure.get() >= 14) {
+                            Toast.makeText(context, R.string.recure_warning, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(context, R.string.near_cure_warning, Toast.LENGTH_LONG).show();
+                        }
+                    });
                     if (lastCure.get() != -1)
                         if (lastCure.get() >= 14) {
                             recurrence = true;

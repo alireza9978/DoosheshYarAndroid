@@ -84,12 +84,23 @@ public class AppTest {
         activityTestRule.launchActivity(null);
     }
 
+    public void createScoreLevel(){
+        onView(withId(R.id.scores_level_text)).perform(click());
+        onView(withTagValue(is("child_1"))).perform(clearText(), typeText("one"), closeSoftKeyboard());;
+        onView(withTagValue(is("child_2"))).perform(clearText(), typeText("two"), closeSoftKeyboard());;
+        onView(withTagValue(is("child_3"))).perform(clearText(), typeText("three"), closeSoftKeyboard());;
+        onView(withId(R.id.submit)).perform(click());
+    }
+
     public void createFarm(String name) {
-//        onView(withTagValue(is("add_farm_get"))).perform(click());
-//        onView(withId(R.id.farm_title_input)).perform(clearText(), typeText(name), closeSoftKeyboard());
-//        onView(withId(R.id.control_system_input)).perform(clearText(), typeText("control"), closeSoftKeyboard());
-//        onView(withId(R.id.something_count)).perform(clearText(), typeText("132"), closeSoftKeyboard());
-//        onView(withId(R.id.submit)).perform(click());
+        onView(withTagValue(is("add_farm_get"))).perform(click());
+        onView(withId(R.id.farm_title_input)).perform(clearText(), typeText(name), closeSoftKeyboard());
+        onView(withId(R.id.birth_count)).perform(clearText(), typeText("10"), closeSoftKeyboard());
+        onView(withId(R.id.shower_count)).perform(clearText(), typeText("20"), closeSoftKeyboard());
+        onView(withId(R.id.bed_count)).perform(clearText(), typeText("30"), closeSoftKeyboard());
+        onView(withId(R.id.shower_unit_count)).perform(clearText(), typeText("40"), closeSoftKeyboard());
+        onView(withId(R.id.shower_pit_count)).perform(clearText(), typeText("50"), closeSoftKeyboard());
+        onView(withId(R.id.submit)).perform(click());
     }
 
     public void addReport(String name, String cowNumber) {
@@ -144,6 +155,7 @@ public class AppTest {
         clearData();
         String test = "farm test 1";
         String cowNumber = "123";
+        SystemClock.sleep(5000);
         createFarm(test);
         SystemClock.sleep(2000);
         addReport(test, cowNumber);

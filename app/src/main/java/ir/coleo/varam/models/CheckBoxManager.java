@@ -109,7 +109,7 @@ public class CheckBoxManager {
         checkBoxManager = new CheckBoxManager(scoreMethod);
     }
 
-    private boolean isCureChange() {
+    public boolean isCureChange() {
         return Objects.requireNonNull(getByName(R.string.option_eight)).isCheck();
     }
 

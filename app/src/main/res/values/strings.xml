@@ -254,7 +254,7 @@
     <string name="three_level_text">سه سطحی</string>
     <string name="added">افزوده شد</string>
     <string name="finger_number">1~8</string>
-    <string name="add_new_injury">add new injury for this cow</string>
+    <string name="add_new_injury">ثبت کارتیه ی جدید برای این دام</string>
     <string name="empty_error">enter value</string>
     <string name="cartie_error">select one of cartie states</string>
     <string name="score_error">select score</string>
@@ -307,5 +307,8 @@
     <string name="cartie_selection_text_two">انتخاب کارتیه (شماره دو انتخاب شده است)</string>
     <string name="cartie_selection_text_three">انتخاب کارتیه (شماره سه انتخاب شده است)</string>
     <string name="cartie_selection_text_four">انتخاب کارتیه (شماره چهار انتخاب شده است)</string>
+    <string name="score_selection_title">تعیین اسکور ورم پستان</string>
+    <string name="cartie">کارتیه</string>
+    <string name="score_title">اسکور ورم پستان</string>
 
 </resources>

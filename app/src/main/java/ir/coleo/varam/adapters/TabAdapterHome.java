@@ -75,7 +75,9 @@ public class TabAdapterHome extends FragmentStateAdapter {
 
     public View getTabView(int position) {
         if (position == 2) {
-            return inflater.inflate(R.layout.home_tab_layout_center, null);
+            View view = inflater.inflate(R.layout.home_tab_layout_center, null);
+            view.findViewById(R.id.item_image).setTag("add_farm_get");
+            return view;
         }
         View view = inflater.inflate(R.layout.home_tab_layout, null);
 
@@ -112,9 +114,12 @@ public class TabAdapterHome extends FragmentStateAdapter {
 
     public View getSelectedTabView(int position) {
         if (position == 2) {
-            return inflater.inflate(R.layout.home_tab_layout_center, null);
+            View view = inflater.inflate(R.layout.home_tab_layout_center, null);
+            view.findViewById(R.id.item_image).setTag("add_farm_get");
+            return view;
         }
         View view = inflater.inflate(R.layout.home_tab_layout_selected, null);
+
 
         String title = null;
         Drawable drawable = null;

@@ -32,6 +32,7 @@ public class CreateScoreMethod extends AppCompatActivity {
     private void addViewToList(String name, int i, boolean lastOne, boolean combine) {
         View child = getLayoutInflater().inflate(R.layout.score_list_item_layout, null);
         EditText tempEditText = child.findViewById(R.id.item_name);
+        tempEditText.setTag("child_" + (i + 1));
         TextView tempTextView = child.findViewById(R.id.item_text);
         if(combine){
             tempTextView.setText(name + (i + 1));
