@@ -58,7 +58,6 @@ public class AddReportActivity extends AppCompatActivity {
     private String mode;
     private Integer reportId;
     private ViewPager2 viewPager;
-
     private ArrayList<Report> fastReports;
 
     @Override
@@ -222,7 +221,7 @@ public class AddReportActivity extends AppCompatActivity {
         report.chronic = ((CowInjuryFragment) adapter.getFragment(1)).isChronic();
         report.recurrence = ((CowInjuryFragment) adapter.getFragment(1)).isRecurrence();
         manager.setBooleansOnReport(report);
-        report.description = ((MoreInfoFragment) adapter.getFragment(3)).getMoreInfo();
+        report.description = ((DrugFragment) adapter.getFragment(2)).getMoreInfo();
         fastReports.add(report);
 
         AppExecutors.getInstance().diskIO().execute(() -> {

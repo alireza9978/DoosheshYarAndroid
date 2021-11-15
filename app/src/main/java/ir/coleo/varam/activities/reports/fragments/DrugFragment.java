@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -22,7 +23,9 @@ import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.main.Drug;
 import ir.coleo.varam.database.models.main.Report;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
+import ir.coleo.varam.models.CheckBoxManager;
 
 /**
  * صفحه ثبت دارو‌های مصرفی در ثبت گزارش
@@ -35,13 +38,17 @@ public class DrugFragment extends Fragment {
             R.id.drug_text_three, R.id.drug_text_four, R.id.drug_text_five};
     private String description;
     private EditText moreInfo;
+    private final ScoreMethod scoreMethod;
 
 
-    public DrugFragment(ArrayList<Pair<Integer, Integer>> setDrugs, String description) {
+    public DrugFragment(ArrayList<Pair<Integer, Integer>> setDrugs, String description, ScoreMethod scoreMethod) {
         this.setDrugs = setDrugs;
         this.description = description;
+        this.scoreMethod =scoreMethod;
     }
-    public DrugFragment() {
+
+    public DrugFragment(ScoreMethod scoreMethod) {
+        this.scoreMethod =scoreMethod;
         setDrugs = new ArrayList<>();
     }
 
@@ -66,7 +73,17 @@ public class DrugFragment extends Fragment {
             updateText(pair);
         }
 
-        view.findViewById(R.id.next_button).setOnClickListener(v -> ((AddReportActivity) requireActivity()).next());
+        view.findViewById(R.id.next_button).setOnClickListener(v -> {
+            this.description = moreInfo.getText().toString();
+            CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(this.scoreMethod);
+            if(manager.isNew() || manager.isCureChange()){
+                if (this.description.isEmpty() && !isDrugEntered()){
+                    Toast.makeText(requireActivity(), getString(R.string.enter_drug_or_description), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            ((AddReportActivity) requireActivity()).next();
+        });
         view.findViewById(R.id.back_button).setOnClickListener(v -> ((AddReportActivity) requireActivity()).back());
         return view;
     }
@@ -116,6 +133,10 @@ public class DrugFragment extends Fragment {
         });
     }
 
+    public boolean isDrugEntered(){
+        return setDrugs.size() > 0;
+    }
+
     public void setDrugOnReport(Report report) {
         for (Pair<Integer, Integer> pair : setDrugs) {
             switch (pair.first) {
@@ -141,6 +162,10 @@ public class DrugFragment extends Fragment {
                 }
             }
         }
+    }
+
+    public String getMoreInfo() {
+        return description;
     }
 
 }

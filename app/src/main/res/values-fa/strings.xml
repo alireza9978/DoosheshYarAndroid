@@ -312,6 +312,7 @@
     <string name="score_selection_title">تعیین اسکور ورم پستان</string>
     <string name="cartie">کارتیه</string>
     <string name="score_title">اسکور ورم پستان</string>
+    <string name="enter_drug_or_description">لطفا یکی از موارد داروها یا توضیحات بیشتر را وارد کنید.</string>
 
 
 </resources>
