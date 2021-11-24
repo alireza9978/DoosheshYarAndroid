@@ -1,5 +1,7 @@
 package ir.coleo.varam.activities;
 
+import static android.os.Build.VERSION.SDK_INT;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -10,7 +12,9 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ShareCompat;
@@ -33,6 +37,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ir.coleo.varam.R;
+import ir.coleo.varam.activities.reports.ReportSummery;
 import ir.coleo.varam.activities.tabs.AddFarmActivity;
 import ir.coleo.varam.adapters.GridViewAdapterCowInFarmProfile;
 import ir.coleo.varam.adapters.RecyclerViewAdapterNextVisitFarmProfile;
@@ -49,10 +54,15 @@ import ir.coleo.varam.database.models.main.Farm;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
+import ir.coleo.varam.dialog.DateModelDialog;
+import ir.coleo.varam.dialog.SureDialog;
+import ir.coleo.varam.models.DateContainer;
 import ir.coleo.varam.models.MyDate;
 
 import static ir.coleo.varam.R.string.more_info;
 import static ir.coleo.varam.R.string.next_visit;
+import static ir.coleo.varam.constants.Constants.DATE_SELECTION_EXPORT_REPORT;
+import static ir.coleo.varam.constants.Constants.DATE_SELECTION_RESULT;
 
 
 /**
@@ -79,6 +89,7 @@ public class FarmProfileActivity extends AppCompatActivity {
     private ConstraintLayout menuLayout;
     private ImageView outside;
     private int id;
+    private DateContainer dateContainerOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,28 +134,42 @@ public class FarmProfileActivity extends AppCompatActivity {
         });
         remove.setOnClickListener(view -> {
             MyDao dao = DataBase.getInstance(this).dao();
-            AppExecutors.getInstance().diskIO().execute(() -> {
-                Farm farm = dao.getFarm(id);
-                List<Cow> cows = dao.getAllCowOfFarm(id);
-                for (Cow cow : cows) {
-                    for (Report report : dao.getAllReportOfCow(cow.getId()))
-                        dao.deleteReport(report);
-                    dao.deleteCow(cow);
-                }
-                dao.deleteFarm(farm);
-                runOnUiThread(() -> {
-                    hideMenu();
-                    finish();
-                });
-            });
+            SureDialog dialog = new SureDialog(FarmProfileActivity.this, getString(R.string.delete_question),
+                    getString(R.string.delete),
+                    () -> AppExecutors.getInstance().diskIO().execute(() -> {
+                        Farm farm = dao.getFarm(id);
+                        List<Cow> cows = dao.getAllCowOfFarm(id);
+                        for (Cow cow : cows) {
+                            for (Report report : dao.getAllReportOfCow(cow.getId()))
+                                dao.deleteReport(report);
+                            dao.deleteCow(cow);
+                        }
+                        dao.deleteFarm(farm);
+                        runOnUiThread(() -> {
+                            hideMenu();
+                            finish();
+                        });
+                    }),
+                    () -> runOnUiThread(this::hideMenu), getString(R.string.yes),
+                    getString(R.string.no));
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
         });
         share.setOnClickListener(view -> {
-            export();
+            dateContainerOne = null;
+            selectDate();
             hideMenu();
         });
 
 
     }
+
+    private void selectDate() {
+        DateModelDialog dialog = new DateModelDialog(this);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+    }
+
 
     private void showMenu() {
         outside.setVisibility(View.VISIBLE);
@@ -253,9 +278,20 @@ public class FarmProfileActivity extends AppCompatActivity {
 
         MyDao dao = DataBase.getInstance(this).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
+
+            List<MyReport> reports;
+            if (dateContainerOne == null) {
+                reports = dao.getAllMyReportFarm(id);
+            } else {
+                if (dateContainerOne.getEndDate() != null) {
+                    reports = dao.getAllMyReportFarm((long) id, dateContainerOne.exportStart(), dateContainerOne.exportEnd());
+                } else {
+                    reports = dao.getAllMyReportFarm((long) id, dateContainerOne.exportStart());
+                }
+            }
+
             Farm farm = dao.getFarm(id);
             ScoreMethod scoreMethod = dao.getScoreMethod(farm.scoreMethodId);
-            List<MyReport> reports = dao.getAllMyReportFarm(id);
             List<Drug> drugs = dao.getAllDrug();
             runOnUiThread(() -> {
                 //add headers
@@ -289,7 +325,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             if (j == 4 + (report.areaNumber - 1)) {
                                 cell.setCellValue(scoreMethod.scoresNameList.get(report.score));
                             }
-                        }else{
+                        } else {
                             if (j == 4 + (report.areaNumber - 1)) {
                                 cell.setCellValue("*");
                             }
@@ -397,7 +433,6 @@ public class FarmProfileActivity extends AppCompatActivity {
             Farm farm = dao.getFarm(id);
             runOnUiThread(() -> {
                 try {
-
                     String storage = Environment.getExternalStorageDirectory().toString() + String.format("/%s.xlsx", farm.name);
                     File file = new File(storage);
                     if (file.exists()) {
@@ -441,6 +476,40 @@ public class FarmProfileActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void getDate(boolean single) {
+        Intent intent = new Intent(this, DateSelectionActivity.class);
+        if (single) {
+            intent.setAction(Constants.DateSelectionMode.SINGLE);
+        } else {
+            intent.setAction(Constants.DateSelectionMode.RANG);
+        }
+        startActivityForResult(intent, DATE_SELECTION_EXPORT_REPORT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == DATE_SELECTION_EXPORT_REPORT) {
+            if (resultCode == Constants.DATE_SELECTION_OK) {
+                assert data != null;
+                DateContainer container = (DateContainer) Objects.requireNonNull(data.getExtras()).get(DATE_SELECTION_RESULT);
+                assert container != null;
+                dateContainerOne = container;
+                export();
+            }
+        }
+        if (requestCode == 2296) {
+            if (SDK_INT >= Build.VERSION_CODES.R) {
+                if (Environment.isExternalStorageManager()) {
+                    export();
+                } else {
+                    Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
 }

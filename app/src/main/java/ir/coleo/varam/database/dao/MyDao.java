@@ -174,6 +174,14 @@ public interface MyDao {
 
     @Query("SELECT *, Cow.number AS cowNumber FROM Cow,Report WHERE Report.cow_id == Cow.id AND Cow.farm_id == :id")
     List<MyReport> getAllMyReportFarm(Integer id);
+    @Query("SELECT *, Cow.number AS cowNumber FROM Cow,Report " +
+            "WHERE Report.cow_id == Cow.id AND Cow.farm_id == :id " +
+            "AND Report.visit_date >= :start AND Report.visit_date < :end")
+    List<MyReport> getAllMyReportFarm(Long id, MyDate start, MyDate end);
+
+    @Query("SELECT *, Cow.number AS cowNumber FROM Cow,Report " +
+            "WHERE Report.cow_id == Cow.id AND Cow.farm_id == :id AND Report.visit_date == :day")
+    List<MyReport> getAllMyReportFarm(Long id, MyDate day);
 
     @Query("SELECT *, Cow.number AS cowNumber FROM Cow,Report WHERE Report.id == :id and Cow.id == Report.cow_id")
     MyReport myReportWithCow(Integer id);

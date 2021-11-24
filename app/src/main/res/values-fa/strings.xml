@@ -313,6 +313,12 @@
     <string name="cartie">کارتیه</string>
     <string name="score_title">اسکور ورم پستان</string>
     <string name="enter_drug_or_description">لطفا یکی از موارد داروها یا توضیحات بیشتر را وارد کنید.</string>
-
-
+    <string name="delete_question">اخطار حذف</string>
+    <string name="delete">آیا از حذف مورد اطمینان دارید؟</string>
+    <string name="yes">بله</string>
+    <string name="no">خیر</string>
+    <string name="select_date_selection_mode">بازه زمانی گزارش گیری</string>
+    <string name="single_date">انتخاب یک روز</string>
+    <string name="range_date">انتخاب بازه</string>
+    <string name="all_date">تمامی زمان‌‌ها</string>
 </resources>
