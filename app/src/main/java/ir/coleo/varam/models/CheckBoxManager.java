@@ -109,7 +109,7 @@ public class CheckBoxManager {
         checkBoxManager = new CheckBoxManager(scoreMethod);
     }
 
-    private boolean isCureChange() {
+    public boolean isCureChange() {
         return Objects.requireNonNull(getByName(R.string.option_eight)).isCheck();
     }
 
@@ -164,8 +164,10 @@ public class CheckBoxManager {
 
     public void setBooleansFromReport(Report report, ScoreMethod scoreMethod) {
         reset(scoreMethod);
-        checkBoxManager.score.get(report.score).setCheck(true);
-        checkBoxManager.score.get(report.score).disableOther();
+        if(report.score != null) {
+            checkBoxManager.score.get(report.score).setCheck(true);
+            checkBoxManager.score.get(report.score).disableOther();
+        }
         Objects.requireNonNull(checkBoxManager.getByName(R.string.option_five)).setCheck(report.sardalme);
         Objects.requireNonNull(checkBoxManager.getByName(R.string.option_six)).setCheck(report.khoni);
         Objects.requireNonNull(checkBoxManager.getByName(R.string.option_seven)).setCheck(report.kor);

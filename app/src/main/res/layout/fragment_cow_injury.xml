@@ -24,136 +24,80 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <Button
-                    android:id="@+id/one"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintRight_toRightOf="@id/main_som"
-                    app:layout_constraintTop_toTopOf="@id/main_som" />
-
-                <Button
-                    android:id="@+id/two"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintBottom_toBottomOf="@id/main_som"
-                    app:layout_constraintRight_toRightOf="@id/main_som" />
-
-                <Button
-                    android:id="@+id/three"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintLeft_toLeftOf="@id/main_som"
-                    app:layout_constraintTop_toTopOf="@id/main_som" />
-
-                <Button
-                    android:id="@+id/four"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintBottom_toBottomOf="@id/main_som"
-                    app:layout_constraintLeft_toLeftOf="@id/main_som" />
-
-                <ImageView
-                    android:id="@+id/head_cow_image"
-                    style="@style/Theme.App.ImageView.Edit"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="10dp"
-                    android:minHeight="250dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_head_cow"
-                    app:layout_constraintRight_toRightOf="@id/main_som"
-                    app:layout_constraintTop_toBottomOf="@id/head_cow" />
 
                 <TextView
-                    android:id="@+id/info_title"
+                    android:id="@+id/first_section_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:fontFamily="@font/anjoman_bold"
-                    android:text="@string/injury_area"
-                    android:textColor="@color/selected_tab_home"
-                    android:textSize="22sp"
-                    app:layout_constraintBottom_toBottomOf="@id/head_cow_image"
-                    app:layout_constraintStart_toEndOf="@id/head_cow_image"
-                    app:layout_constraintTop_toTopOf="@id/head_cow_image" />
-
-                <TextView
-                    android:id="@+id/head_cow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/anjoman_medium"
-                    android:text="@string/cow_head"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintLeft_toLeftOf="@id/head_cow_image"
-                    app:layout_constraintRight_toRightOf="@id/head_cow_image"
+                    android:text="@string/score_selection_title"
+                    android:textColor="@color/report_gray"
+                    android:textSize="20sp"
+                    android:layout_margin="8dp"
+                    app:layout_constraintBottom_toTopOf="@id/grid"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/main_som"
-                    style="@style/Theme.App.ImageView.Edit"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:layout_marginTop="10dp"
-                    android:minHeight="250dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_area_zero"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/head_cow_image" />
+
+                <ir.coleo.varam.ui_element.ExpandableHeightGridView
+                    android:id="@+id/grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:numColumns="2"
+                    android:overScrollMode="never"
+                    android:verticalSpacing="4dp"
+                    app:layout_constraintBottom_toTopOf="@id/divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/first_section_title"
+                    tools:listitem="@layout/reason_list_item" />
 
                 <TextView
-                    android:id="@+id/one_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/anjoman_regular"
-                    android:padding="4dp"
-                    android:text="@string/one"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintRight_toRightOf="@id/main_som"
-                    app:layout_constraintTop_toTopOf="@id/main_som" />
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/hit_gray"
+                    app:layout_constraintBottom_toTopOf="@id/grid_two"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/grid" />
 
-                <TextView
-                    android:id="@+id/two_text"
-                    android:layout_width="wrap_content"
+                <ir.coleo.varam.ui_element.ExpandableHeightGridView
+                    android:id="@+id/grid_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:numColumns="2"
+                    android:overScrollMode="never"
+                    android:verticalSpacing="4dp"
+                    app:layout_constraintBottom_toTopOf="@id/cartie_selection"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider"
+                    tools:listitem="@layout/reason_list_item" />
+
+                <Button
+                    android:id="@+id/cartie_selection"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/anjoman_regular"
-                    android:padding="4dp"
-                    android:text="@string/two"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:fontFamily="@font/anjoman_semi_bold"
+                    android:text="@string/cartie_selection_text"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="@id/main_som" />
-
-                <TextView
-                    android:id="@+id/scores_level_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/anjoman_regular"
-                    android:padding="4dp"
-                    android:text="@string/three"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintLeft_toLeftOf="@id/main_som"
-                    app:layout_constraintTop_toTopOf="@id/main_som" />
-
-                <TextView
-                    android:id="@+id/four_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/anjoman_regular"
-                    android:padding="4dp"
-                    android:text="@string/four"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="@id/main_som" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,9 @@ import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
 import ir.coleo.varam.database.models.MyReport;
 import ir.coleo.varam.database.models.main.Report;
+import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
+import ir.coleo.varam.models.CheckBoxManager;
 import ir.coleo.varam.models.DateContainer;
 import ir.coleo.varam.ui_element.ExpandableHeightGridView;
 
@@ -37,6 +39,7 @@ public class ReportSummery extends AppCompatActivity {
     private TextView description;
     private TextView cartieNumber;
     private TextView cartieState;
+    private TextView cartieScore;
     private GridViewAdapterItemInSummery drugAdapter;
     private Integer reportId;
     private final Integer[] scoresName = {R.string.option_two, R.string.option_three, R.string.option_eight, R.string.option_four, R.string.option_one};
@@ -57,6 +60,7 @@ public class ReportSummery extends AppCompatActivity {
         lastVisit = findViewById(R.id.last_visit_text);
         description = findViewById(R.id.description_text);
         cartieNumber = findViewById(R.id.cartie_number_text);
+        cartieScore = findViewById(R.id.score_number_text);
         cartieState = findViewById(R.id.cartie_state_text);
         drugsGrid = findViewById(R.id.drug_list);
 
@@ -94,8 +98,10 @@ public class ReportSummery extends AppCompatActivity {
             MyReport myReport = dao.myReportWithCow(reportId);
             ArrayList<String> drugs = new ArrayList<>();
             Report report = myReport.report;
-            if (report.pomadeId != null)
+            ScoreMethod scoreMethod = dao.getScoreMethod(report.scoreMethodId);
+            if (report.pomadeId != null) {
                 drugs.add(dao.getDrug(report.pomadeId).name);
+            }
             if (report.serumId != null)
                 drugs.add(dao.getDrug(report.serumId).name);
             if (report.antiInflammatoryId != null)
@@ -105,7 +111,6 @@ public class ReportSummery extends AppCompatActivity {
             if (report.cureId != null)
                 drugs.add(dao.getDrug(report.cureId).name);
 
-
             runOnUiThread(() -> {
                 cowText.setText(getString(R.string.report));
                 cowText.append(" " + myReport.report.id);
@@ -113,12 +118,15 @@ public class ReportSummery extends AppCompatActivity {
                 cowText.append("" + myReport.cowNumber);
 
                 if (report.areaNumber != null) {
-                    cartieNumber.setText(R.string.area);
+                    cartieNumber.setText(R.string.cartie);
                     cartieNumber.append(" " + report.areaNumber);
+                }
+                if (report.score != null) {
+                    cartieScore.setText(scoreMethod.getScoreName(report.score));
                 }
                 if (report.cartieState == null) {
                     cartieState.setText(R.string.unknown);
-                }else{
+                } else {
                     cartieState.setText(scoresName[report.cartieState]);
                 }
                 DateContainer container;

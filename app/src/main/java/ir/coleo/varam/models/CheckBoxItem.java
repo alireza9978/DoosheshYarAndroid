@@ -90,7 +90,7 @@ public class CheckBoxItem {
     public void setCheck(boolean check) {
         this.check = check;
         if (check && listener != null) {
-            listener.run(value);
+            listener.run();
         }
     }
 
