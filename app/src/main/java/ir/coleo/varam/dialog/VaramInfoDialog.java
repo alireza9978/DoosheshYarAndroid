@@ -86,21 +86,22 @@ public class VaramInfoDialog extends Dialog {
         if (editMode) {
             newInput.setVisibility(View.GONE);
         } else {
-            if (manager.isNew() || manager.isCureChange()) {
-                newInput.setVisibility(View.GONE);
-            } else {
-                newInput.setVisibility(View.VISIBLE);
-                newInput.setOnClickListener(view -> {
-                    if (isOk()) {
-                        fragment.setSelected(this.selected);
-                        fragment.setChronic(chronic);
-                        fragment.setRecurrence(recurrence);
-                        fastDone = true;
-                        ((AddReportActivity) fragment.requireActivity()).addCowAndReportFast();
-                        dismiss();
-                    }
-                });
-            }
+//            if (manager.isNew() || manager.isCureChange()) {
+//                newInput.setVisibility(View.GONE);
+//            } else {
+//
+//            }
+            newInput.setVisibility(View.VISIBLE);
+            newInput.setOnClickListener(view -> {
+                if (isOk()) {
+                    fragment.setSelected(this.selected);
+                    fragment.setChronic(chronic);
+                    fragment.setRecurrence(recurrence);
+                    fastDone = true;
+                    ((AddReportActivity) fragment.requireActivity()).addCowAndReportFast();
+                    dismiss();
+                }
+            });
         }
 
         Button ok = findViewById(R.id.ok);

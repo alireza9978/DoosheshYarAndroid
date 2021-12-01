@@ -197,6 +197,10 @@ public class ImportFragment extends Fragment {
                             String temp = cell.getStringCellValue();
                             if (!temp.isEmpty() && !temp.equals("*"))
                                 importedScoreName.add(temp);
+                        } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                            String temp = "" + cell.getNumericCellValue();
+                            if (!temp.isEmpty() && !temp.equals("*"))
+                                importedScoreName.add(temp);
                         }
                     }
                     for (int i = 16; i < 21; i++) {
@@ -380,6 +384,24 @@ public class ImportFragment extends Fragment {
                             requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score and area number error", Toast.LENGTH_SHORT).show());
                             return;
                         }
+                    }else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC){
+                        String temp = String.valueOf(cell.getNumericCellValue());
+                        if (!temp.isEmpty()) {
+                            if (temp.equals("*")) {
+                                report.areaNumber = i - 3;
+                                break;
+                            }
+                            for (int j = 0; j < scoreMethod.scoresNameList.size(); j++) {
+                                String scoreString = scoreMethod.scoresNameList.get(j);
+                                if (scoreString.equals(temp)) {
+                                    report.score = j;
+                                    report.areaNumber = i - 3;
+                                    break score_loop;
+                                }
+                            }
+                            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score and area number error", Toast.LENGTH_SHORT).show());
+                            return;
+                        }
                     }
                 }
 
@@ -407,7 +429,7 @@ public class ImportFragment extends Fragment {
                     } else {
                         report.sardalme = false;
                     }
-                else{
+                else {
                     report.sardalme = false;
                 }
 
@@ -501,7 +523,7 @@ public class ImportFragment extends Fragment {
 
                 Cell moreInfo = row.getCell(22);
                 if (moreInfo != null) {
-                    if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    if (moreInfo.getCellType() == Cell.CELL_TYPE_STRING) {
                         String temp = moreInfo.getStringCellValue();
                         if (temp != null && !temp.isEmpty())
                             report.description = temp;

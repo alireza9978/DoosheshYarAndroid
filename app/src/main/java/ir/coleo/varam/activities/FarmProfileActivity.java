@@ -319,15 +319,17 @@ public class FarmProfileActivity extends AppCompatActivity {
                     cell = row.createCell(3);
                     cell.setCellValue(String.format("%02d", date[0]));
 
-                    for (int j = 4; j < 8; j++) {
-                        cell = row.createCell(j);
-                        if (report.score != null) {
-                            if (j == 4 + (report.areaNumber - 1)) {
-                                cell.setCellValue(scoreMethod.scoresNameList.get(report.score));
-                            }
-                        } else {
-                            if (j == 4 + (report.areaNumber - 1)) {
-                                cell.setCellValue("*");
+                    if (report.areaNumber != null) {
+                        for (int j = 4; j < 8; j++) {
+                            cell = row.createCell(j);
+                            if (report.score != null) {
+                                if (j == 4 + (report.areaNumber - 1)) {
+                                    cell.setCellValue(scoreMethod.scoresNameList.get(report.score));
+                                }
+                            } else {
+                                if (j == 4 + (report.areaNumber - 1)) {
+                                    cell.setCellValue("*");
+                                }
                             }
                         }
                     }
