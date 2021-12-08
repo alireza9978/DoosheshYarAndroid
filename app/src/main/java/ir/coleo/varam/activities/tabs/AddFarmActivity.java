@@ -75,6 +75,18 @@ public class AddFarmActivity extends AppCompatActivity {
                                     scoresLevelText.setText(R.string.define_levels_five);
                                     break;
                                 }
+                                case 6: {
+                                    scoresLevelText.setText(R.string.define_levels_six);
+                                    break;
+                                }
+                                case 7: {
+                                    scoresLevelText.setText(R.string.define_levels_seven);
+                                    break;
+                                }
+                                case 8: {
+                                    scoresLevelText.setText(R.string.define_levels_eight);
+                                    break;
+                                }
                                 default:
                                     throw new IllegalStateException("Unexpected value: " + scoreMethod.scoresCount);
                             }
