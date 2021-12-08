@@ -25,6 +25,7 @@ import ir.coleo.varam.database.models.main.ScoreMethod;
 public class CreateScoreMethod extends AppCompatActivity {
 
     private int scoreCount = 3;
+    private int maxScoreCount = 8;
     private final Stack<View> views = new Stack<>();
     private final Stack<EditText> editTexts = new Stack<>();
     private LinearLayout scoresList;
@@ -76,7 +77,7 @@ public class CreateScoreMethod extends AppCompatActivity {
         if (mode.equals("CREATE")) {
 
             findViewById(R.id.add).setOnClickListener(v -> {
-                if (scoreCount < 5) {
+                if (scoreCount < maxScoreCount) {
                     scoreCount++;
                     EditText beforeLast = editTexts.peek();
                     beforeLast.setImeOptions(EditorInfo.IME_ACTION_NEXT);
@@ -155,17 +156,23 @@ public class CreateScoreMethod extends AppCompatActivity {
                         Toast.makeText(CreateScoreMethod.this, getString(R.string.invalid_input), Toast.LENGTH_LONG).show();
                         return;
                     }
-                    int position = Integer.parseInt(temp);
-                    if (position <= 0) {
-                        Toast.makeText(CreateScoreMethod.this, getString(R.string.invalid_input_small_number), Toast.LENGTH_LONG).show();
+                    try {
+                        int position = Integer.parseInt(temp);
+                        if (position <= 0) {
+                            Toast.makeText(CreateScoreMethod.this, getString(R.string.invalid_input_small_number), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (position <= scoreCount) {
+                            scoresNameList[position - 1] = scoresName.get(i);
+                        } else {
+                            Toast.makeText(CreateScoreMethod.this, getString(R.string.invalid_input_big_number), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }catch (NumberFormatException e){
+                        Toast.makeText(CreateScoreMethod.this, getString(R.string.invalid_input_number), Toast.LENGTH_LONG).show();
                         return;
                     }
-                    if (position <= scoreCount) {
-                        scoresNameList[position - 1] = scoresName.get(i);
-                    } else {
-                        Toast.makeText(CreateScoreMethod.this, getString(R.string.invalid_input_big_number), Toast.LENGTH_LONG).show();
-                        return;
-                    }
+
                 }
 
                 ScoreMethod scoreMethod = new ScoreMethod();

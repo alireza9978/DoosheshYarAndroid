@@ -39,6 +39,7 @@ import java.util.Objects;
 import ir.coleo.varam.R;
 import ir.coleo.varam.activities.reports.ReportSummery;
 import ir.coleo.varam.activities.tabs.AddFarmActivity;
+import ir.coleo.varam.adapters.EndlessScrollListener;
 import ir.coleo.varam.adapters.GridViewAdapterCowInFarmProfile;
 import ir.coleo.varam.adapters.RecyclerViewAdapterNextVisitFarmProfile;
 import ir.coleo.varam.constants.Constants;
@@ -137,6 +138,9 @@ public class FarmProfileActivity extends AppCompatActivity {
             SureDialog dialog = new SureDialog(FarmProfileActivity.this, getString(R.string.delete_question),
                     getString(R.string.delete),
                     () -> AppExecutors.getInstance().diskIO().execute(() -> {
+                        runOnUiThread(() -> {
+                            Toast.makeText(FarmProfileActivity.this, "در حال حذف، اندکی صبر کنید.", Toast.LENGTH_SHORT).show();
+                        });
                         Farm farm = dao.getFarm(id);
                         List<Cow> cows = dao.getAllCowOfFarm(id);
                         for (Cow cow : cows) {
@@ -239,8 +243,27 @@ public class FarmProfileActivity extends AppCompatActivity {
                     temp.setNumber(cow.getNumber());
                     cows.add(temp);
                 }
-                GridViewAdapterCowInFarmProfile adapter = new GridViewAdapterCowInFarmProfile(this, cows, id);
+                List<CowWithLastVisit> tempCows = new ArrayList<>();
+                for (int cowIndex = 0; cowIndex < 10 && cows.size() > cowIndex; cowIndex++) {
+                    tempCows.add(cows.get(cowIndex));
+                }
+                GridViewAdapterCowInFarmProfile adapter = new GridViewAdapterCowInFarmProfile(this, tempCows, id);
                 cowsGridView.setAdapter(adapter);
+                cowsGridView.setOnScrollListener(new EndlessScrollListener() {
+                    @Override
+                    public boolean onLoadMore(int page, int totalItemsCount) {
+                        boolean done = false;
+                        Log.i("FARM", "onLoadMore: page = " + page);
+                        int startIndex = (page - 1) * 10;
+                        for (int cowIndex = 0; cowIndex < 10 && cows.size() > startIndex + cowIndex; cowIndex++) {
+                            tempCows.add(cows.get(startIndex + cowIndex));
+                            done = true;
+                        }
+                        if (done)
+                            adapter.notifyDataSetChanged();
+                        return done; // ONLY if more data is actually being loaded; false otherwise.
+                    }
+                });
             });
             List<NextVisit> list = dao.getAllNextVisitFroFarm(new MyDate(new Date()), id);
             runOnUiThread(() -> {
