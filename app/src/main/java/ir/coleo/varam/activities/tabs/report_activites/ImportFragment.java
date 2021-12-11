@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -209,10 +210,13 @@ public class ImportFragment extends Fragment {
                             continue;
                         }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                            Drug drug = new Drug();
-                            drug.type = i - 16;
-                            drug.name = cell.getStringCellValue();
-                            importedDrugs.add(drug);
+                            String temp = cell.getStringCellValue().trim().toLowerCase();
+                            if (!temp.isEmpty()) {
+                                Drug drug = new Drug();
+                                drug.type = i - 16;
+                                drug.name = temp;
+                                importedDrugs.add(drug);
+                            }
                         }
                     }
                 }
@@ -254,6 +258,7 @@ public class ImportFragment extends Fragment {
             farm.id = (int) dao.insertGetId(farm);
 
             HashSet<Integer> cowNumbers = new HashSet<>();
+            Hashtable<Integer, Integer> cowNumberCowId = new Hashtable<>();
             ArrayList<Cow> cows = new ArrayList<>();
             ArrayList<Report> reports = new ArrayList<>();
             List<Drug> drugList = dao.getAllDrug();
@@ -277,6 +282,30 @@ public class ImportFragment extends Fragment {
             rows.next();
             while (rows.hasNext()) {
                 Row row = rows.next();
+                Cell cell = row.getCell(0);
+                if (cell == null) {
+                    Log.i("IMPORT", "continueImporting: one");
+                    continue;
+                }
+                int cowNumber;
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    cowNumber = Integer.parseInt(cell.getStringCellValue());
+                } else {
+                    cowNumber = (int) cell.getNumericCellValue();
+                }
+                cowNumbers.add(cowNumber);
+            }
+            for (Integer cowNumber : cowNumbers) {
+                Cow cow = new Cow(cowNumber, false, farm.id);
+                cow.setId((int) dao.insertGetId(cow));
+                cowNumberCowId.put(cowNumber, cow.getId());
+                cows.add(cow);
+            }
+
+            rows = finalDataTypeSheet.iterator();
+            rows.next();
+            while (rows.hasNext()) {
+                Row row = rows.next();
                 Report report = new Report();
 
                 Cell cell = row.getCell(0);
@@ -289,7 +318,7 @@ public class ImportFragment extends Fragment {
                 } else {
                     report.cowId = (int) cell.getNumericCellValue();
                 }
-
+                report.cowId = cowNumberCowId.get(report.cowId);
                 report.scoreMethodId = scoreMethod.id;
                 cowNumbers.add(report.cowId);
 
@@ -588,23 +617,8 @@ public class ImportFragment extends Fragment {
 
                 reports.add(report);
             }
-            for (Integer cowNumber : cowNumbers) {
-                cows.add(new Cow(cowNumber, false, farm.id));
-            }
-            for (Cow cow : cows) {
-                cow.setId((int) dao.insertGetId(cow));
-            }
 
-            main:
-            for (Report report : reports) {
-                for (Cow cow : cows) {
-                    if (report.cowId.equals(cow.getNumber())) {
-                        report.cowId = cow.getId();
-                        dao.insert(report);
-                        continue main;
-                    }
-                }
-            }
+            dao.insert(reports);
 
             requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), reports.size() + " گزارش ایمپورت شد.", Toast.LENGTH_LONG).show());
         });

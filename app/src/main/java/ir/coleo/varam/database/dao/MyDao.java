@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ir.coleo.varam.database.models.CowForMarked;
@@ -248,6 +249,9 @@ public interface MyDao {
 
     @Insert
     void insert(Report report);
+
+    @Insert
+    void insert(ArrayList<Report> reports);
 
     @Insert
     void insert(ScoreMethod scoreMethod);

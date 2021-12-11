@@ -142,12 +142,12 @@ public class FarmProfileActivity extends AppCompatActivity {
                             Toast.makeText(FarmProfileActivity.this, "در حال حذف، اندکی صبر کنید.", Toast.LENGTH_SHORT).show();
                         });
                         Farm farm = dao.getFarm(id);
-                        List<Cow> cows = dao.getAllCowOfFarm(id);
-                        for (Cow cow : cows) {
-                            for (Report report : dao.getAllReportOfCow(cow.getId()))
-                                dao.deleteReport(report);
-                            dao.deleteCow(cow);
-                        }
+//                        List<Cow> cows = dao.getAllCowOfFarm(id);
+//                        for (Cow cow : cows) {
+//                            for (Report report : dao.getAllReportOfCow(cow.getId()))
+//                                dao.deleteReport(report);
+//                            dao.deleteCow(cow);
+//                        }
                         dao.deleteFarm(farm);
                         runOnUiThread(() -> {
                             hideMenu();
