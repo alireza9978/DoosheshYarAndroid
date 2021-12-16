@@ -1,15 +1,19 @@
 package ir.coleo.varam.activities;
 
 import static android.os.Build.VERSION.SDK_INT;
+import static ir.coleo.varam.R.string.more_info;
+import static ir.coleo.varam.R.string.next_visit;
+import static ir.coleo.varam.constants.Constants.DATE_SELECTION_EXPORT_REPORT;
+import static ir.coleo.varam.constants.Constants.DATE_SELECTION_RESULT;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,9 +42,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ir.coleo.varam.R;
-import ir.coleo.varam.activities.reports.ReportSummery;
 import ir.coleo.varam.activities.tabs.AddFarmActivity;
-import ir.coleo.varam.adapters.EndlessScrollListener;
 import ir.coleo.varam.adapters.GridViewAdapterCowInFarmProfile;
 import ir.coleo.varam.adapters.RecyclerViewAdapterNextVisitFarmProfile;
 import ir.coleo.varam.constants.Constants;
@@ -60,11 +63,6 @@ import ir.coleo.varam.dialog.SureDialog;
 import ir.coleo.varam.models.DateContainer;
 import ir.coleo.varam.models.MyDate;
 
-import static ir.coleo.varam.R.string.more_info;
-import static ir.coleo.varam.R.string.next_visit;
-import static ir.coleo.varam.constants.Constants.DATE_SELECTION_EXPORT_REPORT;
-import static ir.coleo.varam.constants.Constants.DATE_SELECTION_RESULT;
-
 
 /**
  * صفحه پروفایل گاوداری
@@ -83,7 +81,7 @@ public class FarmProfileActivity extends AppCompatActivity {
     private TextView birthCount;
     private TextView nextVisit;
     private ImageView bookmark;
-    private GridView cowsGridView;
+    private RecyclerView cowsGridView;
     private RecyclerView nextVisitView;
     private RecyclerViewAdapterNextVisitFarmProfile mAdapter;
     private ImageView menu;
@@ -91,6 +89,7 @@ public class FarmProfileActivity extends AppCompatActivity {
     private ImageView outside;
     private int id;
     private DateContainer dateContainerOne;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,10 +113,16 @@ public class FarmProfileActivity extends AppCompatActivity {
         exit.setOnClickListener(view -> finish());
         Constants.setImageBackBorder(this, exit);
 
+
         id = Objects.requireNonNull(getIntent().getExtras()).getInt(Constants.FARM_ID);
         nextVisitView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         nextVisitView.setLayoutManager(layoutManager);
+        mAdapter = new RecyclerViewAdapterNextVisitFarmProfile(new ArrayList<>(), this);
+        nextVisitView.setAdapter(mAdapter);
+
+        RecyclerView.LayoutManager cowLayoutManager = new GridLayoutManager(this, 2);
+        cowsGridView.setLayoutManager(cowLayoutManager);
         mAdapter = new RecyclerViewAdapterNextVisitFarmProfile(new ArrayList<>(), this);
         nextVisitView.setAdapter(mAdapter);
 
@@ -142,12 +147,6 @@ public class FarmProfileActivity extends AppCompatActivity {
                             Toast.makeText(FarmProfileActivity.this, "در حال حذف، اندکی صبر کنید.", Toast.LENGTH_SHORT).show();
                         });
                         Farm farm = dao.getFarm(id);
-//                        List<Cow> cows = dao.getAllCowOfFarm(id);
-//                        for (Cow cow : cows) {
-//                            for (Report report : dao.getAllReportOfCow(cow.getId()))
-//                                dao.deleteReport(report);
-//                            dao.deleteCow(cow);
-//                        }
                         dao.deleteFarm(farm);
                         runOnUiThread(() -> {
                             hideMenu();
@@ -243,27 +242,33 @@ public class FarmProfileActivity extends AppCompatActivity {
                     temp.setNumber(cow.getNumber());
                     cows.add(temp);
                 }
-                List<CowWithLastVisit> tempCows = new ArrayList<>();
-                for (int cowIndex = 0; cowIndex < 10 && cows.size() > cowIndex; cowIndex++) {
-                    tempCows.add(cows.get(cowIndex));
-                }
-                GridViewAdapterCowInFarmProfile adapter = new GridViewAdapterCowInFarmProfile(this, tempCows, id);
+//                List<CowWithLastVisit> tempCows = new ArrayList<>();
+//                for (int cowIndex = 0; cowIndex < 50 && cows.size() > cowIndex; cowIndex++) {
+//                    tempCows.add(cows.get(cowIndex));
+//                }
+                GridViewAdapterCowInFarmProfile adapter = new GridViewAdapterCowInFarmProfile(this, cows, id);
                 cowsGridView.setAdapter(adapter);
-                cowsGridView.setOnScrollListener(new EndlessScrollListener() {
-                    @Override
-                    public boolean onLoadMore(int page, int totalItemsCount) {
-                        boolean done = false;
-                        Log.i("FARM", "onLoadMore: page = " + page);
-                        int startIndex = (page - 1) * 10;
-                        for (int cowIndex = 0; cowIndex < 10 && cows.size() > startIndex + cowIndex; cowIndex++) {
-                            tempCows.add(cows.get(startIndex + cowIndex));
-                            done = true;
-                        }
-                        if (done)
-                            adapter.notifyDataSetChanged();
-                        return done; // ONLY if more data is actually being loaded; false otherwise.
-                    }
-                });
+                // Changes the height and width to the specified *pixels*
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                cowsGridView.getLayoutParams().height = 5000;
+                cowsGridView.requestLayout();
+
+//                cowsGridView.setOnScrollListener(new EndlessScrollListener() {
+//                    @Override
+//                    public boolean onLoadMore(int page, int totalItemsCount) {
+//                        boolean done = false;
+//                        Log.i("FARM", "onLoadMore: page = " + page);
+//                        int startIndex = (page - 1) * 10;
+//                        for (int cowIndex = 0; cowIndex < 10 && cows.size() > startIndex + cowIndex; cowIndex++) {
+//                            tempCows.add(cows.get(startIndex + cowIndex));
+//                            done = true;
+//                        }
+//                        if (done)
+//                            adapter.notifyDataSetChanged();
+//                        return done; // ONLY if more data is actually being loaded; false otherwise.
+//                    }
+//                });
             });
             List<NextVisit> list = dao.getAllNextVisitFroFarm(new MyDate(new Date()), id);
             runOnUiThread(() -> {
