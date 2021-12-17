@@ -20,9 +20,11 @@
 # hide the original source file name.
 -renamesourcefileattribute SourceFile
 
-#-injars      bin/classes*
+#-injars      bin/
 #-injars      bin/resources.ap_
-#-injars      libs
+#-libraryjars      libs/commons-math3-3.6.1.jar
+#-libraryjars      libs/aa-poi-ooxml-schemas-3.10-reduced-more-0.1.5.jar
+#-libraryjars      libs/aa-poi-3.10-min-0.1.5.jar
 #-outjars     bin/application.apk
 -libraryjars D:/idea/SDK/temp/platforms/android-31/android.jar
 #/usr/local/android-sdk/platforms/android-28/android.jar
@@ -33,7 +35,12 @@
 -optimizations !code/simplification/arithmetic
 -keepattributes *Annotation*
 
+-keep class javax.** { *; }
+-keep class org.apache.** { *; }
+-keep class twitter4j.** { *; }
+
 -keep public class * extends android.app.Activity
+-keep public class * extends androidx.appcompat.app.AppCompatActivity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
@@ -70,3 +77,19 @@
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }
+
+
+-keep class org.openxmlformats.** { *; }
+-keep class schemaorg_apache_xmlbeans.* { *; }
+-keep class schemasMicrosoftComOfficeExcel.* { *; }
+-keep class schemasMicrosoftComOfficeOffice.* { *; }
+-keep class schemasMicrosoftComOfficePowerpoint.* { *; }
+-keep class schemasMicrosoftComOfficeWord.* { *; }
+-keep class schemasMicrosoftComVml.* { *; }
+-keep class aavax.xml.* { *; }
+-keep class org.apache.poi.* { *; }
+-keep class org.apache.xmlbeans.* { *; }
+-keep class org.dom4j.* { *; }
+-keep class org.w3c.dom.* { *; }
+-keep class repackage.* { *; }
+-keep class schemaorg_apache_xmlbeans.* { *; }

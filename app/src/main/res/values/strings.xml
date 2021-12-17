@@ -324,4 +324,5 @@
     <string name="range_date">انتخاب بازه</string>
     <string name="all_date">تمامی زمان‌‌ها</string>
     <string name="importing">در حال ایمپورت</string>
+    <string name="define_levels_invalid">تعیین سطوح (نامعتبر)</string>
 </resources>

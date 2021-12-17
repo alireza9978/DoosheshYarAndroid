@@ -190,10 +190,10 @@ public class CheckBoxManager {
         report.kor = Objects.requireNonNull(checkBoxManager.getByName(R.string.option_seven)).isCheck();
         report.scoreMethodId = scoreMethod.id;
 
-        Integer[] scoresName = {R.string.option_two, R.string.option_three, R.string.option_eight, R.string.option_four, R.string.option_one};
+        Integer[] cartieStateName = {R.string.option_two, R.string.option_three, R.string.option_eight, R.string.option_four, R.string.option_one};
 
-        for (int i = 0; i < scoresName.length; i++) {
-            if (Objects.requireNonNull(getByName(scoresName[i])).isCheck()) {
+        for (int i = 0; i < cartieStateName.length; i++) {
+            if (Objects.requireNonNull(getByName(cartieStateName[i])).isCheck()) {
                 report.cartieState = i;
                 break;
             }

@@ -440,7 +440,14 @@ public class AddReportActivity extends AppCompatActivity {
 
     private boolean goingDrugPage() {
         CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
-        return !manager.isTarkhis() && !manager.isRest() && !manager.isContinueCure();
+        if (manager.isContinueCure()) {
+            if (cow == null) {
+                return true;
+            } else {
+                return ((CowInjuryFragment) adapter.getFragment(1)).getNeedDrug();
+            }
+        }
+        return !manager.isTarkhis() && !manager.isRest();
     }
 
     public void back() {
