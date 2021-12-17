@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import ir.coleo.varam.R;
@@ -45,7 +46,11 @@ public class VaramInfoDialog extends Dialog {
     private boolean recurrence = false;
     private ScoreMethod scoreMethod;
 
+    private final AtomicBoolean needDrug = new AtomicBoolean(false);
+    private Button newInput;
+
     private boolean fastDone = false;
+
 
     public VaramInfoDialog(@NonNull final CowInjuryFragment fragment, boolean editMode, ScoreMethod scoreMode, int selected, MyDate targetDate, int cowId) {
         super(fragment.requireContext());
@@ -55,8 +60,9 @@ public class VaramInfoDialog extends Dialog {
         this.targetDate = targetDate;
         this.cowId = cowId;
         this.scoreMethod = scoreMode;
+        this.newInput = findViewById(R.id.new_input);
+        this.mainImage = findViewById(R.id.main_som);
 
-        mainImage = findViewById(R.id.main_som);
         int[] buttonId = new int[]{R.id.one, R.id.two, R.id.three, R.id.four};
         for (int i = 0; i < buttonId.length; i++) {
             int finalI = i;
@@ -65,6 +71,7 @@ public class VaramInfoDialog extends Dialog {
                     this.selected = finalI;
                     mainImage.setImageResource(cartieImage[finalI]);
                     lastCureError();
+                    checkNeedDrug();
                 } else if (this.selected == finalI) {
                     this.selected = -1;
                     mainImage.setImageResource(R.drawable.ic_area_zero);
@@ -81,16 +88,9 @@ public class VaramInfoDialog extends Dialog {
             mainImage.setImageResource(cartieImage[selected]);
         }
 
-        CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(this.scoreMethod);
-        Button newInput = findViewById(R.id.new_input);
         if (editMode) {
             newInput.setVisibility(View.GONE);
         } else {
-//            if (manager.isNew() || manager.isCureChange()) {
-//                newInput.setVisibility(View.GONE);
-//            } else {
-//
-//            }
             newInput.setVisibility(View.VISIBLE);
             newInput.setOnClickListener(view -> {
                 if (isOk()) {
@@ -129,6 +129,30 @@ public class VaramInfoDialog extends Dialog {
             return false;
         }
         return true;
+    }
+
+    private void checkNeedDrug() {
+        needDrug.set(true);
+        MyDao dao = DataBase.getInstance(context).dao();
+        if (cowId != -1) {
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                ArrayList<Report> reports = (ArrayList<Report>) dao.getReportOfCowWithDrug(cowId, targetDate);
+                if (reports.size() > 0) {
+                    for (int i = reports.size() - 1; i >= 0; i--) {
+                        if (reports.get(i).cartieState != null) {
+                            if (reports.get(i).areaNumber == selected + 1) {
+                                if (reports.get(i).cartieState == 0 || reports.get(i).cartieState == 1 || reports.get(i).cartieState == 2) {
+                                    needDrug.set(false);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    needDrug.set(true);
+                }
+            });
+        }
     }
 
     private void lastCureError() {
@@ -209,5 +233,9 @@ public class VaramInfoDialog extends Dialog {
 
     public boolean isRecurrence() {
         return recurrence;
+    }
+
+    public boolean getNeedDrug() {
+        return needDrug.get();
     }
 }

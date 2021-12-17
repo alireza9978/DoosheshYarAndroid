@@ -150,11 +150,8 @@ public class CowInjuryFragment extends Fragment {
                         if (reports.get(i).cartieState != null) {
                             if (reports.get(i).areaNumber == selected + 1) {
                                 if (reports.get(i).cartieState == 0 || reports.get(i).cartieState == 1 || reports.get(i).cartieState == 2) {
-                                    Date startDate = reports.get(i).visit.getDate();
-                                    long differenceInTime = targetDate.getDate().getTime() - startDate.getTime();
-                                    if (differenceInTime <= 1) {
-                                        needDrug.set(false);
-                                    }
+                                    needDrug.set(false);
+                                    break;
                                 }
                             }
                         }
@@ -174,6 +171,7 @@ public class CowInjuryFragment extends Fragment {
                 selected = dialog.getSelected();
                 chronic = dialog.isChronic();
                 recurrence = dialog.isRecurrence();
+                needDrug.set(dialog.getNeedDrug());
                 ((AddReportActivity) requireActivity()).hideKeyboard();
                 switch (selected) {
                     case 0: {
