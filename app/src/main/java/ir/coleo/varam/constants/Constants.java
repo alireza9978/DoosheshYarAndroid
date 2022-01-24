@@ -51,6 +51,7 @@ public class Constants {
     public static final int FARM_SELECTION_REPORT_FACTOR = 106;
     public static final int DATE_SELECTION_REPORT_INJURY = 107;
     public static final int FARM_SELECTION_REPORT_INJURY = 108;
+    public static final int DATE_SELECTION_EXPORT_REPORT = 111;
     public static final int DATE_SELECTION_OK = 200;
     public static final int DATE_SELECTION_FAIL = 400;
 
@@ -78,6 +79,8 @@ public class Constants {
     private static String LANGUAGE_DATA = "someWhereInDarkness12";
     private static String TOKEN_STORAGE = "someWhereInDarknessTOK";
     private static String TOKEN_DATA = "someWhereInDarkness12TOKTOK";
+    private static String OPENING_STORAGE = "sdigjcxnzlkness";
+    private static String FIRST_OPEN = "vcnidpfsdhjvckl";
 
     public static boolean checkPermissionRead(Context context) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -213,6 +216,25 @@ public class Constants {
         editor.putString(LANGUAGE_DATA, token);
         editor.apply();
     }
+
+    /**
+     * گرفتن کلید ارتباط با سرور
+     */
+    public static boolean getFirstOpen(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(OPENING_STORAGE, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(FIRST_OPEN, true);
+    }
+
+    /**
+     * ذخیره کلید ارطباط با سرور در حافظه
+     */
+    public static void setOpened(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(OPENING_STORAGE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(FIRST_OPEN, false);
+        editor.apply();
+    }
+
 
     public static class DateSelectionMode {
         public static String SINGLE = "asdasdngy";

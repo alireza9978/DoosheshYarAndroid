@@ -230,7 +230,7 @@ public class AddReportActivity extends AppCompatActivity {
                 cow = dao.getCow(cowNumber, farmId);
             }
 
-            if (manager.isContinueCure()) {
+            if (manager.isContinueCure() && state != State.drugs) {
                 if (cow != null) {
                     List<Report> reports = dao.getReportOfCowWithDrug(cow.getId(), report.visit);
                     if (reports != null && reports.size() > 0) {
@@ -378,14 +378,6 @@ public class AddReportActivity extends AppCompatActivity {
                     cow = dao.getCow(cowNumber, farmId);
                 }
 
-//                if (manager.isContinueCure()) {
-//                    if (cow == null) {
-//                        runOnUiThread(() -> Toast.makeText(this, getString(R.string.new_cow_cure_error), Toast.LENGTH_SHORT).show());
-//                        ((CowInjuryFragment) adapter.getFragment(1)).reset();
-//                        return;
-//                    }
-//                }
-
                 if (cow == null) {
                     cow = new Cow(cowNumber, false, farmId);
                     cow.setId((int) dao.insertGetId(cow));
@@ -440,7 +432,14 @@ public class AddReportActivity extends AppCompatActivity {
 
     private boolean goingDrugPage() {
         CheckBoxManager manager = CheckBoxManager.getCheckBoxManager(scoreMethod);
-        return !manager.isTarkhis() && !manager.isRest() && !manager.isContinueCure();
+        if (manager.isContinueCure()) {
+            if (cow == null) {
+                return true;
+            } else {
+                return ((CowInjuryFragment) adapter.getFragment(1)).getNeedDrug();
+            }
+        }
+        return !manager.isTarkhis() && !manager.isRest();
     }
 
     public void back() {

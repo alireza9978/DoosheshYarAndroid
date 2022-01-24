@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import ir.coleo.varam.database.models.CowWithLastVisit;
 /**
  * کلاس مدیریت لیست گاو‌ها در صفحه‌ی پروفایل گاوداری
  */
-public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
+public class GridViewAdapterCowInFarmProfile extends RecyclerView.Adapter<GridViewAdapterCowInFarmProfile.Holder> {
 
     private List<CowWithLastVisit> cows;
     private Context context;
@@ -34,12 +35,6 @@ public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
         this.farmId = farmId;
     }
 
-    @Override
-    public int getCount() {
-        return cows.size() + 1;
-    }
-
-    @Override
     public Object getItem(int i) {
         if (cows.size() <= i) {
             return null;
@@ -48,21 +43,33 @@ public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
     }
 
     @Override
-    public long getItemId(int i) {
-        if (cows.size() <= i) {
-            return i;
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return 0;
+        } else {
+            return 1;
         }
-        return cows.get(i).getId();
+    }
+
+    @NonNull
+    @Override
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == 0) {
+            view = LayoutInflater.from(context)
+                    .inflate(R.layout.add_grid_item, parent, false);
+        } else {
+            view = LayoutInflater.from(context)
+                    .inflate(R.layout.livestock_grid_item, parent, false);
+        }
+        Constants.gridRtl(context, view);
+        return new Holder(view, viewType);
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        Holder holder;
-        if (0 == i) {
-            view = LayoutInflater.from(context)
-                    .inflate(R.layout.add_grid_item, viewGroup, false);
-            Constants.gridRtl(context, view);
-            view.setOnClickListener(view1 -> {
+    public void onBindViewHolder(@NonNull Holder holder, int position) {
+        if (0 == position) {
+            holder.view.setOnClickListener(view1 -> {
                 Intent intent = new Intent(context, AddReportActivity.class);
                 intent.putExtra(Constants.REPORT_MODE, Constants.REPORT_CREATE);
                 intent.putExtra(Constants.COW_ID, -1);
@@ -70,22 +77,7 @@ public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
                 context.startActivity(intent);
             });
         } else {
-            CowWithLastVisit cow = cows.get(i - 1);
-            if (view == null || view.getTag() == null) {
-                view = LayoutInflater.from(context)
-                        .inflate(R.layout.livestock_grid_item, viewGroup, false);
-                Constants.gridRtl(context, view);
-                holder = new Holder();
-                holder.view = view;
-                holder.cowCount = view.findViewById(R.id.cow_count);
-                holder.farmTitle = view.findViewById(R.id.farm_text);
-                holder.icon = view.findViewById(R.id.cow_icon);
-                holder.arrow = view.findViewById(R.id.arrow);
-                view.setTag(holder);
-            } else {
-                holder = (Holder) view.getTag();
-            }
-
+            CowWithLastVisit cow = cows.get(position - 1);
             holder.view.setOnClickListener((v) -> {
                 Intent intent = new Intent(context, CowProfileActivity.class);
                 intent.putExtra(Constants.COW_ID, cow.getId());
@@ -103,15 +95,39 @@ public class GridViewAdapterCowInFarmProfile extends BaseAdapter {
             holder.arrow.setColorFilter(ContextCompat.getColor(context, R.color.persian_green), android.graphics.PorterDuff.Mode.SRC_IN);
             holder.icon.setColorFilter(ContextCompat.getColor(context, R.color.persian_green), android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        return view;
     }
 
-    static class Holder {
+    @Override
+    public long getItemId(int i) {
+        if (cows.size() <= i) {
+            return i;
+        }
+        return cows.get(i).getId();
+    }
+
+    @Override
+    public int getItemCount() {
+        return cows.size() + 1;
+    }
+
+    static class Holder extends RecyclerView.ViewHolder {
         View view;
         TextView cowCount;
         TextView farmTitle;
         ImageView icon;
         ImageView arrow;
+
+        public Holder(@NonNull View itemView, int viewType) {
+            super(itemView);
+            this.view = itemView;
+            if (viewType == 1) {
+                this.cowCount = view.findViewById(R.id.cow_count);
+                this.farmTitle = view.findViewById(R.id.farm_text);
+                this.icon = view.findViewById(R.id.cow_icon);
+                this.arrow = view.findViewById(R.id.arrow);
+            }
+        }
+
     }
 
 }

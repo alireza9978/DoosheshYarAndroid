@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import ir.coleo.varam.R;
@@ -38,7 +39,9 @@ public class CowInjuryFragment extends Fragment {
     private int selected = -1;
     private final ScoreMethod scoreMethod;
     private boolean edit = false;
+    private final AtomicBoolean needDrug = new AtomicBoolean(false);
 
+    private final AtomicLong lastCure = new AtomicLong(-1L);
     private int cowId;
     private MyDate targetDate = null;
     private boolean chronic = false;
@@ -78,7 +81,15 @@ public class CowInjuryFragment extends Fragment {
                 }
             }
         });
-
+        checkBoxItem = manager.getCheckBoxItem(R.string.option_three);
+        checkBoxItem.setListener(new CheckBoxItemListener() {
+            @Override
+            public void run() {
+                if (selected != -1) {
+                    checkNeedDrug();
+                }
+            }
+        });
         adapter = new GridViewAdapterReasonAddReport(requireContext(), manager.getScoreTop());
         adapterTwo = new GridViewAdapterReasonAddReport(requireContext(), manager.getScoreBottom());
         gridView.setAdapter(adapter);
@@ -100,7 +111,6 @@ public class CowInjuryFragment extends Fragment {
 
     private void getLastCureError() {
         MyDao dao = DataBase.getInstance(requireContext()).dao();
-        AtomicLong lastCure = new AtomicLong(-1L);
         if (cowId != -1) {
             AppExecutors.getInstance().diskIO().execute(() -> {
                 ArrayList<Report> reports = (ArrayList<Report>) dao.getReportOfCowOrdered(cowId);
@@ -113,6 +123,7 @@ public class CowInjuryFragment extends Fragment {
                                 lastCure.set((differenceInTime / (1000 * 60 * 60 * 24)) % 365);
                                 break;
                             }
+
                     }
                 }
                 requireActivity().runOnUiThread(() -> {
@@ -128,14 +139,39 @@ public class CowInjuryFragment extends Fragment {
         }
     }
 
+    private void checkNeedDrug() {
+        needDrug.set(true);
+        MyDao dao = DataBase.getInstance(requireContext()).dao();
+        if (cowId != -1) {
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                ArrayList<Report> reports = (ArrayList<Report>) dao.getReportOfCowWithDrug(cowId, targetDate);
+                if (reports.size() > 0) {
+                    for (int i = reports.size() - 1; i >= 0; i--) {
+                        if (reports.get(i).cartieState != null) {
+                            if (reports.get(i).areaNumber == selected + 1) {
+                                if (reports.get(i).cartieState == 0 || reports.get(i).cartieState == 1 || reports.get(i).cartieState == 2) {
+                                    needDrug.set(false);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    needDrug.set(true);
+                }
+            });
+        }
+    }
+
     public void getCartieNumber() {
         VaramInfoDialog dialog = new VaramInfoDialog(this, edit, scoreMethod, selected, targetDate, cowId);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setOnDismissListener(dialogInterface -> {
-            if (!dialog.isFastDone()){
+            if (!dialog.isFastDone()) {
                 selected = dialog.getSelected();
                 chronic = dialog.isChronic();
                 recurrence = dialog.isRecurrence();
+                needDrug.set(dialog.getNeedDrug());
                 ((AddReportActivity) requireActivity()).hideKeyboard();
                 switch (selected) {
                     case 0: {
@@ -221,5 +257,9 @@ public class CowInjuryFragment extends Fragment {
         gridView.setAdapter(adapter);
         gridViewTwo.setAdapter(adapterTwo);
         cartieSelection.setText(R.string.cartie_selection_text);
+    }
+
+    public boolean getNeedDrug() {
+        return needDrug.get();
     }
 }

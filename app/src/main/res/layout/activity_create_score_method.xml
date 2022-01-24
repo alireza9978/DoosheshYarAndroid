@@ -56,14 +56,23 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <LinearLayout
-        android:id="@+id/scores_list_id"
+    <ScrollView
+        android:id="@+id/scores_list_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/top_add_score_method_container"
+        app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toTopOf="@id/add"
-        />
+        app:layout_constraintTop_toBottomOf="@id/top_add_score_method_container">
+
+        <LinearLayout
+            android:id="@+id/scores_list_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
 
     <Button
         android:id="@+id/sub"
@@ -76,10 +85,10 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         app:cornerRadius="15dp"
-        app:layout_constraintTop_toTopOf="@id/add"
+        app:layout_constraintBottom_toBottomOf="@id/add"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/add"
-        app:layout_constraintBottom_toBottomOf="@id/add" />
+        app:layout_constraintTop_toTopOf="@id/add" />
 
     <Button
         android:id="@+id/add"
@@ -94,9 +103,8 @@
         android:textSize="18sp"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toTopOf="@id/submit"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/sub"
-        app:layout_constraintTop_toBottomOf="@id/scores_list_id" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/submit"
@@ -113,7 +121,6 @@
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

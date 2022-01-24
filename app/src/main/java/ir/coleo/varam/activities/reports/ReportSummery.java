@@ -21,6 +21,7 @@ import ir.coleo.varam.database.models.MyReport;
 import ir.coleo.varam.database.models.main.Report;
 import ir.coleo.varam.database.models.main.ScoreMethod;
 import ir.coleo.varam.database.utils.AppExecutors;
+import ir.coleo.varam.dialog.SureDialog;
 import ir.coleo.varam.models.CheckBoxManager;
 import ir.coleo.varam.models.DateContainer;
 import ir.coleo.varam.ui_element.ExpandableHeightGridView;
@@ -80,14 +81,22 @@ public class ReportSummery extends AppCompatActivity {
             startActivity(intent);
             hideMenu();
         });
-        remove.setOnClickListener(view -> AppExecutors.getInstance().diskIO().execute(() -> {
-            Report report = dao.getReport(reportId);
-            dao.deleteReport(report);
-            runOnUiThread(() -> {
-                hideMenu();
-                finish();
-            });
-        }));
+        remove.setOnClickListener(view -> {
+            SureDialog dialog = new SureDialog(ReportSummery.this, getString(R.string.delete_question),
+                    getString(R.string.delete),
+                    () -> AppExecutors.getInstance().diskIO().execute(() -> {
+                        Report report = dao.getReport(reportId);
+                        dao.deleteReport(report);
+                        runOnUiThread(() -> {
+                            hideMenu();
+                            finish();
+                        });
+                    }),
+                    () -> runOnUiThread(this::hideMenu), getString(R.string.yes),
+                    getString(R.string.no));
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
+        });
     }
 
     @Override

@@ -1,9 +1,12 @@
 package ir.coleo.varam.database.models.main;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import android.content.Context;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import ir.coleo.varam.R;
@@ -11,7 +14,14 @@ import ir.coleo.varam.R;
 /**
  * کلاس نگه دارنده اطلاعات یک گاو
  */
-@Entity
+@Entity(
+        foreignKeys = {
+                @ForeignKey(onDelete = CASCADE,
+                        entity = Farm.class,
+                        parentColumns = "id",
+                        childColumns = "farm_id"),
+        }
+)
 public class Cow {
     @PrimaryKey
     private Integer id;

@@ -284,6 +284,7 @@
     <string name="contact_bottom_three"> ارسال نمایید.</string>
     <string name="level">"سطح "</string>
     <string name="invalid_input">مقادیر ورودی را وارد کنید.</string>
+    <string name="invalid_input_number">مقادیر ورودی را به صورت عددی وارد کنید.</string>
     <string name="invalid_input_big_number">برای هر سطح شماره مربوط را وارد کنید.</string>
     <string name="createMethod_one_text">نام هر یک از سطوح ورم پستان را در این بخش تعریف کنید برای مثال اگر از اسکور 4 سطحی استفاده می کنید می توانید نام هر یک از سطوح را با اعداد 1، 2، 3 و 4 مشخص کنید</string>
     <string name="new_selection_error">باید یکی از سطوح یا گزینه سردلمه یا گزینه خونی را انتخاب کنید.</string>
@@ -299,9 +300,12 @@
     <string name="define_levels_three">تعیین سطوح (سه سطح تعیین شده است)</string>
     <string name="define_levels_four">تعیین سطوح (چهار سطح تعیین شده است)</string>
     <string name="define_levels_five">تعیین سطوح (پنچ سطح تعیین شده است)</string>
+    <string name="define_levels_six">تعیین سطوح (شش سطح تعیین شده است)</string>
+    <string name="define_levels_seven">تعیین سطوح (هفت سطح تعیین شده است)</string>
+    <string name="define_levels_eight">تعیین سطوح (هشت سطح تعیین شده است)</string>
     <string name="add_score_level">+</string>
     <string name="sub_score_level">-</string>
-    <string name="max_level_reaches">بیشترین تعداد سطوح قابل تعریف پنج است.</string>
+    <string name="max_level_reaches">بیشترین تعداد سطوح قابل تعریف هشت است.</string>
     <string name="min_level_reaches">کمترین تعداد سطوح قابل تعریف سه است.</string>
     <string name="select_cartie">شماره کارتیه را انتخاب کنید.</string>
     <string name="cartie_selection_text">انتخاب کارتیه</string>
@@ -313,6 +317,14 @@
     <string name="cartie">کارتیه</string>
     <string name="score_title">اسکور ورم پستان</string>
     <string name="enter_drug_or_description">لطفا یکی از موارد داروها یا توضیحات بیشتر را وارد کنید.</string>
-
-
+    <string name="delete_question">اخطار حذف</string>
+    <string name="delete">آیا از حذف مورد اطمینان دارید؟</string>
+    <string name="yes">بله</string>
+    <string name="no">خیر</string>
+    <string name="select_date_selection_mode">بازه زمانی گزارش گیری</string>
+    <string name="single_date">انتخاب یک روز</string>
+    <string name="range_date">انتخاب بازه</string>
+    <string name="all_date">تمامی زمان‌‌ها</string>
+    <string name="importing">در حال ایمپورت</string>
+    <string name="define_levels_invalid">تعیین سطوح (نامعتبر)</string>
 </resources>

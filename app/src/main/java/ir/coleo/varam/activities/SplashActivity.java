@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
@@ -51,6 +52,12 @@ public class SplashActivity extends AppCompatActivity {
 
         AppCenter.start(getApplication(), "51203f5f-d489-4989-a2fb-01a3195a9a57",
                 Analytics.class, Crashes.class);
+
+        if (Constants.getFirstOpen(this)){
+            Constants.setOpened(this);
+            String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+            Analytics.trackEvent("first open " + android_id);
+        }
 
         loading_state = findViewById(R.id.splash_loading_container);
         error_state = findViewById(R.id.offline_splash_loading_container);

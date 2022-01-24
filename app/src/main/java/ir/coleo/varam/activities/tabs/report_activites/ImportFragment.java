@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -197,6 +198,10 @@ public class ImportFragment extends Fragment {
                             String temp = cell.getStringCellValue();
                             if (!temp.isEmpty() && !temp.equals("*"))
                                 importedScoreName.add(temp);
+                        } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                            String temp = "" + cell.getNumericCellValue();
+                            if (!temp.isEmpty() && !temp.equals("*"))
+                                importedScoreName.add(temp);
                         }
                     }
                     for (int i = 16; i < 21; i++) {
@@ -205,10 +210,13 @@ public class ImportFragment extends Fragment {
                             continue;
                         }
                         if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-                            Drug drug = new Drug();
-                            drug.type = i - 16;
-                            drug.name = cell.getStringCellValue();
-                            importedDrugs.add(drug);
+                            String temp = cell.getStringCellValue().trim().toLowerCase();
+                            if (!temp.isEmpty()) {
+                                Drug drug = new Drug();
+                                drug.type = i - 16;
+                                drug.name = temp;
+                                importedDrugs.add(drug);
+                            }
                         }
                     }
                 }
@@ -234,7 +242,7 @@ public class ImportFragment extends Fragment {
     }
 
     public void continueImporting(ScoreMethod scoreMethod, Sheet finalDataTypeSheet, String finalFarmName, TreeSet<Drug> importedDrugs) {
-
+        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), R.string.importing, Toast.LENGTH_SHORT).show());
         MyDao dao = DataBase.getInstance(requireContext()).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
             scoreMethod.id = dao.insertGetId(scoreMethod);
@@ -250,6 +258,7 @@ public class ImportFragment extends Fragment {
             farm.id = (int) dao.insertGetId(farm);
 
             HashSet<Integer> cowNumbers = new HashSet<>();
+            Hashtable<Integer, Integer> cowNumberCowId = new Hashtable<>();
             ArrayList<Cow> cows = new ArrayList<>();
             ArrayList<Report> reports = new ArrayList<>();
             List<Drug> drugList = dao.getAllDrug();
@@ -273,10 +282,35 @@ public class ImportFragment extends Fragment {
             rows.next();
             while (rows.hasNext()) {
                 Row row = rows.next();
+                Cell cell = row.getCell(0);
+                if (cell == null) {
+                    Log.i("IMPORT", "continueImporting: one");
+                    continue;
+                }
+                int cowNumber;
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    cowNumber = Integer.parseInt(cell.getStringCellValue());
+                } else {
+                    cowNumber = (int) cell.getNumericCellValue();
+                }
+                cowNumbers.add(cowNumber);
+            }
+            for (Integer cowNumber : cowNumbers) {
+                Cow cow = new Cow(cowNumber, false, farm.id);
+                cow.setId((int) dao.insertGetId(cow));
+                cowNumberCowId.put(cowNumber, cow.getId());
+                cows.add(cow);
+            }
+
+            rows = finalDataTypeSheet.iterator();
+            rows.next();
+            while (rows.hasNext()) {
+                Row row = rows.next();
                 Report report = new Report();
 
                 Cell cell = row.getCell(0);
                 if (cell == null) {
+                    Log.i("IMPORT", "continueImporting: one");
                     continue;
                 }
                 if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
@@ -284,13 +318,14 @@ public class ImportFragment extends Fragment {
                 } else {
                     report.cowId = (int) cell.getNumericCellValue();
                 }
-
+                report.cowId = cowNumberCowId.get(report.cowId);
                 report.scoreMethodId = scoreMethod.id;
                 cowNumbers.add(report.cowId);
 
                 int day, month, year;
                 cell = row.getCell(3);
                 if (cell == null) {
+                    Log.i("IMPORT", "continueImporting: 2");
                     continue;
                 }
                 if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
@@ -298,18 +333,21 @@ public class ImportFragment extends Fragment {
                     if (temp != null && !temp.isEmpty()) {
                         year = Integer.parseInt(temp);
                     } else {
-                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
-                        return;
+                        Log.i("IMPORT", "continueImporting: 3");
+//                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                        continue;
                     }
                 } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                     year = (int) cell.getNumericCellValue();
                 } else {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
-                    return;
+                    Log.i("IMPORT", "continueImporting: 4");
+//                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                    continue;
                 }
 
                 cell = row.getCell(2);
                 if (cell == null) {
+                    Log.i("IMPORT", "continueImporting: 5");
                     continue;
                 }
                 if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
@@ -317,18 +355,22 @@ public class ImportFragment extends Fragment {
                     if (temp != null && !temp.isEmpty()) {
                         month = Integer.parseInt(temp);
                     } else {
-                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
-                        return;
+                        Log.i("IMPORT", "continueImporting: 6");
+//                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+                        continue;
                     }
                 } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                     month = (int) cell.getNumericCellValue();
                 } else {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
-                    return;
+                    Log.i("IMPORT", "continueImporting: 7");
+                    continue;
+//                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+//                    return;
                 }
 
                 cell = row.getCell(1);
                 if (cell == null) {
+                    Log.i("IMPORT", "continueImporting: 8");
                     continue;
                 }
                 if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
@@ -336,15 +378,19 @@ public class ImportFragment extends Fragment {
                     if (temp != null && !temp.isEmpty()) {
                         day = Integer.parseInt(temp);
                     } else {
-                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
-                        return;
+                        Log.i("IMPORT", "continueImporting: 9");
+                        continue;
+//                        requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+//                        return;
                     }
 
                 } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
                     day = (int) cell.getNumericCellValue();
                 } else {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
-                    return;
+                    Log.i("IMPORT", "continueImporting: 10");
+                    continue;
+//                    requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "read error", Toast.LENGTH_LONG).show());
+//                    return;
                 }
 
 
@@ -377,7 +423,29 @@ public class ImportFragment extends Fragment {
                                     break score_loop;
                                 }
                             }
-                            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score and area number error", Toast.LENGTH_SHORT).show());
+                            Log.i("IMPORT", "continueImporting: 12");
+//                            continue;
+//                            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score and area number error", Toast.LENGTH_SHORT).show());
+                            return;
+                        }
+                    } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                        String temp = String.valueOf(cell.getNumericCellValue());
+                        if (!temp.isEmpty()) {
+                            if (temp.equals("*")) {
+                                report.areaNumber = i - 3;
+                                break;
+                            }
+                            for (int j = 0; j < scoreMethod.scoresNameList.size(); j++) {
+                                String scoreString = scoreMethod.scoresNameList.get(j);
+                                if (scoreString.equals(temp)) {
+                                    report.score = j;
+                                    report.areaNumber = i - 3;
+                                    break score_loop;
+                                }
+                            }
+                            Log.i("IMPORT", "continueImporting: 13");
+//                            continue;
+//                            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "score and area number error", Toast.LENGTH_SHORT).show());
                             return;
                         }
                     }
@@ -407,7 +475,7 @@ public class ImportFragment extends Fragment {
                     } else {
                         report.sardalme = false;
                     }
-                else{
+                else {
                     report.sardalme = false;
                 }
 
@@ -501,7 +569,7 @@ public class ImportFragment extends Fragment {
 
                 Cell moreInfo = row.getCell(22);
                 if (moreInfo != null) {
-                    if (nextVisitCell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    if (moreInfo.getCellType() == Cell.CELL_TYPE_STRING) {
                         String temp = moreInfo.getStringCellValue();
                         if (temp != null && !temp.isEmpty())
                             report.description = temp;
@@ -549,24 +617,10 @@ public class ImportFragment extends Fragment {
 
                 reports.add(report);
             }
-            for (Integer cowNumber : cowNumbers) {
-                cows.add(new Cow(cowNumber, false, farm.id));
-            }
-            for (Cow cow : cows) {
-                cow.setId((int) dao.insertGetId(cow));
-            }
-            main:
-            for (Report report : reports) {
-                for (Cow cow : cows) {
-                    if (report.cowId.equals(cow.getNumber())) {
-                        report.cowId = cow.getId();
-                        dao.insert(report);
-                        continue main;
-                    }
-                }
-            }
 
-            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "imported", Toast.LENGTH_LONG).show());
+            dao.insert(reports);
+
+            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), reports.size() + " گزارش ایمپورت شد.", Toast.LENGTH_LONG).show());
         });
 
 
