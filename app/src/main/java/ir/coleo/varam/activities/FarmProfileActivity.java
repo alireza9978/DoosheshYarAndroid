@@ -28,6 +28,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gun0912.tedpermission.PermissionListener;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -89,6 +91,7 @@ public class FarmProfileActivity extends AppCompatActivity {
     private ImageView outside;
     private int id;
     private DateContainer dateContainerOne;
+    private PermissionListener permissionlistener;
 
 
     @Override
@@ -112,7 +115,6 @@ public class FarmProfileActivity extends AppCompatActivity {
         ImageView exit = findViewById(R.id.back_icon);
         exit.setOnClickListener(view -> finish());
         Constants.setImageBackBorder(this, exit);
-
 
         id = Objects.requireNonNull(getIntent().getExtras()).getInt(Constants.FARM_ID);
         nextVisitView.setHasFixedSize(true);
@@ -143,9 +145,7 @@ public class FarmProfileActivity extends AppCompatActivity {
             SureDialog dialog = new SureDialog(FarmProfileActivity.this, getString(R.string.delete_question),
                     getString(R.string.delete),
                     () -> AppExecutors.getInstance().diskIO().execute(() -> {
-                        runOnUiThread(() -> {
-                            Toast.makeText(FarmProfileActivity.this, "در حال حذف، اندکی صبر کنید.", Toast.LENGTH_SHORT).show();
-                        });
+                        runOnUiThread(() -> Toast.makeText(FarmProfileActivity.this, "در حال حذف، اندکی صبر کنید.", Toast.LENGTH_SHORT).show());
                         Farm farm = dao.getFarm(id);
                         dao.deleteFarm(farm);
                         runOnUiThread(() -> {
@@ -159,11 +159,23 @@ public class FarmProfileActivity extends AppCompatActivity {
             dialog.show();
         });
         share.setOnClickListener(view -> {
-            dateContainerOne = null;
-            selectDate();
+            checkExportPermission();
             hideMenu();
         });
 
+        permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(FarmProfileActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                dateContainerOne = null;
+                selectDate();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(FarmProfileActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+        };
 
     }
 
@@ -173,6 +185,15 @@ public class FarmProfileActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void getDate(boolean single) {
+        Intent intent = new Intent(this, DateSelectionActivity.class);
+        if (single) {
+            intent.setAction(Constants.DateSelectionMode.SINGLE);
+        } else {
+            intent.setAction(Constants.DateSelectionMode.RANG);
+        }
+        startActivityForResult(intent, DATE_SELECTION_EXPORT_REPORT);
+    }
 
     private void showMenu() {
         outside.setVisibility(View.VISIBLE);
@@ -201,7 +222,7 @@ public class FarmProfileActivity extends AppCompatActivity {
             ScoreMethod scoreMethod = dao.getScoreMethod(farm.scoreMethodId);
             runOnUiThread(() -> {
                 bedType.setText(farm.bedType);
-                scoreMethodTextView.setText(getString(scoreMethod.getText()));
+                scoreMethodTextView.setText(scoreMethod.getText());
                 bookmark.setOnClickListener(view -> {
                     farm.favorite = !farm.favorite;
                     if (farm.favorite) {
@@ -242,10 +263,6 @@ public class FarmProfileActivity extends AppCompatActivity {
                     temp.setNumber(cow.getNumber());
                     cows.add(temp);
                 }
-//                List<CowWithLastVisit> tempCows = new ArrayList<>();
-//                for (int cowIndex = 0; cowIndex < 50 && cows.size() > cowIndex; cowIndex++) {
-//                    tempCows.add(cows.get(cowIndex));
-//                }
                 GridViewAdapterCowInFarmProfile adapter = new GridViewAdapterCowInFarmProfile(this, cows, id);
                 cowsGridView.setAdapter(adapter);
                 // Changes the height and width to the specified *pixels*
@@ -253,22 +270,6 @@ public class FarmProfileActivity extends AppCompatActivity {
                 getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                 cowsGridView.getLayoutParams().height = 5000;
                 cowsGridView.requestLayout();
-
-//                cowsGridView.setOnScrollListener(new EndlessScrollListener() {
-//                    @Override
-//                    public boolean onLoadMore(int page, int totalItemsCount) {
-//                        boolean done = false;
-//                        Log.i("FARM", "onLoadMore: page = " + page);
-//                        int startIndex = (page - 1) * 10;
-//                        for (int cowIndex = 0; cowIndex < 10 && cows.size() > startIndex + cowIndex; cowIndex++) {
-//                            tempCows.add(cows.get(startIndex + cowIndex));
-//                            done = true;
-//                        }
-//                        if (done)
-//                            adapter.notifyDataSetChanged();
-//                        return done; // ONLY if more data is actually being loaded; false otherwise.
-//                    }
-//                });
             });
             List<NextVisit> list = dao.getAllNextVisitFroFarm(new MyDate(new Date()), id);
             runOnUiThread(() -> {
@@ -288,11 +289,11 @@ public class FarmProfileActivity extends AppCompatActivity {
         nextVisitView.setVisibility(View.VISIBLE);
     }
 
+    public void checkExportPermission() {
+        Constants.checkPermission(permissionlistener);
+    }
+
     public void export() {
-
-        if (Constants.checkPermission(this))
-            return;
-
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Sample sheet");
 
@@ -482,7 +483,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                     }
 
                     Uri uri;
-                    if (Build.VERSION.SDK_INT < 24) {
+                    if (SDK_INT < 24) {
                         uri = Uri.fromFile(file);
                     } else {
                         uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
@@ -506,16 +507,6 @@ public class FarmProfileActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    public void getDate(boolean single) {
-        Intent intent = new Intent(this, DateSelectionActivity.class);
-        if (single) {
-            intent.setAction(Constants.DateSelectionMode.SINGLE);
-        } else {
-            intent.setAction(Constants.DateSelectionMode.RANG);
-        }
-        startActivityForResult(intent, DATE_SELECTION_EXPORT_REPORT);
     }
 
     @Override

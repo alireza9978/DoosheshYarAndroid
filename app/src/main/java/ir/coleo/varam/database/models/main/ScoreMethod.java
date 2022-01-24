@@ -1,7 +1,5 @@
 package ir.coleo.varam.database.models.main;
 
-import android.os.Parcelable;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,8 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.List;
-
-import ir.coleo.varam.R;
 
 @Entity
 public class ScoreMethod implements Serializable {
@@ -26,32 +22,26 @@ public class ScoreMethod implements Serializable {
     public List<String> scoresNameList;
 
     @Override
-    public @NotNull String toString() {
+    public @NotNull
+    String toString() {
         return "ScoreMethod{" +
                 "scoresCount=" + scoresCount +
                 ", scoresNameList=" + scoresNameList.toString() +
                 '}';
     }
 
-    public String getScoreName(Integer index){
-        if (scoresNameList.size() > index){
+    public String getScoreName(Integer index) {
+        if (scoresNameList.size() > index) {
             return scoresNameList.get(index);
         }
         return "unknown";
     }
 
-    public int getText() {
-        switch (scoresCount){
-            case 3:{
-                return R.string.three_level;
-            }
-            case 4:{
-                return R.string.four_level;
-            }
-            case 5:{
-                return R.string.five_level;
-            }
-        }
-        return R.string.no_level;
+    public String getText() {
+        return scoresCount + " سطحی";
+    }
+
+    public String getTextLong() {
+        return "تعیین سطوح (" + scoresCount + " سطح تعیین شده است)";
     }
 }

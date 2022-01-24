@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import ir.coleo.varam.database.models.main.ScoreMethod;
 public class CreateScoreMethod extends AppCompatActivity {
 
     private int scoreCount = 3;
-    private int maxScoreCount = 8;
+    private final int maxScoreCount = 20;
     private final Stack<View> views = new Stack<>();
     private final Stack<EditText> editTexts = new Stack<>();
     private LinearLayout scoresList;
@@ -65,6 +66,7 @@ public class CreateScoreMethod extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_score_method);
 
+        ScrollView tempScroll = findViewById(R.id.scores_list_scroll_view);
         scoresList = findViewById(R.id.scores_list_id);
         findViewById(R.id.close_image).setOnClickListener(v -> finish());
         findViewById(R.id.info_image).setOnClickListener(v -> {

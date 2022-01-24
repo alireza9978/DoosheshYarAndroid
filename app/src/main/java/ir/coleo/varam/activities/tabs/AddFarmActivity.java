@@ -62,34 +62,7 @@ public class AddFarmActivity extends AppCompatActivity {
                             Intent data = result.getData();
                             assert data != null;
                             this.scoreMethod = (ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT);
-                            switch (scoreMethod.scoresCount) {
-                                case 3: {
-                                    scoresLevelText.setText(R.string.define_levels_three);
-                                    break;
-                                }
-                                case 4: {
-                                    scoresLevelText.setText(R.string.define_levels_four);
-                                    break;
-                                }
-                                case 5: {
-                                    scoresLevelText.setText(R.string.define_levels_five);
-                                    break;
-                                }
-                                case 6: {
-                                    scoresLevelText.setText(R.string.define_levels_six);
-                                    break;
-                                }
-                                case 7: {
-                                    scoresLevelText.setText(R.string.define_levels_seven);
-                                    break;
-                                }
-                                case 8: {
-                                    scoresLevelText.setText(R.string.define_levels_eight);
-                                    break;
-                                }
-                                default:
-                                    throw new IllegalStateException("Unexpected value: " + scoreMethod.scoresCount);
-                            }
+                            scoresLevelText.setText(scoreMethod.getTextLong());
                         } else {
                             scoresLevelText.setText(R.string.define_levels);
                         }
@@ -152,34 +125,7 @@ public class AddFarmActivity extends AppCompatActivity {
                         showerUnitCount.setText("" + farm.showerUnitCount);
                         scoreMethod = tempScoreMethod;
                         scoreMethod.id = null;
-                        switch (scoreMethod.scoresCount) {
-                            case 3: {
-                                scoresLevelText.setText(R.string.define_levels_three);
-                                break;
-                            }
-                            case 4: {
-                                scoresLevelText.setText(R.string.define_levels_four);
-                                break;
-                            }
-                            case 5: {
-                                scoresLevelText.setText(R.string.define_levels_five);
-                                break;
-                            }
-                            case 6: {
-                                scoresLevelText.setText(R.string.define_levels_six);
-                                break;
-                            }
-                            case 7: {
-                                scoresLevelText.setText(R.string.define_levels_seven);
-                                break;
-                            }
-                            case 8: {
-                                scoresLevelText.setText(R.string.define_levels_eight);
-                                break;
-                            }
-                            default:
-                                scoresLevelText.setText(R.string.define_levels_invalid);
-                        }
+                        scoresLevelText.setText(scoreMethod.getTextLong());
                     });
                 });
 

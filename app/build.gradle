@@ -10,8 +10,8 @@ android {
         applicationId "ir.coleo.varam"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 32
-        versionName "0.3.2"
+        versionCode 33
+        versionName "0.3.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -81,7 +81,7 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0'
     implementation 'com.github.medyo:fancybuttons:1.9.1'
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
-    implementation 'gun0912.ted:tedpermission:2.2.3'
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
 
     implementation "com.mikepenz:materialdrawer:6.1.2"
 
