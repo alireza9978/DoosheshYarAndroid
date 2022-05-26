@@ -3,6 +3,7 @@ package ir.coleo.varam.activities;
 import static android.os.Build.VERSION.SDK_INT;
 import static ir.coleo.varam.R.string.more_info;
 import static ir.coleo.varam.R.string.next_visit;
+import static ir.coleo.varam.R.string.score;
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_EXPORT_REPORT;
 import static ir.coleo.varam.constants.Constants.DATE_SELECTION_RESULT;
 
@@ -166,7 +167,7 @@ public class FarmProfileActivity extends AppCompatActivity {
         permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(FarmProfileActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(FarmProfileActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                 dateContainerOne = null;
                 selectDate();
             }
@@ -354,6 +355,7 @@ public class FarmProfileActivity extends AppCompatActivity {
                             if (report.score != null) {
                                 if (j == 4 + (report.areaNumber - 1)) {
                                     cell.setCellValue(scoreMethod.scoresNameList.get(report.score));
+                                    Log.e("TAG", "export: "+report.score + scoreMethod.scoresNameList.get(report.score));
                                 }
                             } else {
                                 if (j == 4 + (report.areaNumber - 1)) {

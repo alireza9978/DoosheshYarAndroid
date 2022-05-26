@@ -1,19 +1,32 @@
 package ir.coleo.varam.activities.tabs.report_activites;
 
+import static ir.coleo.varam.R.string.more_info;
+import static ir.coleo.varam.R.string.next_visit;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -38,7 +51,6 @@ import java.util.Objects;
 import java.util.TreeSet;
 
 import ir.coleo.varam.R;
-import ir.coleo.varam.activities.tabs.CreateScoreMethod;
 import ir.coleo.varam.constants.Constants;
 import ir.coleo.varam.database.DataBase;
 import ir.coleo.varam.database.dao.MyDao;
@@ -51,9 +63,6 @@ import ir.coleo.varam.database.utils.AppExecutors;
 import ir.coleo.varam.models.MyDate;
 import saman.zamani.persiandate.PersianDate;
 
-import static ir.coleo.varam.R.string.more_info;
-import static ir.coleo.varam.R.string.next_visit;
-
 /**
  * صفحه بارگداری یک فایل اکسل در قسمت گزارش‌ها
  */
@@ -64,25 +73,29 @@ public class ImportFragment extends Fragment {
     private TreeSet<Drug> importedDrugs;
     private String finalFarmName;
     private Sheet finalDataTypeSheet;
+    private AlertDialog.Builder builder;
+    private AlertDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        dialog = builder.create();
         View view = inflater.inflate(R.layout.fragment_import, container, false);
 
         ConstraintLayout button = view.findViewById(R.id.import_button);
         button.setOnClickListener(view1 -> showFileChooser());
 
-        someActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-                        assert data != null;
-                        continueImporting((ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT), finalDataTypeSheet, finalFarmName, importedDrugs);
-                    }
-                });
+//        someActivityResultLauncher = registerForActivityResult(
+//                new ActivityResultContracts.StartActivityForResult(),
+//                result -> {
+//                    if (result.getResultCode() == Activity.RESULT_OK) {
+//                        // There are no request codes
+//                        Intent data = result.getData();
+//                        assert data != null;
+//                        continueImporting((ScoreMethod) data.getSerializableExtra(Constants.SCORE_METHOD_INTENT), finalDataTypeSheet, finalFarmName, importedDrugs);
+//                    }
+//                });
 
         fileActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -110,6 +123,7 @@ public class ImportFragment extends Fragment {
         startActivityForResult(chooseFile, Constants.CHOOSE_FILE_REQUEST_CODE);
     }
 
+    @SuppressLint("Range")
     public void importFile(Intent intent) {
 
 
@@ -220,18 +234,21 @@ public class ImportFragment extends Fragment {
                         }
                     }
                 }
+                // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+                finalDataTypeSheet = dataTypeSheet;
+                finalFarmName = farmName;
+
+                ScoreMethod scoreMethod = new ScoreMethod();
+                scoreMethod.scoresCount = importedScoreName.size();
+                scoreMethod.scoresNameList = new ArrayList<>(importedScoreName);
+//                Log.e("TAG", "importFile: " + scoreMethod.scoresNameList.size());
+                continueImporting(scoreMethod, finalDataTypeSheet, finalFarmName, importedDrugs);
             }
 
-
-            // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
-            finalDataTypeSheet = dataTypeSheet;
-            finalFarmName = farmName;
-
-            Intent createScoreMethodIntent = new Intent(requireActivity(), CreateScoreMethod.class);
-            createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_MODE, "IMPORT");
-            createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_DATA, new ArrayList<>(importedScoreName));
-            someActivityResultLauncher.launch(createScoreMethodIntent);
-
+//            Intent createScoreMethodIntent = new Intent(requireActivity(), CreateScoreMethod.class);
+//            createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_MODE, "IMPORT");
+//            createScoreMethodIntent.putExtra(Constants.SCORE_METHOD_INTENT_DATA, new ArrayList<>(importedScoreName));
+//            someActivityResultLauncher.launch(createScoreMethodIntent);
 
         } catch (IOException | InvalidFormatException e) {
             Toast.makeText(requireContext(), "reading error", Toast.LENGTH_SHORT).show();
@@ -241,7 +258,57 @@ public class ImportFragment extends Fragment {
 
     }
 
+//    public void showProgressDialog(boolean isShow) {
+//        if (isShow){
+//            int llPadding = 30;
+//            LinearLayout ll = new LinearLayout(getContext());
+//            ll.setOrientation(LinearLayout.HORIZONTAL);
+//            ll.setPadding(llPadding, llPadding, llPadding, llPadding);
+//            ll.setGravity(Gravity.CENTER);
+//            LinearLayout.LayoutParams llParam = new LinearLayout.LayoutParams(
+//                    LinearLayout.LayoutParams.WRAP_CONTENT,
+//                    LinearLayout.LayoutParams.WRAP_CONTENT);
+//            llParam.gravity = Gravity.CENTER;
+//            ll.setLayoutParams(llParam);
+//
+//            ProgressBar progressBar = new ProgressBar(getContext());
+//            progressBar.setIndeterminate(true);
+//            progressBar.setPadding(0, 0, llPadding, 0);
+//            progressBar.setLayoutParams(llParam);
+//
+//            llParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+//                    ViewGroup.LayoutParams.WRAP_CONTENT);
+//            llParam.gravity = Gravity.CENTER;
+//            TextView tvText = new TextView(getContext());
+//            tvText.setText("لطفا صبر کنید...");
+//            tvText.setTextColor(Color.parseColor("#000000"));
+//            tvText.setTextSize(20);
+//            tvText.setLayoutParams(llParam);
+//
+//            ll.addView(progressBar);
+//            ll.addView(tvText);
+//
+//            builder.setCancelable(true);
+//            builder.setView(ll);
+//
+//            dialog.show();
+//            Window window = dialog.getWindow();
+//            if (window != null) {
+//                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+//                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+//                layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                dialog.getWindow().setAttributes(layoutParams);
+//            }
+//        }else{
+//            if (dialog != null) {
+//                dialog.dismiss();
+//            }
+//        }
+//    }
+
     public void continueImporting(ScoreMethod scoreMethod, Sheet finalDataTypeSheet, String finalFarmName, TreeSet<Drug> importedDrugs) {
+//        showProgressDialog(true);
         requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), R.string.importing, Toast.LENGTH_SHORT).show());
         MyDao dao = DataBase.getInstance(requireContext()).dao();
         AppExecutors.getInstance().diskIO().execute(() -> {
@@ -617,10 +684,12 @@ public class ImportFragment extends Fragment {
 
                 reports.add(report);
             }
-
             dao.insert(reports);
 
-            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), reports.size() + " گزارش ایمپورت شد.", Toast.LENGTH_LONG).show());
+            requireActivity().runOnUiThread(()-> {
+//                showProgressDialog(false);
+                Toast.makeText(requireContext(), reports.size() + " گزارش ایمپورت شد.", Toast.LENGTH_LONG).show();
+            });
         });
 
 
